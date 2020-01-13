@@ -109,6 +109,8 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
             btnProfile.setVisibility(View.VISIBLE);
         }*/
 
+        // ye sab safaiyi karani hy sab MAYA hy
+
         //if (firebaseAuth.getCurrentUser() == null) {
 
             /*FacebookSdk.sdkInitialize(this.getApplicationContext());
