@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/quantum_orange">
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <!--<com.google.android.material.tabs.TabItem
+            android:id="@+id/profileViewTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/editProfileTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Profile" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/addMoreInfoTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other Information" />-->
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabLayoutProfile"/>
+
+</RelativeLayout>

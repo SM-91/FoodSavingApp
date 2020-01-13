@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="#fff">
+
+
+    <ImageView
+        android:id="@+id/logoImg"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/veganfood"
+        android:visibility="visible"/>
+    <ViewFlipper
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/logoImg"
+        android:layout_marginTop="20dp"
+        android:id="@+id/slider"/>
+
+    <!--<Button
+        android:id="@+id/countryPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/slider"
+        android:layout_gravity="center_horizontal"
+        android:text="pick country"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:background="@drawable/small_button"
+        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/slider"
+        android:layout_alignParentRight="true"
+        android:id="@+id/selected_country_flag_image_view"
+        android:src="@mipmap/ic_launcher"/>-->
+    <TextView
+        android:id="@+id/browse"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:text="Visit as Guest"
+        android:textColor="#000"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:text="@string/login"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:background="@drawable/small_button"/>
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:text="@string/signup"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:background="@drawable/small_button"/>
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fb_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        />
+
+</RelativeLayout>

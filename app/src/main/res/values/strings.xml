@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">MyFirstApplication</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="facebook_app_id">1292935487560657</string>
+    <string name="fb_login_protocol_scheme">fb1292935487560657</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sex">Sex</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="diverse">Diverse</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="choose_photo">Choose Photo</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="title">Title</string>
+    <string name="submit">Submit</string>
+    <string name="select_food_region">Select Food Region</string>
+    <string name="food_recipe_type">Food Recipe/Type</string>
+    <string name="email_example_com">Email@Example.com</string>
+    <string name="user_name">User Name</string>
+    <string name="profile">Profile</string>
+    <string name="messages">Messages</string>
+    <string name="signout">SignOut</string>
+    <string name="name">Name</string>
+    <string name="product_title">Product Title</string>
+    <string name="price">Price</string>
+    <string name="signup">SignUp</string>
+    <string name="login">Login</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email">Enter Email</string>
+
+    <!-- Google auto fill places API Key
+    <string name="google_api_key">AIzaSyCJiTIWJuH2_y_BhwPp3Kcx0GWu-BRaPzI</string>-->
+    <string name="navigationDrawerOpen">Open Navigation</string>
+    <string name="navigationDrawerClose">Close Navigation</string>
+</resources>

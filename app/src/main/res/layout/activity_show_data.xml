@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:background="@color/cardview_dark_background">
+
+
+
+
+    <TextView
+        android:id="@+id/listTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textColor="#4CAF50"
+        android:text="Profile"
+        android:textColorHighlight="#ff7eff15"
+        android:textColorHint="#4CAF50"
+        android:textSize="25sp"/>
+
+    <Button
+        android:id="@+id/btnSignOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/listTextView"
+        android:layout_alignParentTop="true"
+        android:gravity="end"
+        android:text="LogOut"
+        android:textAlignment="center"
+        android:layout_marginLeft="176dp"
+        android:layout_marginTop="10dp" />
+
+    <ListView
+        android:id="@+id/simpleListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:textColorHighlight="#ff7eff15"
+        android:textColor="#4CAF50"
+        android:textColorHint="#4CAF50"
+        android:textSize="25sp"/>
+
+</RelativeLayout>

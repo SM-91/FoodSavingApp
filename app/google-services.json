@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "189228877578",
+    "firebase_url": "https://myfirstapplication-8a9b8.firebaseio.com",
+    "project_id": "myfirstapplication-8a9b8",
+    "storage_bucket": "myfirstapplication-8a9b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189228877578:android:cf81820974f07f20aa1cf3",
+        "android_client_info": {
+          "package_name": "com.example.foodsharingapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189228877578-0c1p0kh06k53o7t85evb7giuooh4gdr9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodsharingapplication",
+            "certificate_hash": "4d24afd7878f7889c4f10f131f462b6ec877f806"
+          }
+        },
+        {
+          "client_id": "189228877578-ve5vdbd5keldvkfne0a393drs8n35lq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs_LY93QcbV3oOrsjXyW6QaB_nIa7CVQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189228877578-ve5vdbd5keldvkfne0a393drs8n35lq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189228877578:android:4067dd3e11edd55daa1cf3",
+        "android_client_info": {
+          "package_name": "com.example.myfirstapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189228877578-kagfu822fqhpm4hrcr9ei90aa6qnojta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myfirstapplication",
+            "certificate_hash": "4d24afd7878f7889c4f10f131f462b6ec877f806"
+          }
+        },
+        {
+          "client_id": "189228877578-ve5vdbd5keldvkfne0a393drs8n35lq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs_LY93QcbV3oOrsjXyW6QaB_nIa7CVQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189228877578-ve5vdbd5keldvkfne0a393drs8n35lq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189228877578:android:d54c038947d79e11aa1cf3",
+        "android_client_info": {
+          "package_name": "com.foosApp.stopwastingfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189228877578-2m68amo7ec27qkudefokndejjgtn4ct2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foosApp.stopwastingfood",
+            "certificate_hash": "7ca10c7521c43980cf3302345803237e267cfc24"
+          }
+        },
+        {
+          "client_id": "189228877578-ve5vdbd5keldvkfne0a393drs8n35lq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs_LY93QcbV3oOrsjXyW6QaB_nIa7CVQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189228877578-ve5vdbd5keldvkfne0a393drs8n35lq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

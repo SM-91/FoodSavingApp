@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context="Maps.MapsActivity">
+    <fragment
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:id="@+id/map">
+
+        <SeekBar
+            android:layout_height="55dp"
+            android:layout_width="401dp"
+            android:id="@+id/seekBar"
+            android:layout_gravity="bottom"
+            android:progress="2"
+            android:max="5"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"/>
+
+    </fragment>
+</RelativeLayout>

@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".products.UploadData">
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/test1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorImageViewBackground">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/flipperView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/mainImage"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/imageViewLayout"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_buttons"
+                android:layout_below="@+id/imageViewLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                >
+
+                <!--<Button
+                    android:id="@+id/btnTakePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_shape"
+                    android:text="Take a photo"
+                    android:textColor="@color/colorText"
+                    android:textSize="15sp"/>-->
+
+                <Button
+                    android:id="@+id/btnChoosePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_shape"
+                    android:text="Upload Images"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorText"/>
+
+                <TextView
+                    android:id="@+id/alertTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You must add an image"
+                    android:textSize="15sp"
+                    android:textColor="#F32525"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- <RelativeLayout
+             android:id="@+id/temp_layout"
+             android:layout_below="@+id/test1"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+             <Button
+                 android:id="@+id/chooseImageFromGallery"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Choose Images"/>
+         </RelativeLayout>-->
+
+        <!--Form Layout-->
+        <RelativeLayout
+            android:id="@+id/formLayout"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/test1">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:text="Food title:"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/editTextTitle"
+                android:layout_below="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:hint="e.g Title of your food"/>
+
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_below="@+id/editTextTitle"
+                android:text="Food description:"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_below="@+id/textViewDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:hint="e.g Quality, quantity, other information"/>
+
+            <LinearLayout
+                android:id="@+id/radioLayout"
+                android:layout_below="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewFoodType"
+                    android:text="Choose food type:"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_below="@+id/textViewFoodType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioButton android:id="@+id/radioCookedFood"
+                        android:textColor="#000000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cooked Food" />
+
+                    <RadioButton android:id="@+id/radioRawFood"
+                        android:textColor="#000000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Raw Food" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/spinnerCusinetype"
+                android:layout_below="@+id/radioLayout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--  <TextView
+                      android:id="@+id/selectCuisineType"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:textSize="15sp"
+                      android:textColor="#000000"
+                      android:text="Select cuisine type"/>-->
+
+                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                    android:id="@+id/cuisine_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:smsp_searchHeaderBackgroundColor="@color/colorPrimary"
+                    app:smsp_searchHeaderText="Select Cuisine Type"
+                    app:smsp_hint="select cuisine type"
+                    app:smsp_hintSize="15sp"
+                    app:smsp_hintColor="#000000"
+                    app:smsp_itemSize="15sp"
+                    app:smsp_floatingLabelText="Select Cuisine Type"
+                    app:smsp_floatingLabelSize="15sp"
+                    app:smsp_floatingLabelColor="#000000"
+                    app:smsp_arrowColor="@color/colorPrimary"
+                    app:smsp_underlineColor="@color/colorPrimary"
+                    app:smsp_itemListHintBackgroundColor="@color/colorPrimary"
+                    app:smsp_errorText="Please choose your cuisine type"
+                    app:smsp_isSearchable="true" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewPickUpDetails"
+                android:layout_below="@+id/spinnerCusinetype"
+                android:text="Pick up details:"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/editTextPickUpDetails"
+                android:layout_below="@+id/textViewPickUpDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:hint="e.g Today from 16:00 - 18:00 Hours, other information"/>
+
+            <RelativeLayout
+                android:id="@+id/productValidity"
+                android:layout_below="@id/editTextPickUpDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- <ImageView
+                     android:id="@+id/listIcon"
+                     android:background="@mipmap/baseline_av_timer_black_36dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+                 <TextView
+                     android:id="@+id/captionForListing"
+                     android:layout_toRightOf="@+id/listIcon"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textSize="15sp"
+                     android:textColor="#000000"
+                     android:text="List food for how many days"/>-->
+
+                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                    android:id="@+id/days_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:smsp_itemSize="15sp"
+                    app:smsp_hint="Select days to list your food"
+                    app:smsp_hintSize="15sp"
+                    app:smsp_hintColor="#000000"
+                    app:smsp_floatingLabelText="Select days to list your food"
+                    app:smsp_floatingLabelSize="15sp"
+                    app:smsp_floatingLabelColor="#000000"
+                    app:smsp_arrowColor="@color/colorPrimary"
+                    app:smsp_underlineColor="@color/colorPrimary"
+                    app:smsp_errorText="Please select the days to list your food"
+                    app:smsp_itemListHintBackgroundColor="@color/colorPrimary" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutPaymentMethods"
+                android:layout_below="@+id/productValidity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/payment"
+                    android:text="Payment Section"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/radioPaymentLayout"
+                    android:layout_below="@+id/payment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <me.abhinay.input.CurrencyEditText
+                        android:id="@+id/etPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Set price"
+                        android:inputType="number"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/paymentOptions"
+                        android:text="Please select your desired option"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupPaymentMethods"
+                        android:layout_below="@+id/paymentOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton android:id="@+id/paypal"
+                            android:textColor="#000000"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Paypal" />
+
+                        <RadioButton android:id="@+id/bankTransfer"
+                            android:textColor="#000000"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bank transfer" />
+
+                        <RadioButton android:id="@+id/cashOnDelivery"
+                            android:textColor="#000000"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cash on delivery" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <!--Submit Button Layout-->
+        <RelativeLayout
+            android:id="@+id/submitArea"
+            android:layout_below="@id/formLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/submitData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Submit"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout> <!-- Parent Layout Close-->
+
+</ScrollView>

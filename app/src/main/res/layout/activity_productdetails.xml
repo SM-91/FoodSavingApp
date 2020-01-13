@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".extras.productdetails"
+    android:padding="10dp">
+    <TextView
+        android:id="@+id/reviewAd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Review your Ad"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#fff"
+        android:textColorHint="#fff"
+        android:textSize="15sp"
+        android:textColor="#fff"
+        android:background="@drawable/small_button"/>
+    <ImageView
+        android:id="@+id/viewProductImageReview"
+        android:src="@drawable/camera"
+        android:layout_below="@+id/reviewAd"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"/>
+
+    <EditText
+        android:id="@+id/foodNameReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewProductImageReview"
+        android:text="Title"
+        android:layout_marginTop="2dp"
+        android:inputType="textCapSentences"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#A2A19F" />
+
+    <TextView
+        android:id="@+id/foodDetilesHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/foodNameReview"
+        android:text="Food Details"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#A2A19F" />
+    <TextView
+        android:id="@+id/foodDescriptionReview"
+        android:inputType="textMultiLine"
+        android:layout_below="@+id/foodDetilesHeading"
+        android:lines="8"
+        android:minLines="1"
+        android:gravity="top|left"
+        android:maxLines="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"/>
+
+
+    <TextView
+        android:id="@+id/foodDetilesHeading1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/foodDescriptionReview"
+        android:text="Food Price"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#A2A19F" />
+
+    <TextView
+        android:id="@+id/foodPriceReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/foodDetilesHeading1"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textColor="#A2A19F" />
+
+    <TextView
+        android:id="@+id/foodRegionReviewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/foodPriceReview"
+        android:text="Food Region"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#A2A19F" />
+    <TextView
+        android:id="@+id/foodRegionReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foodRegionReviewHeading"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textColor="#A2A19F" />
+    <TextView
+        android:id="@+id/selectPaymentMethodReviewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/foodRegionReview"
+        android:text="Payment Method"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#A2A19F" />
+    <TextView
+        android:id="@+id/selectPaymentMethodReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selectPaymentMethodReviewHeading"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textColor="#A2A19F" />
+    <TextView
+        android:id="@+id/foodLocationReviewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selectPaymentMethodReview"
+        android:text="Food Location"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#A2A19F" />
+
+    <TextView
+        android:id="@+id/foodLocationReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/foodLocationReviewHeading"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="15sp"
+        android:textColor="#A2A19F" />
+<!--    <TextView
+        android:id="@+id/selectRegionReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foodLocationReview"
+        android:layout_marginTop="10dp"
+        android:text="@string/select_food_region"
+        android:inputType="text"
+        android:textColorHighlight="#A2A19F"
+        android:textColorHint="#A2A19F"
+        android:textSize="12sp"/>-->
+    <Button
+        android:id="@+id/btnPay"
+        android:text="Pay"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:onClick="goToHome"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/small_button"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/btnGoToHome"
+        android:text="Home"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:onClick="goToHome"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/small_button"
+        android:layout_alignParentBottom="true"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

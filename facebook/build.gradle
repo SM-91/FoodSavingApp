@@ -1,0 +1,5 @@
+//configurations.maybeCreate("default")
+//dependencies {
+ //   implementation project(path: ':app')
+//}
+//artifacts.add("default", file('facebook.aar'))
