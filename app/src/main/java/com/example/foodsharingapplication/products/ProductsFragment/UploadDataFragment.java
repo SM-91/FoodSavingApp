@@ -29,13 +29,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.UploadModel;
-import com.example.foodsharingapplication.products.UploadData;
 import com.example.foodsharingapplication.products.ViewPageAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -114,7 +112,6 @@ public class UploadDataFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.activity_upload_data,container,false);
 
-
         /*Model Class*/
         uploadModel = new UploadModel();
 
@@ -183,7 +180,6 @@ public class UploadDataFragment extends Fragment {
                 //dataToDB();
             }
         });
-
         foodTypeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -466,13 +462,13 @@ public class UploadDataFragment extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Seller").child("User");
 
+        Log.i("!GetKay",databaseReference.getKey());
+        Log.i("PushKey ",databaseReference.push().getKey());
         initEditText();
         databaseReference.push().setValue(uploadModel);
 
         progressDialog.dismiss();
         Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
     }
-
-
 
 }

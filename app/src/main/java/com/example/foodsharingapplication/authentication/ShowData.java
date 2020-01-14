@@ -59,7 +59,7 @@ public class ShowData extends AppCompatActivity implements View.OnClickListener{
         listTextView= (TextView) findViewById(R.id.listTextView);
         profileImage= (ImageView) findViewById(R.id.userProfilePic);
         Button cancelBtn= findViewById(R.id.btnCancel);
-        btnEdit= findViewById(R.id.btnEdit);
+        /*btnEdit= findViewById(R.id.btnEdit);*/
         CheckBox showPassword= (CheckBox) findViewById(R.id.showPass);
         simpleListView= (ListView) findViewById(R.id.simpleListView);
 

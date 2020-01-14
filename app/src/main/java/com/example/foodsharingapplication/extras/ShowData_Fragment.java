@@ -140,8 +140,8 @@ public class ShowData_Fragment extends Fragment {
         name= (TextView) view.findViewById(R.id.name);
         email= (TextView) view.findViewById(R.id.enterEmail);
         pass= (TextView) view.findViewById(R.id.enterPassword);
-        phoneNumber= (TextView) view.findViewById(R.id.phoneMobile);
-        gender= (TextView) view.findViewById(R.id.gender);
+        //phoneNumber= (TextView) view.findViewById(R.id.phoneMobile);
+        //gender= (TextView) view.findViewById(R.id.gender);
         profileImage= (ImageView) view.findViewById(R.id.profileImgView);
         Button cancelBtn= view.findViewById(R.id.btnCancel);
         CheckBox showPassword= (CheckBox) view.findViewById(R.id.showPass);

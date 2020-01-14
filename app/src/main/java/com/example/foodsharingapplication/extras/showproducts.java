@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.Settings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -91,8 +90,8 @@ public class showproducts extends AppCompatActivity {
         startActivity(intent);
     }
     public void settings(View view) {
-        Intent intent = new Intent(showproducts.this, Settings.class);
-        startActivity(intent);
+//        Intent intent = new Intent(showproducts.this, Settings.class);
+//        startActivity(intent);
     }
 
     @Override

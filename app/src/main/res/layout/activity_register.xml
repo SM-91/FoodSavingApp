@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
-    android:background="#fff">
+    android:background="#fff"
+    tools:context=".extras.Register">
 
 
     <ImageView
         android:id="@+id/logoImg"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/veganfood"
         android:visibility="visible" />
@@ -22,267 +23,336 @@
         android:layout_below="@id/logoImg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="@string/signup"
-        android:textColor="#000"
+        android:text="Register"
+        android:textColor="#A2A19F"
         android:textSize="15sp" />
 
-    <EditText
-        android:id="@+id/firstName"
-        android:layout_below="@+id/signup"
-        android:hint="First Name"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/logInLayout"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:inputType="text"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp"
-        android:textColor="#A2A19F" />
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp">
+
+        <EditText
+            android:id="@+id/firstName"
+            android:hint="First Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:textColorHighlight="#A2A19F"
+            android:textColorHint="#A2A19F"
+            android:textSize="12sp"
+            android:textColor="#A2A19F" />
 
 
-    <EditText
-        android:id="@+id/lastName"
-        android:layout_below="@+id/firstName"
-        android:hint="Last Name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:inputType="text"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp"
-        android:textColor="#A2A19F" />
+        <EditText
+            android:id="@+id/lastName"
+            android:layout_below="@+id/firstName"
+            android:hint="Last Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:textColorHighlight="#A2A19F"
+            android:textColorHint="#A2A19F"
+            android:textSize="12sp"
+            android:textColor="#A2A19F" />
 
-    <EditText
-        android:id="@+id/enterEmail"
-        android:hint="Email"
-        android:layout_below="@+id/lastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:inputType="textEmailAddress"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp"
-        android:textColor="#A2A19F"
-        android:autoLink="email" />
+        <EditText
+            android:id="@+id/enterEmail"
+            android:hint="Email"
+            android:layout_below="@+id/lastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:textColorHighlight="#A2A19F"
+            android:textColorHint="#A2A19F"
+            android:textSize="12sp"
+            android:textColor="#A2A19F" />
 
 
-    <EditText
-        android:id="@+id/enterPassword"
-        android:hint="Password"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:layout_below="@+id/enterEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp"
-        android:textColor="#A2A19F" />
+        <EditText
+            android:id="@+id/enterPassword"
+            android:hint="Password"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:layout_below="@+id/enterEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColorHighlight="#A2A19F"
+            android:textColorHint="#A2A19F"
+            android:textSize="12sp"
+            android:textColor="#A2A19F" />
 
-    <EditText
-        android:id="@+id/confirmPassword"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_below="@+id/enterPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp"
-        android:textColor="#A2A19F" />
+        <EditText
+            android:id="@+id/confirmPassword"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:layout_below="@+id/enterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColorHighlight="#A2A19F"
+            android:textColorHint="#A2A19F"
+            android:textSize="12sp"
+            android:textColor="#A2A19F" />
 
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uploadProfilePic"
+            android:layout_below="@id/confirmPassword"
+            android:layout_marginTop="10dp"
+            android:padding="5dp">
+            <ImageView
+                android:id="@+id/profileImgView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/veganfood"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnChoose"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/ic_camera_alt_black_24dp" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnUpload"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btnChoose"
+                android:background="@drawable/ic_file_upload_black_24dp" />
+
+        </RelativeLayout>
+        <Button
+            android:id="@+id/btnSignup"
+            android:text="Submit"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/uploadProfilePic"
+            android:layout_centerHorizontal="true"
+            android:textColor="#A2A19F"
+            android:textSize="15sp"
+            android:background="@drawable/small_button" />
+
+    </RelativeLayout>
     <TextView
-        android:id="@+id/textSex"
-        android:layout_below="@+id/confirmPassword"
-        android:text="@string/sex"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp"
-        android:layout_alignParentLeft="true"
-        android:textColor="#A2A19F" />
-
-    <RadioGroup
-        android:id="@+id/sexBtnGroup"
-        android:layout_below="@id/confirmPassword"
+        android:id="@+id/txtSignIn"
+        android:text="Login here!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp"
-        android:orientation="horizontal"
-        android:layout_alignParentRight="true">
-
-        <RadioButton
-            android:id="@+id/radio_male"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/male"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:textColor="#A2A19F"
-            android:textSize="12sp"
-            android:textColorHint="#A2A19F"
-            android:textColorHighlight="#A2A19F" />
-
-        <RadioButton
-            android:id="@+id/radio_female"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/female"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:textColor="#A2A19F"
-            android:textSize="12sp"
-            android:textColorHint="#A2A19F"
-            android:textColorHighlight="#A2A19F" />
-
-        <RadioButton
-            android:id="@+id/radio_diverse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/diverse"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:textColor="#A2A19F"
-            android:textSize="12sp"
-            android:textColorHint="#A2A19F"
-            android:textColorHighlight="#A2A19F" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/countryPicker"
-        android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:layout_below="@id/textSex"
-        android:layout_gravity="center_horizontal"
-        android:text="pick country"
-        android:textColor="#A2A19F"
-        android:textSize="12sp"
-        android:background="#fff"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:textColorHint="#A2A19F"
-        android:shadowColor="#2B2B2B"
-        android:shadowRadius="0" />
-
-    <TextView
-        android:id="@+id/countryName"
-        android:layout_width="100dp"
-        android:layout_height="34dp"
-        android:layout_toRightOf="@id/countryPicker"
-        android:layout_below="@+id/textSex"
         android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:inputType="text"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp"
-        android:text="Country name"
-        android:visibility="gone"
         android:textColor="#A2A19F"
-        tools:ignore="TextViewEdits" />
-
-    <ImageView
-        android:id="@+id/selected_country_flag_image_view"
-        android:layout_marginTop="10dp"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_below="@id/countryPicker"
-        android:src="@mipmap/ic_launcher"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/countryISO"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_below="@+id/countryPicker"
-        android:layout_marginTop="15dp"
-        android:textColorHighlight="#A2A19F"
-        android:layout_toRightOf="@+id/selected_country_flag_image_view"
-        android:textColorHint="#A2A19F"
-        android:textSize="15sp"
-        android:text="abc"
-        android:visibility="gone"
-        android:textColor="#A2A19F" />
-
-    <TextView
-        android:id="@+id/phoneCode"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_below="@+id/countryPicker"
-        android:layout_marginTop="15dp"
-        android:textColorHighlight="#A2A19F"
-        android:layout_toRightOf="@+id/countryISO"
-        android:textColorHint="#A2A19F"
-        android:textSize="15sp"
-        android:text="abc"
-        android:visibility="gone"
-        android:textColor="#A2A19F" />
-
-    <EditText
-        android:id="@+id/phoneMobile"
-        android:layout_below="@+id/countryPicker"
-        android:hint="@string/phone_number"
-        android:inputType="phone"
-        android:layout_toRightOf="@id/phoneCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7.5dp"
         android:textColorHighlight="#A2A19F"
         android:textColorHint="#A2A19F"
         android:textSize="12sp"
-        android:textColor="#A2A19F" />
-    <!--<EditText
-        android:id="@+id/mVerificationField"
-        android:layout_below="@+id/selected_country_flag_image_view"
-        android:hint="Verification Code"
-        android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp"
-        android:textColor="#A2A19F" />
-    <Button
-        android:id="@+id/varifyCode"
-        android:text="Verify Code"
-        android:layout_width="120dp"
-        android:layout_height="34dp"
-        android:layout_below="@+id/selected_country_flag_image_view"
-        android:layout_marginTop="50dp"
-        android:layout_alignParentRight="true"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:background="@drawable/small_button"
-        android:textColorHint="#A2A19F" />-->
-
-    <TextView
-        android:id="@+id/browse"
-        android:gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/login"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/logInLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:text="Browse"
-        android:textColor="#4CAF50"
-        android:textColorHighlight="#ff7eff15"
-        android:textColorHint="#4CAF50"
-        android:textSize="25sp"
-        android:visibility="gone" />
+        android:layout_marginTop="50dp"/>
 
-    <Button
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+</RelativeLayout>
+    <!--<TextView
+       android:id="@+id/textSex"
+       android:layout_below="@+id/confirmPassword"
+       android:text="@string/sex"
+       android:layout_width="50dp"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:textColorHighlight="#A2A19F"
+       android:textColorHint="#A2A19F"
+       android:textSize="12sp"
+       android:layout_alignParentLeft="true"
+       android:textColor="#A2A19F" />
+
+   <RadioGroup
+       android:id="@+id/sexBtnGroup"
+       android:layout_below="@id/confirmPassword"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:textColorHighlight="#A2A19F"
+       android:textColorHint="#A2A19F"
+       android:textSize="12sp"
+       android:orientation="horizontal"
+       android:layout_alignParentRight="true">
+
+       <RadioButton
+           android:id="@+id/radio_male"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/male"
+           android:scaleX="0.8"
+           android:scaleY="0.8"
+           android:textColor="#A2A19F"
+           android:textSize="12sp"
+           android:textColorHint="#A2A19F"
+           android:textColorHighlight="#A2A19F" />
+
+       <RadioButton
+           android:id="@+id/radio_female"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/female"
+           android:scaleX="0.8"
+           android:scaleY="0.8"
+           android:textColor="#A2A19F"
+           android:textSize="12sp"
+           android:textColorHint="#A2A19F"
+           android:textColorHighlight="#A2A19F" />
+
+       <RadioButton
+           android:id="@+id/radio_diverse"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/diverse"
+           android:scaleX="0.8"
+           android:scaleY="0.8"
+           android:textColor="#A2A19F"
+           android:textSize="12sp"
+           android:textColorHint="#A2A19F"
+           android:textColorHighlight="#A2A19F" />
+   </RadioGroup>
+
+   <Button
+       android:id="@+id/countryPicker"
+       android:layout_width="wrap_content"
+       android:layout_height="34dp"
+       android:layout_below="@id/textSex"
+       android:layout_gravity="center_horizontal"
+       android:text="pick country"
+       android:textColor="#A2A19F"
+       android:textSize="12sp"
+       android:background="#fff"
+       android:layout_marginTop="10dp"
+       android:layout_marginRight="10dp"
+       android:textColorHint="#A2A19F"
+       android:shadowColor="#2B2B2B"
+       android:shadowRadius="0" />
+
+   <TextView
+       android:id="@+id/countryName"
+       android:layout_width="100dp"
+       android:layout_height="34dp"
+       android:layout_toRightOf="@id/countryPicker"
+       android:layout_below="@+id/textSex"
+       android:gravity="center"
+       android:layout_marginTop="10dp"
+       android:inputType="text"
+       android:textColorHighlight="#A2A19F"
+       android:textColorHint="#A2A19F"
+       android:textSize="12sp"
+       android:text="Country name"
+       android:visibility="gone"
+       android:textColor="#A2A19F"
+       tools:ignore="TextViewEdits" />
+
+   <ImageView
+       android:id="@+id/selected_country_flag_image_view"
+       android:layout_marginTop="10dp"
+       android:layout_width="32dp"
+       android:layout_height="32dp"
+       android:layout_below="@id/countryPicker"
+       android:src="@mipmap/ic_launcher"
+       android:visibility="gone" />
+
+   <TextView
+       android:id="@+id/countryISO"
+       android:layout_width="wrap_content"
+       android:layout_height="32dp"
+       android:layout_below="@+id/countryPicker"
+       android:layout_marginTop="15dp"
+       android:textColorHighlight="#A2A19F"
+       android:layout_toRightOf="@+id/selected_country_flag_image_view"
+       android:textColorHint="#A2A19F"
+       android:textSize="15sp"
+       android:text="abc"
+       android:visibility="gone"
+       android:textColor="#A2A19F" />
+
+   <TextView
+       android:id="@+id/phoneCode"
+       android:layout_width="wrap_content"
+       android:layout_height="32dp"
+       android:layout_below="@+id/countryPicker"
+       android:layout_marginTop="15dp"
+       android:textColorHighlight="#A2A19F"
+       android:layout_toRightOf="@+id/countryISO"
+       android:textColorHint="#A2A19F"
+       android:textSize="15sp"
+       android:text="abc"
+       android:visibility="gone"
+       android:textColor="#A2A19F" />
+
+   <EditText
+       android:id="@+id/phoneMobile"
+       android:layout_below="@+id/countryPicker"
+       android:hint="@string/phone_number"
+       android:inputType="phone"
+       android:layout_toRightOf="@id/phoneCode"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="7.5dp"
+       android:textColorHighlight="#A2A19F"
+       android:textColorHint="#A2A19F"
+       android:textSize="12sp"
+       android:textColor="#A2A19F" />
+   &lt;!&ndash;<EditText
+       android:id="@+id/mVerificationField"
+       android:layout_below="@+id/selected_country_flag_image_view"
+       android:hint="Verification Code"
+       android:inputType="number"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="50dp"
+       android:textColorHighlight="#A2A19F"
+       android:textColorHint="#A2A19F"
+       android:textSize="12sp"
+       android:textColor="#A2A19F" />
+   <Button
+       android:id="@+id/varifyCode"
+       android:text="Verify Code"
+       android:layout_width="120dp"
+       android:layout_height="34dp"
+       android:layout_below="@+id/selected_country_flag_image_view"
+       android:layout_marginTop="50dp"
+       android:layout_alignParentRight="true"
+       android:textColor="#FFFFFF"
+       android:textSize="18sp"
+       android:background="@drawable/small_button"
+       android:textColorHint="#A2A19F" />&ndash;&gt;
+
+   <TextView
+       android:id="@+id/browse"
+       android:gravity="center_vertical"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/login"
+       android:layout_alignParentBottom="true"
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="60dp"
+       android:text="Browse"
+       android:textColor="#4CAF50"
+       android:textColorHighlight="#ff7eff15"
+       android:textColorHint="#4CAF50"
+       android:textSize="25sp"
+       android:visibility="gone" />-->
+    <!--<Button
         android:id="@+id/btnConfirm"
         android:text="Confirm"
         android:layout_width="112dp"
@@ -306,11 +376,4 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:background="@drawable/small_button"
-        android:textColorHint="#A2A19F" />
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
-
-</RelativeLayout>
+        android:textColorHint="#A2A19F" />-->

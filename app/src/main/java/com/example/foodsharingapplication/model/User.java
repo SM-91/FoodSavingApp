@@ -1,7 +1,15 @@
 package com.example.foodsharingapplication.model;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
+
 public class User {
-    private String uId;
+    private double Latitude;
+    private double Longitude;
+    private @ServerTimestamp
+    Date timestamp;
+    private String userId;
     private String userName;
     private String userPhoneNumber;
     private String userEmail;
@@ -16,8 +24,40 @@ public class User {
     private String userCountryDialCode;
     private Boolean userWithFb;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getUserCountryCurrency() {
         return userCountryCurrency;
+    }
+
+    public double getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        Latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        Longitude = longitude;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public void setUserCountryCurrency(String userCountryCurrency) {

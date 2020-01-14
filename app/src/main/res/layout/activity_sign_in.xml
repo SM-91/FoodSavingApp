@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/logoImg"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/veganfood"
         android:visibility="visible" />
@@ -24,101 +24,108 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="@string/login"
-        android:textColor="#000"
+        android:textColor="#A2A19F"
         android:textSize="15sp" />
-
-
-    <EditText
-        android:id="@+id/enterEmail"
-        android:layout_width="match_parent"
+    <RelativeLayout
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginText"
-        android:layout_marginTop="10dp"
-        android:hint="@string/enter_password"
-        android:inputType="text"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp" />
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/logInLayout">
 
-    <EditText
-        android:id="@+id/enterLoginPassword"
-        android:layout_below="@+id/enterEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="@string/enter_password"
-        android:inputType="textPassword"
-        android:textColorHighlight="#A2A19F"
-        android:textColorHint="#A2A19F"
-        android:textSize="12sp" />
+        <EditText
+            android:id="@+id/enterEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Email"
+            android:inputType="text"
+            android:textColorHighlight="#A2A19F"
+            android:textColorHint="#A2A19F"
+            android:textSize="12sp"
+            android:textColor="#A2A19F" />
+
+        <EditText
+            android:id="@+id/enterLoginPassword"
+            android:layout_below="@+id/enterEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColorHighlight="#A2A19F"
+            android:textColorHint="#A2A19F"
+            android:textSize="12sp"
+            android:textColor="#A2A19F" />
+
+        <TextView
+            android:id="@+id/forgetLoginPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enterLoginPassword"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:text="Forget Password?"
+            android:textColor="#A2A19F"
+            android:textColorHighlight="#A2A19F"
+            android:textColorHint="#A2A19F"
+            android:textSize="12sp" />
+
+        <!--<com.facebook.login.widget.LoginButton
+            android:id="@+id/fb_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100dp"
+            android:onClick="buttonClickLoginFb"/>-->
+
+        <TextView
+            android:id="@+id/browse"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/login"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:text="Browse"
+            android:textColor="#4CAF50"
+            android:textColorHighlight="#ff7eff15"
+            android:textColorHint="#4CAF50"
+            android:textSize="25sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:text="@string/login"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/forgetLoginPassword"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#A2A19F"
+            android:textSize="15sp"
+            android:background="@drawable/small_button"/>
+
+
+</RelativeLayout>
 
     <TextView
-        android:id="@+id/forgetLoginPassword"
+        android:id="@+id/txtRegister"
+        android:text="Sign Up here!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/enterLoginPassword"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:text="Forget Password?"
+        android:gravity="center"
         android:textColor="#A2A19F"
         android:textColorHighlight="#A2A19F"
         android:textColorHint="#A2A19F"
-        android:textSize="12sp" />
-
-    <!--<com.facebook.login.widget.LoginButton
-        android:id="@+id/fb_login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:textSize="12sp"
+        android:layout_below="@id/logInLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:onClick="buttonClickLoginFb"/>-->
-
-    <TextView
-        android:id="@+id/browse"
-        android:gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/login"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:text="Browse"
-        android:textColor="#4CAF50"
-        android:textColorHighlight="#ff7eff15"
-        android:textColorHint="#4CAF50"
-        android:textSize="25sp"
-        android:visibility="gone" />
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:text="@string/login"
-        android:layout_width="112dp"
-        android:layout_height="34dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:background="@drawable/small_button" />
-
-    <Button
-        android:id="@+id/btnSignOut"
-        android:text="Signout"
-        android:layout_width="112dp"
-        android:layout_height="34dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:background="@drawable/small_button" />
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:layout_marginTop="50dp"/>
 
 
 </RelativeLayout>

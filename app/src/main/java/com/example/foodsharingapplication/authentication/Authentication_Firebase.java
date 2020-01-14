@@ -96,6 +96,7 @@ public class Authentication_Firebase {
                                 //System.out.println("current user id in registerToFirebase "+currentUserid);
                                 //if (!currentUserid.isEmpty()) {
                                 //intent = new Intent(getContext(), HomeActivity.class);
+                                userData.setUserId(firebaseAuth.getUid());
                                 firebaseDatabaseRef.child(firebaseAuth.getCurrentUser().getUid()).setValue(userData)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override

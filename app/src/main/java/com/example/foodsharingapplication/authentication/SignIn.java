@@ -1,8 +1,12 @@
 package com.example.foodsharingapplication.authentication;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,9 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.foodsharingapplication.Dashboard;
-import com.example.foodsharingapplication.products.HomeActivity;
-import com.example.foodsharingapplication.products.ProductListView;
+import com.example.foodsharingapplication.HomeActivity;
+import com.example.foodsharingapplication.HomeDefinition;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.extras.ShowData_Fragment;
 import com.example.foodsharingapplication.model.User;
@@ -24,7 +27,9 @@ import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -35,10 +40,12 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SignIn extends AppCompatActivity implements View.OnClickListener {
+public class SignIn extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;
     Button btnSignIn, btnsignOut, loginFb, btnProfile;
     EditText email, pass;
-    TextView forgetPassword;
+    TextView forgetPassword,txtRegister;
     public static final String id = "-LtvYIg-vEh0iY78nmOJ";
     private LoginButton FacebookButton;
     private CircleImageView circleImageView;
@@ -64,6 +71,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     private String fbAge;
     private String fbphoneNumber;
     private String fbImageUrl;
+    private Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,26 +84,27 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         circleImageView = findViewById(R.id.profile_pic);
         forgetPassword = (TextView) findViewById(R.id.forgetLoginPassword);
 
-        btnsignOut = (Button) findViewById(R.id.btnSignOut);
+        txtRegister = (TextView) findViewById(R.id.txtRegister);
         btnSignIn = (Button) findViewById(R.id.btnLogin);
 
-        showData_fragment = new ShowData_Fragment();
-        fragManger = getSupportFragmentManager();
-        fragTrans = fragManger.beginTransaction();
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("signInPref", 0); // 0 - for private mode
+        final SharedPreferences.Editor editor = pref.edit();
+
+
 
         progress = new ProgressDialog(this);
         progress.setTitle("Please Wait!!");
         progress.setMessage("Wait!!");
         progress.setCancelable(true);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
+/*
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignIn.this, com.example.foodsharingapplication.authentication.forgetPassword.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         userList = new ArrayList<User>();
         verifyUser = new User();
@@ -109,8 +118,6 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
             btnProfile.setVisibility(View.VISIBLE);
         }*/
 
-        // ye sab safaiyi karani hy sab MAYA hy
-
         //if (firebaseAuth.getCurrentUser() == null) {
 
             /*FacebookSdk.sdkInitialize(this.getApplicationContext());
@@ -123,18 +130,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
        // }
 
         //btnSignIn.setOnClickListener(this);
-        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null) {
-                    Toast.makeText(SignIn.this, "Successfully Signed In with: " + firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
-
-                } else
-                    Toast.makeText(SignIn.this, "Successfully Signed Out: ", Toast.LENGTH_SHORT).show();
-            }
-        };
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,21 +138,21 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
                 loginEmail = email.getText().toString().trim();
                 loginPassword = pass.getText().toString().trim();
 
-                if (!loginEmail.equals("") && !loginPassword.equals("")) {
+                if (!TextUtils.isEmpty(loginEmail) && !TextUtils.isEmpty(loginPassword) ) {
 
                     firebaseAuth.signInWithEmailAndPassword(loginEmail, loginPassword)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(SignIn.this, "Congrats!", Toast.LENGTH_SHORT).show();
-                                        //Intent intent = new Intent(SignIn.this, ShowData.class);
-                                        //Intent intent = new Intent(SignIn.this, UserProfile.class);
+                                        editor.putString("loginEmail",loginEmail);
+                                        editor.putString("loginPassword",loginPassword);
+                                        editor.commit();
                                         Intent intent = new Intent(SignIn.this, HomeActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
+                                        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
+                                        //finish();
+                                        Toast.makeText(SignIn.this, "Congrats!231", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(SignIn.this, "Please check Email or Password", Toast.LENGTH_SHORT).show();
                                     }
@@ -180,48 +176,48 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
 
 
-        btnsignOut.setOnClickListener(new View.OnClickListener() {
+        txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                firebaseAuth.signOut();
                 Toast.makeText(SignIn.this, "Signing Out...", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SignIn.this, Dashboard.class);
+                Intent intent = new Intent(SignIn.this, User_SignUp.class);
                 startActivity(intent);
-
-
             }
         });
     }
-
     @Override
     public void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(firebaseAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (firebaseAuthListener != null) {
-            firebaseAuth.removeAuthStateListener(firebaseAuthListener);
+        //firebaseAuth.addAuthStateListener(firebaseAuthListener);
+        if (firebaseAuth.getCurrentUser()!=null){
+            Intent intent = new Intent(SignIn.this, HomeActivity.class);
+            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
     }
 
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        if (firebaseAuthListener != null) {
+//            firebaseAuth.removeAuthStateListener(firebaseAuthListener);
+//        }
+//    }
 
-    @Override
+
+   /* @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnCancel:
                 startActivity(new Intent(this, Dashboard.class));
                 break;
-        }
+        }*/
         /*switch (v.getId()){
             case R.id.btnLogin:
                 logIn();
                 break;
         }*/
-    }
+    //}
     /*AccessTokenTracker tokenTracker = new AccessTokenTracker() {
         @Override
         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
@@ -373,8 +369,4 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
     }*/
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
 }

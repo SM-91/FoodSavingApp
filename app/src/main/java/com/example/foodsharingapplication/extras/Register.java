@@ -1,15 +1,20 @@
-package com.example.foodsharingapplication.authentication;
+package com.example.foodsharingapplication.extras;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -21,27 +26,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.foodsharingapplication.Dashboard;
-import com.example.foodsharingapplication.extras.PhoneVerificationFragment;
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.extras.ShowData_Fragment;
+import com.example.foodsharingapplication.authentication.Authentication_Firebase;
+import com.example.foodsharingapplication.authentication.SignIn;
 import com.example.foodsharingapplication.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.mukesh.countrypicker.Country;
 import com.mukesh.countrypicker.CountryPicker;
 import com.mukesh.countrypicker.OnCountryPickerListener;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity implements View.OnClickListener, OnCountryPickerListener {
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     EditText fName, lName, email, pass, cPass;
     Button btnRegister, btnCancel;
     User userData;
@@ -58,7 +64,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     DatabaseReference firebaseDatabaseRef;
     EditText imagename;
     private EditText phoneNumber;
-    private Button btnChoose, btnUpload;
+    private ImageButton btnChoose, btnUpload;
     private ImageView profileImageView;
     private Uri filePath;
     private String imageUploadId;
@@ -70,15 +76,17 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     private Button btnCountry_picker;
     private ImageView countryFlag;
     private CountryPicker countryPicker;
-    private TextView txtCountryName,txtPhoneCode,txtCountryISO,txtVerificationField;
-    private String strCountry_isoCode,strCountry_DialCode,strCountry_Name,strCountry_Currency;
-
+    private TextView txtCountryName, txtPhoneCode, txtCountryISO, txtVerificationField;
+    private String strCountry_isoCode, strCountry_DialCode, strCountry_Name, strCountry_Currency;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    private  Button btnvarifyCode;
+    private Button btnvarifyCode;
     private boolean mVerificationInProgress = false;
     private String mVerificationId;
-    private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
+    private Authentication_Firebase authentication_firebase;
+    private Intent intent;
+    private Uri imageUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -92,36 +100,37 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
         email = findViewById(R.id.enterEmail);
         pass = findViewById(R.id.enterPassword);
         cPass = findViewById(R.id.confirmPassword);
-        phoneNumber = findViewById(R.id.phoneMobile);
-        btnRegister = findViewById(R.id.btnConfirm);
-        btnCancel = findViewById(R.id.btnCancel);
+        btnRegister= findViewById(R.id.btnSignup);
         btnChoose = findViewById(R.id.btnChoose);
         btnUpload = findViewById(R.id.btnUpload);
-        progressBar = findViewById(R.id.progress_bar);
+        //progressBar = findViewById(R.id.progress_bar);
         profileImageView = findViewById(R.id.profileImgView);
-        final ImageView logoImage = findViewById(R.id.logoImg);
-        radioMale = findViewById(R.id.radio_male);
+        TextView txtSignIn=(TextView) findViewById(R.id.txtSignIn);
+        // ImageView logoImage = findViewById(R.id.logoImg);
+        authentication_firebase = new Authentication_Firebase(Register.this);
+        /*radioMale = findViewById(R.id.radio_male);
         radioFemale = findViewById(R.id.radio_female);
         radioDiverse = findViewById(R.id.radio_diverse);
         sexSelectorGroup = findViewById(R.id.sexBtnGroup);
-        //txtVerificationField = (TextView) findViewById(R.id.mVerificationField);
-        //btnvarifyCode = (Button) findViewById(R.id.varifyCode);
-
-
-        //Country with Flag Picker starts
-
+        phoneNumber = findViewById(R.id.phoneMobile);
+        btnRegister = findViewById(R.id.btnConfirm);
+        txtVerificationField = (TextView) findViewById(R.id.mVerificationField);
+        btnvarifyCode = (Button) findViewById(R.id.varifyCode);
         btnCountry_picker=(Button) findViewById(R.id.countryPicker);
         countryFlag=(ImageView) findViewById(R.id.selected_country_flag_image_view);
         txtCountryName = (TextView) findViewById(R.id.countryName);
         txtPhoneCode = (TextView) findViewById(R.id.phoneCode);
-        txtCountryISO = (TextView) findViewById(R.id.countryISO);
-        btnCountry_picker.setOnClickListener(new View.OnClickListener() {
+        txtCountryISO = (TextView) findViewById(R.id.countryISO);*/
+
+
+        //Country with Flag Picker starts
+      /*  btnCountry_picker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 countryPicker.showDialog(getSupportFragmentManager());
             }
         });
-        countryPicker = new CountryPicker.Builder().with(this).listener(this).build();
+        countryPicker = new CountryPicker.Builder().with(this).listener(this).build();*/
 
         // Country with flag Picker ends
         /*mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -152,13 +161,20 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
                 mResendToken = token;
             }
         };*/
+        txtSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getApplicationContext(), SignIn.class);
+                startActivity(intent);
+            }
+        });
         //imagename.setVisibility(View.GONE);
         userData = new User();
-        firebaseAuth = FirebaseAuth.getInstance();
+        /*firebaseAuth = FirebaseAuth.getInstance();
         firebasestorage = FirebaseStorage.getInstance();
         firebaseStorageReference = firebasestorage.getReference("User");
-        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
-        btnCancel.setOnClickListener(this);
+        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");*/
+        //btnCancel.setOnClickListener(this);
         progress = new ProgressDialog(this);
         progress.setTitle("Please Wait!!");
         progress.setMessage("Wait!!");
@@ -176,7 +192,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
         Handler pdCanceller = new Handler();
         pdCanceller.postDelayed(progressRunnable, 1000);
 
-        sexSelectorGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        /*sexSelectorGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (radioMale.isChecked()) {
@@ -187,12 +203,29 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
                     radioCheckedValues = "Diverse";
                 }
             }
+        });*/
+        btnChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage();
+            }
         });
 
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (uploadImageTask != null && uploadImageTask.isInProgress()){
+                    Toast.makeText(getApplicationContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    uploadImage();
+                }
+            }
+        });
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent(Register.this, FinalSignUp.class);
+                //final Intent intent = new Intent(Register.this, FinalSignUp.class);
                 if (TextUtils.isEmpty(fName.getText().toString())) {
 
                     fName.setError("First name Can't be empty");
@@ -204,14 +237,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
 
                 } else {
 
-                    intent.putExtra("name", fName.getText().toString() + lName.getText().toString());
+                    //intent.putExtra("name", fName.getText().toString() + lName.getText().toString());
+                    userData.setUserName(fName.getText().toString() + lName.getText().toString());
 
                 }
                 if (!TextUtils.isEmpty(email.getText().toString())) {
 
                     if (isEmailValid(email.getText().toString())) {
 
-                        intent.putExtra("uEmail", email.getText().toString().trim());
+                        //intent.putExtra("uEmail", email.getText().toString().trim());
+                        userData.setUserEmail(email.getText().toString().trim());
 
                     } else {
 
@@ -226,16 +261,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
                     email.requestFocus();
 
                 }
-                if (!TextUtils.isEmpty(phoneNumber.getText().toString())) {
-                    //startPhoneNumberVerification(phoneNumber+strCountry_DialCode);
-                    intent.putExtra("uPhoneNumber", phoneNumber.getText().toString().trim());
-
-                } else {
-
-                    phoneNumber.setError("Phone Number Can't be empty");
-                    phoneNumber.requestFocus();
-
-                }
                 if (!TextUtils.isEmpty(pass.getText().toString())) {
                     if (pass.getText().toString().length() >= 6) {
 
@@ -243,7 +268,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
 
                             if (pass.getText().toString().equals(cPass.getText().toString())) {
 
-                                intent.putExtra("uPassword", pass.getText().toString().trim());
+                                //intent.putExtra("uPassword", pass.getText().toString().trim());
+                                userData.setUserPassword(pass.getText().toString().trim());
 
                             } else {
 
@@ -271,6 +297,122 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
 
                     pass.setError("Password Can't be empty");
                     pass.requestFocus();
+
+                }
+                // authentication_firebase.registerToFirebase(userData);
+                /*if (success){
+                    Log.i("inside check status", email.getText().toString());
+                    intent = new Intent(Register.this, HomeActivity.class);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }*/
+                /*else{
+                    Toast.makeText(Register.this, "Sign In or Register", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(Register.this, SignIn.class);
+                    startActivity(intent);
+                }*/
+
+
+            }
+        });
+
+    }
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null ){
+            filePath = data.getData();
+            Picasso.get().load(filePath).into(profileImageView);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                profileImageView.setImageBitmap(bitmap);
+                profileImageView.setVisibility(View.VISIBLE);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+    private  String getFileExtension(Uri uri){
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
+    }
+    private void uploadImage() {
+        if(filePath != null){
+            userData = authentication_firebase.storeImagesToDB(filePath,getApplicationContext());
+            Log.i("File Path UpdateImage", filePath.toString());
+            //userData.setUserProfilePicUrl(imageUrl.toString());
+            /*final StorageReference ref = firebaseStorageReference.child(System.currentTimeMillis()
+                    + "." + getFileExtension(filePath));
+            uploadImageTask = ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            Handler handler=new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBar.setProgress(0);
+                                }
+                            }, 2000);
+
+                            //progressDialog.dismiss();
+
+                            //imageName = imagename.getText().toString().trim();
+                            Task<Uri> dounloadUriTask= taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                            dounloadUriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    imageUrl = uri.toString();
+                                    //Log.e("download url : ", imageUrl);
+                                    userData.setUserProfilePicUrl(imageUrl);
+                                }
+                            });
+                            //imageUrl = Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl().toString();
+                            //userData.setUserProfilePicName(name+"_"+email);
+                            //userData.setUserProfilePicUrl(imageUrl);
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //progressBar.dismiss();
+                            Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NotNull UploadTask.TaskSnapshot taskSnapshot) {
+                            *//*double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressBar.setProgress((int)progress);*//*
+                        }
+                    });*/
+        }
+        else {
+            Toast.makeText(this,"No file selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+               /* if (!TextUtils.isEmpty(phoneNumber.getText().toString())) {
+                    //startPhoneNumberVerification(phoneNumber+strCountry_DialCode);
+                    //intent.putExtra("uPhoneNumber", phoneNumber.getText().toString().trim());
+
+                } else {
+
+                    phoneNumber.setError("Phone Number Can't be empty");
+                    phoneNumber.requestFocus();
 
                 }
                 if (radioDiverse.isChecked() || radioFemale.isChecked() || radioMale.isChecked()) {
@@ -306,9 +448,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
 
                     startActivity(intent);
 
-                }
-            }
-        });
+                }*/
         /*btnvarifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -322,7 +462,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
             }
         });*/
 
-    }
+
     /*private void verifyPhoneNumberWithCode(String verificationId, String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
     }
@@ -350,7 +490,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
 */
     //Country picker implementation
     @Override
-    public void onSelectCountry(Country country){
+    public void onSelectCountry(Country country) {
         countryFlag.setImageResource(country.getFlag());
         txtCountryName.setVisibility(View.VISIBLE);
         countryFlag.setVisibility(View.VISIBLE);
@@ -364,14 +504,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
         userData.setUserCountryDialCode(country.getDialCode());
         userData.setUserCountryISO(country.getCode());
 
-        strCountry_Currency= country.getCurrency();
-        strCountry_DialCode=country.getDialCode();
+        strCountry_Currency = country.getCurrency();
+        strCountry_DialCode = country.getDialCode();
         strCountry_isoCode = country.getCode();
-        strCountry_Name=country.getName();
-        Log.i("Country Currency:",strCountry_Currency);
-        Log.i("Country DialCode:",strCountry_DialCode);
-        Log.i("Country ISO Code:",strCountry_isoCode);
-        Log.i("Country Name:",strCountry_Name);
+        strCountry_Name = country.getName();
+        Log.i("Country Currency:", strCountry_Currency);
+        Log.i("Country DialCode:", strCountry_DialCode);
+        Log.i("Country ISO Code:", strCountry_isoCode);
+        Log.i("Country Name:", strCountry_Name);
     }
 
 
@@ -389,11 +529,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        /*switch (v.getId()) {
             case R.id.btnCancel:
                 startActivity(new Intent(this, Dashboard.class));
                 break;
-        }
+        }*/
     }
 
     private void toastMessage(String message) {

@@ -120,6 +120,13 @@ dependencies {
 
     // Spinner Lib
     implementation 'com.github.chivorns:smartmaterialspinner:1.1.6'
+// Spinner Lib
+    //Maps
+    implementation 'com.google.maps.android:android-maps-utils:0.6.2'
+    implementation 'androidx.room:room-runtime:2.2.3'
+    annotationProcessor 'androidx.room:room-compiler:2.2.3'
+    implementation 'com.google.maps.android:android-maps-utils:0.6.2'
+    implementation 'com.google.android.gms:play-services-nearby:17.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

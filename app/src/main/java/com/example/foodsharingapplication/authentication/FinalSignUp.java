@@ -26,8 +26,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.foodsharingapplication.products.HomeActivity;
-import com.example.foodsharingapplication.products.ProductListView;
+import com.example.foodsharingapplication.HomeActivity;
 import com.example.foodsharingapplication.extras.MyDatePickerFragment;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.extras.ShowData_Fragment;
@@ -64,12 +63,14 @@ public class FinalSignUp extends AppCompatActivity implements DatePickerDialog.O
     private DatePicker datePicker;
     private ProgressBar progressBar;
     private ImageView profileImageView;
+
     private StorageTask uploadImageTask;
     private FirebaseStorage firebasestorage;
     private StorageReference firebaseStorageReference;
     private DatabaseReference firebaseDatabaseRef;
     private FirebaseAuth firebaseAuth;
     private Uri filePath;
+
     private User userData;
     private EditText imagename;
     private TextView dateText;

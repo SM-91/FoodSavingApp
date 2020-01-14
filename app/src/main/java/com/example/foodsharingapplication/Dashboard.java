@@ -1,50 +1,7 @@
 package com.example.foodsharingapplication;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewFlipper;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.bumptech.glide.request.RequestOptions;
-import com.example.foodsharingapplication.authentication.Register;
-import com.example.foodsharingapplication.authentication.SignIn;
-import com.example.foodsharingapplication.extras.showproducts;
-import com.example.foodsharingapplication.model.User;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
-
-public class Dashboard extends AppCompatActivity implements View.OnClickListener {
-    private ViewFlipper viewFlipper;
+public class Dashboard  {
+    /*private ViewFlipper viewFlipper;
     private Button btnSignUp,loginBtn;
     private TextView txtViewGuest;
     private LoginButton facebookBtn;
@@ -56,10 +13,10 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
 
 
-/*    private Button btnCountry_picker;
+*//*    private Button btnCountry_picker;
     private ImageView countryFlag;
     private CountryPicker countryPicker;
-    private String strCountry_isoCode,strCountry_DialCode,strCountry_Name,strCountry_Currency;*/
+    private String strCountry_isoCode,strCountry_DialCode,strCountry_Name,strCountry_Currency;*//*
 
 
 
@@ -74,7 +31,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         facebookBtn = (LoginButton) findViewById(R.id.fb_login_button);
 
         //Country with Flag Picker starts
-        /*btnCountry_picker=(Button) findViewById(R.id.countryPicker);
+        *//*btnCountry_picker=(Button) findViewById(R.id.countryPicker);
         countryFlag=(ImageView) findViewById(R.id.selected_country_flag_image_view);
         btnCountry_picker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +39,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 countryPicker.showDialog(getSupportFragmentManager());
             }
         });
-        countryPicker = new CountryPicker.Builder().with(this).listener(this).build();*/
+        countryPicker = new CountryPicker.Builder().with(this).listener(this).build();*//*
 
         // Country with flag Picker ends
 
@@ -154,7 +111,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         });
     }
     //Country picker implementation
-   /* @Override
+   *//* @Override
     public void onSelectCountry(Country country){
         countryFlag.setImageResource(country.getFlag());
         strCountry_Currency= country.getCurrency();
@@ -165,7 +122,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         Log.i("Country DialCode:",strCountry_DialCode);
         Log.i("Country ISO Code:",strCountry_isoCode);
         Log.i("Country Name:",strCountry_Name);
-    }*/
+    }*//*
 
 
     //Country picker implementation
@@ -254,9 +211,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                         //startActivity(intent);
                     }
                 });
-/*        intent.putExtra("fbUserName",firebaseUser.getDisplayName());
+*//*        intent.putExtra("fbUserName",firebaseUser.getDisplayName());
         intent.putExtra("fbUserEmail",firebaseUser.getEmail());
-        intent.putExtra("fbUserPrfileImgUrl",firebaseUser.getPhotoUrl().toString());*/
+        intent.putExtra("fbUserPrfileImgUrl",firebaseUser.getPhotoUrl().toString());*//*
         //Log.i("", firebaseUser.getPhoneNumber());
         //Log.i("",firebaseUser.getMetadata());
 
@@ -267,8 +224,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         {
             loadUserProfile(AccessToken.getCurrentAccessToken());
             Intent intent = new Intent(Dashboard.this, showproducts.class);
-           /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
+           *//* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);*//*
             startActivity(intent);
         }
     }
@@ -286,7 +243,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     }
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+       *//* switch (v.getId()){
             case R.id.btnSignUp:
                 startActivity(new Intent(this, Register.class));
                 break;
@@ -301,8 +258,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 Intent intent = new Intent(Dashboard.this, SignIn.class);
                 startActivity(intent);
                 break;
-        }
+        }*//*
 
 
-    }
+    }*/
 }
