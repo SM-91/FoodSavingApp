@@ -7,8 +7,8 @@ import java.util.Date;
 public class User {
     private double Latitude;
     private double Longitude;
-    private @ServerTimestamp
-    Date timestamp;
+    private @ServerTimestamp Date timestamp;
+    private UploadModel uploadModel;
     private String userId;
     private String userName;
     private String userPhoneNumber;
@@ -30,6 +30,14 @@ public class User {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public UploadModel getUploadModel() {
+        return uploadModel;
+    }
+
+    public void setUploadModel(UploadModel uploadModel) {
+        this.uploadModel = uploadModel;
     }
 
     public String getUserCountryCurrency() {

@@ -3,6 +3,7 @@ package com.example.foodsharingapplication.products;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,8 +18,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.extras.Products;
+import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.userOrdersAndUploadedAds.UserOrderAndUploads;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -162,11 +172,22 @@ public class PostDetailActivity extends AppCompatActivity {
             if (requestCode == Activity.RESULT_OK) {
 
                 Toast.makeText(this, "Successfully Paid", Toast.LENGTH_SHORT).show();
-                Intent userOrder = new Intent(PostDetailActivity.this, UserOrderAndUploads.class);
-                userOrder.putExtra("userId",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                userOrder.putExtra("productTitle", title);
-                userOrder.putExtra("productPrice", price);
-                startActivity(userOrder);
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                        .getReference("Orders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Product");
+                UploadModel uploadModel= new UploadModel();
+                uploadModel.setFoodTitle(title);
+                uploadModel.setFoodDescription(desc);
+                uploadModel.setFoodPrice(price);
+                uploadModel.setFoodType(type);
+                uploadModel.setFoodTypeCuisine(cuisineType);
+                databaseReference.setValue(uploadModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(PostDetailActivity.this, "Successful Order", Toast.LENGTH_SHORT).show();
+                        Intent userOrder = new Intent(PostDetailActivity.this, UserOrderAndUploads.class);
+                        startActivity(userOrder);
+                    }
+                });
 
 
             } else {

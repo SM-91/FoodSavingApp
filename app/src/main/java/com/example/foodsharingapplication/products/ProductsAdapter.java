@@ -35,13 +35,42 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
     @NonNull
     @Override
     public ProductsAdapter.ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.single_view, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.activity_showproducts, parent, false);
         return new ProductsAdapter.ProductsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductsViewHolder holder, int position) {
         UploadModel products = productsList.get(position);
+        intent = new Intent(mContext, PostDetailActivity.class);
+        final String productTitle;
+        final String productDesc;
+        final String productLoc;
+        final String productPrice;
+        final String productImgUrl;
+
+            productTitle = products.getFoodTitle();
+            holder.productName.setText(productTitle);
+            intent.putExtra("pTitle", productTitle);
+
+            productDesc = products.getFoodDescription();
+            //holder.productDescription.setText(products.getProductDescription());
+            intent.putExtra("pDesc", productDesc);
+
+            productPrice = products.getFoodPrice();
+            holder.productPrice.setText(String.valueOf(productPrice));
+            intent.putExtra("pPrice", productPrice);
+
+        if (holder.productName != null) {
+            holder.productName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //SignleProduct signleProduct=new SignleProduct();
+                    //signleProduct.setpName(productTitle);
+                    v.getContext().startActivity(intent);
+                }
+            });
+        }
 
     }
 
