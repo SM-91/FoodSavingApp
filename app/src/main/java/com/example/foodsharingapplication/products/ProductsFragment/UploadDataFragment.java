@@ -74,15 +74,15 @@ public class UploadDataFragment extends Fragment {
     private Button chooseImage, btnChoose, btnSubmit;
 
     /*Image View*/
-    ImageView imageView,imgView, mainImageView;
+    ImageView imageView, imgView, mainImageView;
 
     /*EditText*/
     private static CurrencyEditText editTextPrice;
     private static EditText editTextTitle, editTextDescription, editTextPickUpDetails;
 
     /*Radio UI*/
-    private RadioGroup foodTypeRadioGroup,paymentGroup;
-    private RadioButton cookedFoodRadioBtn, rawFoodRadioBtn,paypalOption,bankTransferOption,cashOnDeliveryOption;
+    private RadioGroup foodTypeRadioGroup, paymentGroup;
+    private RadioButton cookedFoodRadioBtn, rawFoodRadioBtn, paypalOption, bankTransferOption, cashOnDeliveryOption;
 
     /*Spinner UI*/
     private SmartMaterialSpinner cuisineTypeSpinner, listFoodSpinner;
@@ -92,16 +92,18 @@ public class UploadDataFragment extends Fragment {
     ViewPageAdapter adapter = null;
 
     /*Other Variable Declaration*/
-    private String cuisine_type,days,title,description,pickUpDetails,price;
+    private String cuisine_type, days, title, description, pickUpDetails, price;
 
     /*ArrayList*/
     ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
+    final ArrayList<String> arrayList = new ArrayList<>();
     Uri mImageUri;
     int uploadCount = 0;
 
     /*Other Static declarations*/
     private static final int MULTIPLE_IMAGE_REQUEST = 2;
     ProgressDialog progressDialog;
+
     public UploadDataFragment() {
         // Required empty public constructor
     }
@@ -110,13 +112,13 @@ public class UploadDataFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.activity_upload_data,container,false);
+        View view = inflater.inflate(R.layout.activity_upload_data, container, false);
 
         /*Model Class*/
         uploadModel = new UploadModel();
 
         /*Layouts*/
-        viewPagerLayout = (RelativeLayout)view.findViewById(R.id.test1);
+        viewPagerLayout = (RelativeLayout) view.findViewById(R.id.test1);
         imageViewLayout = (LinearLayout) view.findViewById(R.id.imageViewLayout);
         buttonLayout = (LinearLayout) view.findViewById(R.id.layout_buttons);
 
@@ -126,13 +128,13 @@ public class UploadDataFragment extends Fragment {
         viewPager.setAdapter(adapter);
 
         /*ImageView*/
-        imageView = (ImageView)view.findViewById(R.id.mainImage);
+        imageView = (ImageView) view.findViewById(R.id.mainImage);
 
         /*EditTexts*/
         editTextTitle = (EditText) view.findViewById(R.id.editTextTitle);
         editTextDescription = (EditText) view.findViewById(R.id.editTextDescription);
         editTextPickUpDetails = (EditText) view.findViewById(R.id.editTextPickUpDetails);
-        editTextPrice = (CurrencyEditText)view.findViewById(R.id.etPrice);
+        editTextPrice = (CurrencyEditText) view.findViewById(R.id.etPrice);
         editTextPrice.setCurrency("€");
         editTextPrice.setDelimiter(false);
         editTextPrice.setSpacing(false);
@@ -176,7 +178,13 @@ public class UploadDataFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postingData();
+                if (!mArrayUri.isEmpty()) {
+                    uploadMultipleImages();
+                } else if (mImageUri != null) {
+                    uploadSingleImage();
+                } else {
+                    Toast.makeText(getContext().getApplicationContext(), "Please Select Image", Toast.LENGTH_SHORT).show();
+                }
                 //dataToDB();
             }
         });
@@ -196,11 +204,11 @@ public class UploadDataFragment extends Fragment {
         paymentGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (paypalOption.isChecked()){
+                if (paypalOption.isChecked()) {
                     uploadModel.setPayment("Paypal");
-                }else if(bankTransferOption.isChecked()){
+                } else if (bankTransferOption.isChecked()) {
                     uploadModel.setPayment("Bank Transfer");
-                }else if(cashOnDeliveryOption.isChecked()){
+                } else if (cashOnDeliveryOption.isChecked()) {
                     uploadModel.setPayment("Cash On Delivery");
                 }
             }
@@ -250,18 +258,17 @@ public class UploadDataFragment extends Fragment {
                 buttonLayout.setVisibility(View.GONE);
 
                 RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) viewPagerLayout.getLayoutParams();
-                lp.height = (int) convertDpToPixelInt(300,getContext()); //convert pixel to dp
+                lp.height = (int) convertDpToPixelInt(300, getContext()); //convert pixel to dp
                 viewPagerLayout.setLayoutParams(lp);
 
                 adapter.notifyDataSetChanged();
 
-            }
-            else if (data.getData() != null) {
+            } else if (data.getData() != null) {
                 mImageUri = data.getData();
                 Bitmap new_bitmap = null;
                 try {
 
-                    new_bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),mImageUri);
+                    new_bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), mImageUri);
                     imageView.setImageBitmap(new_bitmap);
                     imageViewLayout.setVisibility(View.GONE);
                     viewPager.setVisibility(View.GONE);
@@ -273,7 +280,7 @@ public class UploadDataFragment extends Fragment {
                 }
 
                 RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
-                lp.height = (int) convertDpToPixelInt(300,getContext()); //convert pixel to dp
+                lp.height = (int) convertDpToPixelInt(300, getContext()); //convert pixel to dp
                 viewPagerLayout.setLayoutParams(lp);
 
 
@@ -286,7 +293,7 @@ public class UploadDataFragment extends Fragment {
     }
 
     /*EditText init()*/
-    private void initEditText(){
+    private void initEditText() {
 
         uploadModel.setFoodTitle(editTextTitle.getText().toString().trim());
 
@@ -332,6 +339,7 @@ public class UploadDataFragment extends Fragment {
         });
 
     }
+
     private void initDaysSpinner() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 1; i <= 31; i++) {
@@ -361,72 +369,74 @@ public class UploadDataFragment extends Fragment {
         });
     }
 
-    /*Posting Data*/
-    private void postingData(){
 
-        progressDialog.setTitle("Uploading...");
-        progressDialog.show();
+    /*Upload Single Image*/
+    private void uploadSingleImage() {
 
         StorageReference ImageFolder = FirebaseStorage.getInstance().getReference("SellerImageFolder").child("Images");
 
-        Log.i("Checking Storage", String.valueOf(ImageFolder));
+        final StorageReference singleImageName = ImageFolder.child(System.currentTimeMillis() + "." + getFileExtension(mImageUri));
 
-        if (!mArrayUri.isEmpty()){
-            for (uploadCount = 0; uploadCount < mArrayUri.size(); uploadCount++){
-                final Uri individualImage =  mArrayUri.get(uploadCount);
-                Log.i("Individual Image Uri:", String.valueOf(individualImage));
-                final StorageReference imageName = ImageFolder.child("Image"+ individualImage.getLastPathSegment());
+        singleImageName.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                singleImageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
 
-                imageName.putFile(individualImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                String url = String.valueOf(uri);
-                                Log.i("images Url", url);
-                                //sData.setUri(mArrayUri);
-                                //uploadModel.setmArrayUri(mArrayUri.get());
-
-                                HashMap<String,String> hashMap = new HashMap<>();
-                                hashMap.put("ImgLink",url);
-                                uploadModel.setHashMap(hashMap);
-                                storeLink();
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(getContext(), "Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                        Log.i("Progress","checking progress" + progress);
-                        progressDialog.setMessage("Uploaded" + (int) progress + "%");
+                        String url = String.valueOf(uri);
+                        Log.i("image Url", url);
+                        uploadModel.setmImageUri(url);
+                        storeLink();
                     }
                 });
-
             }
-        }
-        else if(mImageUri != null){
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), "Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                Log.i("Progress", "checking progress" + progress);
+                progressDialog.setMessage("Uploaded" + (int) progress + "%");
+            }
+        });
 
-            final StorageReference singleImageName = ImageFolder.child(System.currentTimeMillis() + "." + getFileExtension(mImageUri));
+    }
 
-            singleImageName.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+    /*Upload Multiple Image*/
+    private void uploadMultipleImages() {
+
+        progressDialog = ProgressDialog.show(getContext(), "Posting Data",
+                "Uploading..", true);
+
+        StorageReference ImageFolder = FirebaseStorage.getInstance().getReference("SellerImageFolder").child("Images");
+
+        arrayList.clear();
+        for (uploadCount = 0; uploadCount < mArrayUri.size(); uploadCount++) {
+            final Uri individualImage = mArrayUri.get(uploadCount);
+            Log.i("Individual Image Uri:", String.valueOf(individualImage));
+            final StorageReference imageName = ImageFolder.child("Image" + individualImage.getLastPathSegment());
+
+            imageName.putFile(individualImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    singleImageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
+                            final String url = String.valueOf(uri);
+                            Log.i("images Url", url);
+                            //sData.setUri(mArrayUri);
+                            //uploadModel.setmArrayUri(mArrayUri.get());
+                            arrayList.add(url);
 
-                            String url = String.valueOf(uri);
-                            Log.i("image Url",url);
-                            uploadModel.setmImageUri(url);
-                            storeLink();
+                            if (arrayList.size() == mArrayUri.size()) {
+                                uploadData();
+                            }
                         }
                     });
                 }
@@ -440,30 +450,36 @@ public class UploadDataFragment extends Fragment {
                 @Override
                 public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    Log.i("Progress","checking progress" + progress);
+                    Log.i("Progress", "checking progress" + progress);
                     progressDialog.setMessage("Uploaded" + (int) progress + "%");
                 }
             });
+
         }
-        else{
-            Toast.makeText(getContext(),"No image selected",Toast.LENGTH_SHORT).show();
-        }
+
+
     }
 
+    private void uploadData(){
+        uploadModel.setmArrayString(arrayList);
+        progressDialog.cancel();
+        storeLink();
+    }
+    
     /*Getting File Extension for single Image Uri*/
-    private String getFileExtension(Uri uri){
+    private String getFileExtension(Uri uri) {
         ContentResolver cR = getContext().getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
     /*Sending Data to DB*/
-    private void storeLink(){
+    private void storeLink() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Seller").child("User");
 
-        Log.i("!GetKay",databaseReference.getKey());
-        Log.i("PushKey ",databaseReference.push().getKey());
+        Log.i("!GetKay", databaseReference.getKey());
+        Log.i("PushKey ", databaseReference.push().getKey());
         initEditText();
         databaseReference.push().setValue(uploadModel);
 

@@ -18,6 +18,7 @@ public class UploadModel {
 
     private HashMap<String,String> hashMap;
 
+    private ArrayList<String> mArrayString;
     private ArrayList<Uri> mArrayUri;
     private String mImageUri;
 
@@ -38,6 +39,14 @@ public class UploadModel {
         AvailabilityDays = availabilityDays;
 
         this.user = user;
+    }
+
+    public ArrayList<String> getmArrayString() {
+        return mArrayString;
+    }
+
+    public void setmArrayString(ArrayList<String> mArrayString) {
+        this.mArrayString = mArrayString;
     }
 
     public String getFoodTitle() {
