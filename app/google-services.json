@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:910414432537:android:703598952c2f99ce62dd88",
         "android_client_info": {
-          "package_name": "com.example.foodsharingapp"
+          "package_name": "com.example.foodsharingapplication"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "910414432537-ij7hjtv16h8u5rqkp1nn60pafl9meg0d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.foodsharingapp",
+            "package_name": "com.example.foodsharingapplication",
             "certificate_hash": "b8219541c639ebd5b435aa3a8d60e139c383dcc6"
           }
         },
