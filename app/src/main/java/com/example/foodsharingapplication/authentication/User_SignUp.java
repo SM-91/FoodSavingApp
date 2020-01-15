@@ -21,10 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.foodsharingapplication.HomeActivity;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -82,6 +84,7 @@ public class User_SignUp extends AppCompatActivity {
         userData = new User();
         authentication_firebase = new Authentication_Firebase(getApplicationContext());
         firebaseStorageReference = FirebaseStorage.getInstance().getReference("User");
+        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
         firebaseAuth = FirebaseAuth.getInstance();
         btnUser_ChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +136,7 @@ public class User_SignUp extends AppCompatActivity {
         if (!TextUtils.isEmpty(txtUser_Email.getText().toString())) {
             if (isEmailValid(txtUser_Email.getText().toString())) {
                 userData.setUserEmail(txtUser_Email.getText().toString().trim());
+                userEmail = txtUser_Email.getText().toString();
                 /*firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
                 firebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -206,12 +210,43 @@ public class User_SignUp extends AppCompatActivity {
             txtUser_Password.requestFocus();
 
         }
-
-        if (authentication_firebase.registerToFirebase(userData, userPassword)) {
+        try {
+            firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                //System.out.println("current user id in registerToFirebase "+currentUserid);
+                                //if (!currentUserid.isEmpty()) {
+                                //intent = new Intent(getContext(), HomeActivity.class);
+                                userData.setUserId(firebaseAuth.getCurrentUser().getUid());
+                                firebaseDatabaseRef.child(userData.getUserId()).setValue(userData)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    startActivity(new Intent(User_SignUp.this, HomeActivity.class));
+                                                }
+                                            }
+                                        });
+                            /*} else {
+                                //do on failure
+                                Toast.makeText(getContext(), "Some Thing went wrong with DB", Toast.LENGTH_SHORT).show();
+                            }*/
+                            } else {
+                                //do on failure
+                                Toast.makeText(User_SignUp.this, "Email Already Exists", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } catch (NullPointerException e) {
+            Toast.makeText(User_SignUp.this, "Email already exists!", Toast.LENGTH_SHORT).show();
+        }
+        /*if (authentication_firebase.registerToFirebase(userData, userPassword)) {
             startActivity(new Intent(User_SignUp.this, HomeActivity.class));
         } else {
             toastMessage("Profile cannot be created check your email");
-        }
+        }*/
 
     }
 

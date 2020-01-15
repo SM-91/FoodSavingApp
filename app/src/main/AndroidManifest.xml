@@ -14,14 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".userOrdersAndUploadedAds.UserOrderAndUploads"></activity>
         <activity android:name=".authentication.AuthemnticationFragments.ProfileActivity" />
         <activity android:name=".authentication.User_SignUp" />
         <activity android:name=".extras.productdetails" />
         <activity android:name=".extras.showproducts" />
         <activity android:name=".extras.uploadproduct" />
         <activity android:name=".userProfile.UserProfile" />
-        <activity android:name=".authentication.forgetPassword" />
-        <!--<activity android:name=".authentication.FinalSignUp" />-->
+        <activity android:name=".authentication.forgetPassword" /> <!-- <activity android:name=".authentication.FinalSignUp" /> -->
         <activity android:name=".products.PostDetailActivity" />
         <activity android:name=".Maps.MapsActivity" />
         <activity android:name=".Dashboard" />
@@ -30,9 +30,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".HomeActivity"
-            android:screenOrientation="portrait" >
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".HomeDefinition"
             android:screenOrientation="portrait">
@@ -42,11 +40,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity
+        <!--
+<activity
             android:name=".extras.Register"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" /> -->
+            android:screenOrientation="portrait" />
+        -->
         <!-- <activity android:name=".MainLogin" /> -->
         <activity
             android:name="com.facebook.FacebookActivity"

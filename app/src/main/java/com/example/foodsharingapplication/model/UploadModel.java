@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public class UploadModel {
 
+    public static final String PAYPAL_CLIENT_ID="AVULyNmcckcTupOFuhbixw6Y9-eLfvfFeIWWA-oWTDoDLmYBywtiJTJLsfEcfhklndSEfIVgMv0DXASr";
     private String foodTitle,foodDescription,foodPickUpDetail,foodPrice;
     private String foodType;
     private String foodTypeCuisine;
