@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "759557187934",
-    "firebase_url": "https://foodsavingapp.firebaseio.com",
-    "project_id": "foodsavingapp",
-    "storage_bucket": "foodsavingapp.appspot.com"
+    "project_number": "910414432537",
+    "firebase_url": "https://foodsharingapp-2f2ac.firebaseio.com",
+    "project_id": "foodsharingapp-2f2ac",
+    "storage_bucket": "foodsharingapp-2f2ac.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:759557187934:android:b0b2b9f380024ed75647cf",
+        "mobilesdk_app_id": "1:910414432537:android:703598952c2f99ce62dd88",
         "android_client_info": {
-          "package_name": "com.example.foodsharingapplication"
+          "package_name": "com.example.foodsharingapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "759557187934-b5poonl09huj9pusegrl8uiovh5b8q2r.apps.googleusercontent.com",
+          "client_id": "910414432537-ij7hjtv16h8u5rqkp1nn60pafl9meg0d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.foodsharingapplication",
-            "certificate_hash": "4d24afd7878f7889c4f10f131f462b6ec877f806"
+            "package_name": "com.example.foodsharingapp",
+            "certificate_hash": "b8219541c639ebd5b435aa3a8d60e139c383dcc6"
           }
         },
         {
-          "client_id": "759557187934-sfsdrhb43cqpirlqdifj54d4sdtt35gf.apps.googleusercontent.com",
+          "client_id": "910414432537-6fv4n6ikivpp05dk9rnj7gveo6njrgke.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB4oWUNbARUxAcAYJVUo8rwaYoDJusfFmU"
+          "current_key": "AIzaSyCbItvwO3KMiBm-4GKg7i0FJ2YsfUurR90"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "759557187934-sfsdrhb43cqpirlqdifj54d4sdtt35gf.apps.googleusercontent.com",
+              "client_id": "910414432537-6fv4n6ikivpp05dk9rnj7gveo6njrgke.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
