@@ -197,12 +197,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.signOut:
                 firebaseAuth.signOut();
-                startActivity(new Intent(HomeActivity.this, UserOrderAndUploads.class));
+                startActivity(new Intent(HomeActivity.this, HomeDefinition.class));
 
                 break;
             case R.id.myOrders:
-                firebaseAuth.signOut();
-                startActivity(new Intent(HomeActivity.this, HomeDefinition.class));
+                startActivity(new Intent(HomeActivity.this, UserOrderAndUploads.class));
 
                 break;
             /*case R.id.updateProfile:

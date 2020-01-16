@@ -34,7 +34,7 @@ public class UserOrderAndUploads extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        //setContentView(R.layout.activity_home);
         recyclerView=findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         //txtAddProduct=(Button) findViewById(R.id.txtAddProduct);
