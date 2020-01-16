@@ -93,7 +93,7 @@ public class ProductGridView extends Fragment {
     // /////////Search View Query and Populating View//////////
     private void firebaseSearch(String searchText) {
         String query = searchText;
-        Query searchQuery = FirebaseDatabase.getInstance().getReference("Seller").child("User").orderByChild("foodTitle").startAt(query).endAt(query + "\uf0ff");
+        Query searchQuery = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers").orderByChild("foodTitle").startAt(query).endAt(query + "\uf0ff");
 
         FirebaseRecyclerOptions<UploadModel> searchOptions =
                 new FirebaseRecyclerOptions.Builder<UploadModel>().setQuery(searchQuery, UploadModel.class).build();
@@ -184,7 +184,7 @@ public class ProductGridView extends Fragment {
 
         // //////////////Query and Populating Recycler View 1 ///////////
 
-        Query query = FirebaseDatabase.getInstance().getReference("Seller").child("User");
+        Query query = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers");
         FirebaseRecyclerOptions<UploadModel> options =
                 new FirebaseRecyclerOptions.Builder<UploadModel>().setQuery(query, UploadModel.class).build();
 

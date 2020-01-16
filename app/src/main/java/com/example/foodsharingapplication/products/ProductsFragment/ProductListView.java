@@ -93,7 +93,7 @@ public class ProductListView extends Fragment {
     // /////////Search View Query and Populating View//////////
     private void firebaseSearch(String searchText) {
         String query = searchText;
-        Query searchQuery = FirebaseDatabase.getInstance().getReference("Seller").child("User").orderByChild("foodTitle").startAt(query).endAt(query + "\uf0ff");
+        Query searchQuery = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers").orderByChild("foodTitle").startAt(query).endAt(query + "\uf0ff");
 
         FirebaseRecyclerOptions<UploadModel> searchOptions =
                 new FirebaseRecyclerOptions.Builder<UploadModel>().setQuery(searchQuery, UploadModel.class).build();
@@ -173,7 +173,7 @@ public class ProductListView extends Fragment {
 
         // ///////////Query to get Data from Firebase and Populate HomePage///////////
 
-        Query query = FirebaseDatabase.getInstance().getReference("Seller").child("User");
+        Query query = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers");
         FirebaseRecyclerAdapter<UploadModel, ViewHolder> firebaseRecyclerAdapter;
         FirebaseRecyclerOptions<UploadModel> options =
                 new FirebaseRecyclerOptions.Builder<UploadModel>().setQuery(query, UploadModel.class).build();

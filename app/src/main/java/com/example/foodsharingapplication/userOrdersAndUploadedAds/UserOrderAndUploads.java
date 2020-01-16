@@ -34,17 +34,17 @@ public class UserOrderAndUploads extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_home);
-        recyclerView=findViewById(R.id.my_recycler_view);
+        setContentView(R.layout.productslist);
+        recyclerView=findViewById(R.id.productsListRecyclerView);
         recyclerView.setHasFixedSize(true);
         //txtAddProduct=(Button) findViewById(R.id.txtAddProduct);
         layoutManager=new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);
 
-        User user= new User();
+        /*User user= new User();
         user = getIntent().getParcelableExtra("userOrder");
         UploadModel uploadModel = new UploadModel();
-        uploadModel = user.getUploadModel();
+        uploadModel = user.getUploadModel();*/
         productsList=new ArrayList<>();
         mFirebaseAuth= FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance()

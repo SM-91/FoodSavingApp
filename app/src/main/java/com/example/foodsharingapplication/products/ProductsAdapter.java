@@ -16,6 +16,8 @@ import com.example.foodsharingapplication.extras.AllProducts;
 import com.example.foodsharingapplication.extras.Products;
 import com.example.foodsharingapplication.extras.productdetails;
 import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.userOrdersAndUploadedAds.UserOrderAndUploads;
+import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,13 +44,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
     @Override
     public void onBindViewHolder(@NonNull ProductsViewHolder holder, int position) {
         UploadModel products = productsList.get(position);
-        intent = new Intent(mContext, PostDetailActivity.class);
+        intent = new Intent(mContext, UserOrderAndUploads.class);
         final String productTitle;
         final String productDesc;
         final String productLoc;
         final String productPrice;
         final String productImgUrl;
-
+            System.out.println("pTitle, " +products.getFoodTitle());
+            System.out.println("pDesc, " +products.getFoodTitle());
             productTitle = products.getFoodTitle();
             holder.productName.setText(productTitle);
             intent.putExtra("pTitle", productTitle);
