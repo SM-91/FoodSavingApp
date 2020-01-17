@@ -6,13 +6,16 @@ import android.net.Uri;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UploadModel {
+public class UserUploadFoodModel {
 
+    private String adId;
     private String foodTitle,foodDescription,foodPickUpDetail,foodPrice;
     private String foodType;
     private String foodTypeCuisine;
     private String Payment;
     private String AvailabilityDays;
+    private User foodPostedBy;
+    private String foodUploadDateAndTime;
 
     User user = new User();
 
@@ -23,11 +26,11 @@ public class UploadModel {
     private String mImageUri;
 
 
-    public UploadModel(){
+    public UserUploadFoodModel(){
 
     }
 
-    public UploadModel(String foodTitle, String foodDescription, String foodPickUpDetail, String foodPrice, String foodType, String foodTypeCuisine, String payment, String availabilityDays, User user) {
+    public UserUploadFoodModel(String foodTitle, String foodDescription, String foodPickUpDetail, String foodPrice, String foodType, String foodTypeCuisine, String payment, String availabilityDays, User user) {
 
         this.foodTitle = foodTitle;
         this.foodDescription = foodDescription;
@@ -47,6 +50,14 @@ public class UploadModel {
 
     public void setmArrayString(ArrayList<String> mArrayString) {
         this.mArrayString = mArrayString;
+    }
+
+    public String getAdId() {
+        return adId;
+    }
+
+    public void setAdId(String adId) {
+        this.adId = adId;
     }
 
     public String getFoodTitle() {
@@ -147,5 +158,21 @@ public class UploadModel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getFoodPostedBy() {
+        return foodPostedBy;
+    }
+
+    public void setFoodPostedBy(User foodPostedBy) {
+        this.foodPostedBy = foodPostedBy;
+    }
+
+    public String getFoodUploadDateAndTime() {
+        return foodUploadDateAndTime;
+    }
+
+    public void setFoodUploadDateAndTime(String foodUploadDateAndTime) {
+        this.foodUploadDateAndTime = foodUploadDateAndTime;
     }
 }

@@ -5,40 +5,28 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.products.PostDetailActivity;
 import com.example.foodsharingapplication.products.ViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import java.util.HashMap;
-import java.util.zip.Inflater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,14 +81,14 @@ public class ProductListView extends Fragment {
     // /////////Search View Query and Populating View//////////
     private void firebaseSearch(String searchText) {
         String query = searchText;
-        Query searchQuery = FirebaseDatabase.getInstance().getReference("Seller").child("User").orderByChild("foodTitle").startAt(query).endAt(query + "\uf0ff");
+        Query searchQuery = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers").orderByChild("foodTitle").startAt(query).endAt(query + "\uf0ff");
 
-        FirebaseRecyclerOptions<UploadModel> searchOptions =
-                new FirebaseRecyclerOptions.Builder<UploadModel>().setQuery(searchQuery, UploadModel.class).build();
+        FirebaseRecyclerOptions<UserUploadFoodModel> searchOptions =
+                new FirebaseRecyclerOptions.Builder<UserUploadFoodModel>().setQuery(searchQuery, UserUploadFoodModel.class).build();
 
-        FirebaseRecyclerAdapter<UploadModel, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UploadModel, ViewHolder>(searchOptions) {
+        FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder>(searchOptions) {
             @Override
-            protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UploadModel model) {
+            protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UserUploadFoodModel model) {
                 holder.setDetails(getContext(), model.getFoodTitle(), model.getmImageUri(), model.getUser().getUserProfilePicUrl(), model.getFoodPrice(), model.getFoodPickUpDetail());
             }
 
@@ -173,15 +161,15 @@ public class ProductListView extends Fragment {
 
         // ///////////Query to get Data from Firebase and Populate HomePage///////////
 
-        Query query = FirebaseDatabase.getInstance().getReference("Seller").child("User");
-        FirebaseRecyclerAdapter<UploadModel, ViewHolder> firebaseRecyclerAdapter;
-        FirebaseRecyclerOptions<UploadModel> options =
-                new FirebaseRecyclerOptions.Builder<UploadModel>().setQuery(query, UploadModel.class).build();
+        Query query = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers");
+        FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder> firebaseRecyclerAdapter;
+        FirebaseRecyclerOptions<UserUploadFoodModel> options =
+                new FirebaseRecyclerOptions.Builder<UserUploadFoodModel>().setQuery(query, UserUploadFoodModel.class).build();
 
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UploadModel, ViewHolder>(options) {
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder>(options) {
 
             @Override
-            protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UploadModel model) {
+            protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UserUploadFoodModel model) {
                 holder.setDetails(getContext(), model.getFoodTitle(), model.getmImageUri(), model.getUser().getUserProfilePicUrl(), model.getFoodPrice(), model.getFoodPickUpDetail());
             }
 
