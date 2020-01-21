@@ -44,6 +44,7 @@
             android:layout_gravity="start"
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/drawer_menue" />
+
     </androidx.drawerlayout.widget.DrawerLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

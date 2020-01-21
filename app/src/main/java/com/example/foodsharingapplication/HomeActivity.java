@@ -20,6 +20,7 @@ import com.example.foodsharingapplication.authentication.AuthemnticationFragment
 import com.example.foodsharingapplication.authentication.Authentication_Firebase;
 import com.example.foodsharingapplication.authentication.SignIn;
 import com.example.foodsharingapplication.model.User;
+import com.example.foodsharingapplication.products.MessageListActivity;
 import com.example.foodsharingapplication.products.ProductsFragment.ProductGridView;
 import com.example.foodsharingapplication.products.ProductsFragment.ProductListView;
 import com.example.foodsharingapplication.products.ProductsFragment.UploadDataFragment;
@@ -88,7 +89,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Log.i("auth.getUserEmail: ", firebaseAuth.getCurrentUser().getEmail());*/
         //firebaseAuth.getCurrentUser().getPhotoUrl();
         if (firebaseAuth.getCurrentUser()!=null){
-            txtHeaderEmail.setText(firebaseAuth.getCurrentUser().getEmail().toString());
+            txtHeaderEmail.setText(firebaseAuth.getCurrentUser().getEmail());
+            txtHeaderName.setText(firebaseAuth.getCurrentUser().getDisplayName());
             firebaseDatabaseRef.child(firebaseAuth.getCurrentUser().getUid())
                     .addValueEventListener(new ValueEventListener() {
                         @Override
@@ -122,6 +124,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         //.setCustomAnimations(R.anim.slide_in,R.anim.slide_out)
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in, R.anim.slide_out).replace(R.id.fragment_container, new ProductGridView()).commit();
                         return true;
+
+                    case R.id.list:
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in, R.anim.slide_out).replace(R.id.fragment_container, new ProductListView()).commit();
+                        return true;
+
                     case R.id.add:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in, R.anim.slide_out).replace(R.id.fragment_container, new UploadDataFragment()).commit();
                         return true;
@@ -203,6 +210,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 //startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
                 break;
 
+            case R.id.messages:
+                Intent viewMessage  = new Intent(HomeActivity.this, MessageListActivity.class);
+                startActivity(viewMessage);
+                //nav_bar.setVisibility(View.GONE);
+                //startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                break;
 
 
             case R.id.signOut:

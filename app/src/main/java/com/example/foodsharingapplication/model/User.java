@@ -8,6 +8,7 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 
 public class User implements Parcelable {
+
     private double Latitude;
     private double Longitude;
     private @ServerTimestamp

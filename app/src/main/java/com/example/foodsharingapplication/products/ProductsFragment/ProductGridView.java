@@ -90,7 +90,7 @@ public class ProductGridView extends Fragment {
     // /////////Search View Query and Populating View//////////
     private void firebaseSearch(String searchText) {
         String query = searchText;
-        Query searchQuery = FirebaseDatabase.getInstance().getReference("Seller").child("User").orderByChild("foodTitle").startAt(query).endAt(query + "\uf0ff");
+        Query searchQuery = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers").orderByChild("foodTitle").startAt(query).endAt(query + "\uf0ff");
 
         FirebaseRecyclerOptions<UserUploadFoodModel> searchOptions =
                 new FirebaseRecyclerOptions.Builder<UserUploadFoodModel>().setQuery(searchQuery, UserUploadFoodModel.class).build();
@@ -181,7 +181,7 @@ public class ProductGridView extends Fragment {
 
         // //////////////Query and Populating Recycler View 1 ///////////
 
-        Query query = FirebaseDatabase.getInstance().getReference("Seller").child("User");
+        Query query = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers");
         FirebaseRecyclerOptions<UserUploadFoodModel> options =
                 new FirebaseRecyclerOptions.Builder<UserUploadFoodModel>().setQuery(query, UserUploadFoodModel.class).build();
 
@@ -253,7 +253,7 @@ public class ProductGridView extends Fragment {
 
         // //////////////Query and Populating Slider Recycler View 2 ///////////
 
-        Query query2 = FirebaseDatabase.getInstance().getReference("Seller").child("User");
+        Query query2 = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers");
         FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder> firebaseRecyclerAdapter2;
         FirebaseRecyclerOptions<UserUploadFoodModel> options2 =
                 new FirebaseRecyclerOptions.Builder<UserUploadFoodModel>().setQuery(query2, UserUploadFoodModel.class).build();
@@ -266,7 +266,7 @@ public class ProductGridView extends Fragment {
                 holder.itemView.findViewById(R.id.fav).setOnClickListener(new View.OnClickListener() {
 
                     String title = getItem(position).getFoodTitle();
-                    Query q = FirebaseDatabase.getInstance().getReference("Seller").child("User").orderByChild("foodTitle");
+                    Query q = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers").orderByChild("foodTitle");
                     Query favorites = q.equalTo(title);
 
                     @Override

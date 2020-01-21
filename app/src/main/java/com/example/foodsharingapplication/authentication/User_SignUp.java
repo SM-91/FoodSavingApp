@@ -129,11 +129,13 @@ public class User_SignUp extends AppCompatActivity {
 
 
         }
-        if (!TextUtils.isEmpty(txtUser_Email.getText().toString())) {
+        /*isEmailValid*/
+
+        /*if (!TextUtils.isEmpty(txtUser_Email.getText().toString())) {
             if (isEmailValid(txtUser_Email.getText().toString())) {
                 userData.setUserEmail(txtUser_Email.getText().toString().trim());
                 userEmail = txtUser_Email.getText().toString();
-                /*firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
+                *//*firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
                 firebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -155,7 +157,7 @@ public class User_SignUp extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });*/
+                });*//*
             } else {
                 txtUser_Email.setError("Enter a valid email address");
                 txtUser_Email.requestFocus();
@@ -166,7 +168,7 @@ public class User_SignUp extends AppCompatActivity {
             txtUser_Email.setError("Email Can't be empty");
             txtUser_Email.requestFocus();
 
-        }
+        }*/
         if (!TextUtils.isEmpty(txtUser_Password.getText().toString())) {
             if (txtUser_Password.getText().toString().length() >= 6) {
 
