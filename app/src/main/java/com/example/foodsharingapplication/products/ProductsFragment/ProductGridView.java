@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodsharingapplication.R;
+import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.products.PostDetailActivity;
 import com.example.foodsharingapplication.products.ViewHolder;
@@ -112,6 +113,7 @@ public class ProductGridView extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
 
+                        String ad_id = getItem(position).getAdId();
                         String myTitle = getItem(position).getFoodTitle();
                         String myDesc = getItem(position).getFoodDescription();
                         String myPrice = getItem(position).getFoodPrice();
@@ -119,6 +121,7 @@ public class ProductGridView extends Fragment {
                         String myType = getItem(position).getFoodType();
                         String myCuisineType = getItem(position).getFoodTypeCuisine();
                         String pay = getItem(position).getPayment();
+                        User foodPostedBy = getItem(position).getFoodPostedBy();
                         String available = getItem(position).getAvailabilityDays();
 
                         // Image setting
@@ -128,6 +131,7 @@ public class ProductGridView extends Fragment {
 
                         Intent intent = new Intent(view.getContext(), PostDetailActivity.class);
 
+                        intent.putExtra("ad_id",ad_id);
                         intent.putExtra("title", myTitle);
                         intent.putExtra("description", myDesc);
                         intent.putExtra("price", myPrice);
@@ -136,6 +140,8 @@ public class ProductGridView extends Fragment {
                         intent.putExtra("cuisineType", myCuisineType);
                         intent.putExtra("pay", pay);
                         intent.putExtra("availability", available);
+                        intent.putExtra("foodPostedBy",foodPostedBy);
+
 
                         // Image Setting
                         //intent.putExtra("image2", myImage2);
@@ -205,6 +211,7 @@ public class ProductGridView extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
 
+                        String ad_id = getItem(position).getAdId();
                         String myTitle = getItem(position).getFoodTitle();
                         String myDesc = getItem(position).getFoodDescription();
                         String myImage = getItem(position).getmImageUri();
@@ -213,12 +220,14 @@ public class ProductGridView extends Fragment {
                         String myType = getItem(position).getFoodType();
                         String myCuisineType = getItem(position).getFoodTypeCuisine();
                         String pay = getItem(position).getPayment();
+                        User foodPostedBy = getItem(position).getFoodPostedBy();
                         String available = getItem(position).getAvailabilityDays();
                         HashMap<String, String> hashImage = getItem(position).getHashMap();
                         //String myImage2 = getItem(position).getImage2();
 
 
                         Intent intent = new Intent(view.getContext(), PostDetailActivity.class);
+                        intent.putExtra("ad_id",ad_id);
                         intent.putExtra("image", myImage);
                         intent.putExtra("title", myTitle);
                         intent.putExtra("description", myDesc);
@@ -227,6 +236,7 @@ public class ProductGridView extends Fragment {
                         intent.putExtra("type", myType);
                         intent.putExtra("cuisineType", myCuisineType);
                         intent.putExtra("pay", pay);
+                        intent.putExtra("foodPostedBy",foodPostedBy);
                         intent.putExtra("availability", available);
 
                         //intent.putExtra("image2", myImage2);
@@ -300,6 +310,7 @@ public class ProductGridView extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
 
+                        String ad_id = getItem(position).getAdId();
                         String myTitle = getItem(position).getFoodTitle();
                         String myDesc = getItem(position).getFoodDescription();
                         String myImage = getItem(position).getmImageUri();
@@ -309,11 +320,13 @@ public class ProductGridView extends Fragment {
                         String myCuisineType = getItem(position).getFoodTypeCuisine();
                         String pay = getItem(position).getPayment();
                         String available = getItem(position).getAvailabilityDays();
+                        User foodPostedBy = getItem(position).getFoodPostedBy();
                         HashMap<String, String> hashImage = getItem(position).getHashMap();
                         //String myImage2 = getItem(position).getImage2();
 
 
                         Intent intent = new Intent(view.getContext(), PostDetailActivity.class);
+                        intent.putExtra("ad_id",ad_id);
                         intent.putExtra("image", myImage);
                         intent.putExtra("title", myTitle);
                         intent.putExtra("description", myDesc);
@@ -323,6 +336,8 @@ public class ProductGridView extends Fragment {
                         intent.putExtra("cuisineType", myCuisineType);
                         intent.putExtra("pay", pay);
                         intent.putExtra("availability", available);
+                        intent.putExtra("foodPostedBy",foodPostedBy);
+
 
                         //intent.putExtra("image2", myImage2);
                         if (myImage != null) {
