@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.products.PostDetailActivity;
 import com.example.foodsharingapplication.products.ViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -222,11 +223,13 @@ public class ProductListView extends Fragment {
                         intent.putExtra("availability", available);
 
                         // Image Setting
-                        //intent.putExtra("image2", myImage2);
+                        //intent.putExtra("image2", hashImage);
                         if (myImage != null) {
                             intent.putExtra("image", myImage);
-                        } else if (hashImage != null) {
-                            intent.getStringArrayExtra("hashImage");
+                        }
+
+                        else if (hashImage != null) {
+                            intent.putExtra("hashImage",hashImage);
                         }
 
                         startActivity(intent);

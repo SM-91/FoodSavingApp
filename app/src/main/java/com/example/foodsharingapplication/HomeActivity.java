@@ -94,8 +94,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             userData = dataSnapshot.getValue(User.class);
-                            txtHeaderEmail.setText(firebaseAuth.getCurrentUser().getEmail());
-                            //txtHeaderName.setText(userData.getUserName());
+                            if (!userData.getUserEmail().isEmpty()){
+                                txtHeaderEmail.setText(userData.getUserEmail());
+                            }
+
+                            if (!userData.getUserName().isEmpty()){
+                                txtHeaderName.setText(userData.getUserName());
+                            }
                             //String profilePicUrl = userData.getUserProfilePicUrl();
                            /* Log.i("auth.getUserName: ", userData.getUserName());
                             Log.i("auth.getUserEmail: ", firebaseAuth.getCurrentUser().getEmail());*/
