@@ -5,23 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.products.PostDetailActivity;
 import com.example.foodsharingapplication.products.ViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -44,7 +41,7 @@ public class ProductGridView extends Fragment {
     LinearLayout slider_linear_layout;
     FirebaseDatabase myFirebaseDatabase;
     DatabaseReference myRef;
-    UploadModel uploadModel;
+    UserUploadFoodModel userUploadFoodModel;
 
     public ProductGridView() {
         // Required empty public constructor
@@ -96,12 +93,12 @@ public class ProductGridView extends Fragment {
         String query = searchText;
         Query searchQuery = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers").orderByChild("foodTitle").startAt(query).endAt(query + "\uf0ff");
 
-        FirebaseRecyclerOptions<UploadModel> searchOptions =
-                new FirebaseRecyclerOptions.Builder<UploadModel>().setQuery(searchQuery, UploadModel.class).build();
+        FirebaseRecyclerOptions<UserUploadFoodModel> searchOptions =
+                new FirebaseRecyclerOptions.Builder<UserUploadFoodModel>().setQuery(searchQuery, UserUploadFoodModel.class).build();
 
-        FirebaseRecyclerAdapter<UploadModel, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UploadModel, ViewHolder>(searchOptions) {
+        FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder>(searchOptions) {
             @Override
-            protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UploadModel model) {
+            protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UserUploadFoodModel model) {
                 holder.setDetails(getContext(), model.getFoodTitle(), model.getmImageUri(), model.getUser().getUserProfilePicUrl(), model.getFoodPrice(), model.getFoodPickUpDetail());
             }
 
@@ -186,13 +183,13 @@ public class ProductGridView extends Fragment {
         // //////////////Query and Populating Recycler View 1 ///////////
 
         Query query = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers");
-        FirebaseRecyclerOptions<UploadModel> options =
-                new FirebaseRecyclerOptions.Builder<UploadModel>().setQuery(query, UploadModel.class).build();
+        FirebaseRecyclerOptions<UserUploadFoodModel> options =
+                new FirebaseRecyclerOptions.Builder<UserUploadFoodModel>().setQuery(query, UserUploadFoodModel.class).build();
 
-        FirebaseRecyclerAdapter<UploadModel, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UploadModel, ViewHolder>(options) {
+        FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder>(options) {
 
             @Override
-            protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UploadModel model) {
+            protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UserUploadFoodModel model) {
                 holder.setDetails(getContext(), model.getFoodTitle(), model.getmImageUri(), model.getUser().getUserProfilePicUrl(), model.getFoodPrice(), model.getFoodPickUpDetail());
             }
 
@@ -257,25 +254,25 @@ public class ProductGridView extends Fragment {
 
         // //////////////Query and Populating Slider Recycler View 2 ///////////
 
-        Query query2 = FirebaseDatabase.getInstance().getReference("Seller").child("User");
-        FirebaseRecyclerAdapter<UploadModel, ViewHolder> firebaseRecyclerAdapter2;
-        FirebaseRecyclerOptions<UploadModel> options2 =
-                new FirebaseRecyclerOptions.Builder<UploadModel>().setQuery(query2, UploadModel.class).build();
+        Query query2 = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers");
+        FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder> firebaseRecyclerAdapter2;
+        FirebaseRecyclerOptions<UserUploadFoodModel> options2 =
+                new FirebaseRecyclerOptions.Builder<UserUploadFoodModel>().setQuery(query2, UserUploadFoodModel.class).build();
 
-        firebaseRecyclerAdapter2 = new FirebaseRecyclerAdapter<UploadModel, ViewHolder>(options2) {
+        firebaseRecyclerAdapter2 = new FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder>(options2) {
 
             @Override
-            protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull UploadModel model) {
+            protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull UserUploadFoodModel model) {
                 holder.setDetails(getContext(), model.getFoodTitle(), model.getmImageUri(), model.getUser().getUserProfilePicUrl(), model.getFoodPrice(), model.getFoodPickUpDetail());
                 holder.itemView.findViewById(R.id.fav).setOnClickListener(new View.OnClickListener() {
 
                     String title = getItem(position).getFoodTitle();
-                    Query q = FirebaseDatabase.getInstance().getReference("Seller").child("User").orderByChild("foodTitle");
+                    Query q = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers").orderByChild("foodTitle");
                     Query favorites = q.equalTo(title);
 
                     @Override
                     public void onClick(View v) {
-                        //UploadModel uploadModel;
+                        //UserUploadFoodModel userUploadFoodModel;
                         if (favorites == null) {
 
                         }

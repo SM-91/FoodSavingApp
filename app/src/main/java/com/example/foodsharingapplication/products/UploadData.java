@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -51,7 +51,7 @@ import me.abhinay.input.CurrencyEditText;
 public class UploadData extends AppCompatActivity {
 
     /*Model Class*/
-    UploadModel uploadModel;
+    UserUploadFoodModel userUploadFoodModel;
 
     /*Firebase*/
     DatabaseReference databaseReference;
@@ -100,7 +100,7 @@ public class UploadData extends AppCompatActivity {
         setContentView(R.layout.activity_upload_data);
 
         /*Model Class*/
-        uploadModel = new UploadModel();
+        userUploadFoodModel = new UserUploadFoodModel();
 
         /*Layouts*/
         viewPagerLayout = (RelativeLayout)findViewById(R.id.test1);
@@ -173,10 +173,10 @@ public class UploadData extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (cookedFoodRadioBtn.isChecked()) {
                     /*sData.setCookedFood("Cooked Food");*/
-                    uploadModel.setFoodType("CookedFood");
+                    userUploadFoodModel.setFoodType("CookedFood");
                 } else {
                     /*sData.setCookedFood("Raw Food");*/
-                    uploadModel.setFoodType("RawFood");
+                    userUploadFoodModel.setFoodType("RawFood");
                 }
             }
         });
@@ -185,11 +185,11 @@ public class UploadData extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (paypalOption.isChecked()){
-                    uploadModel.setPayment("Paypal");
+                    userUploadFoodModel.setPayment("Paypal");
                 }else if(bankTransferOption.isChecked()){
-                    uploadModel.setPayment("Bank Transfer");
+                    userUploadFoodModel.setPayment("Bank Transfer");
                 }else if(cashOnDeliveryOption.isChecked()){
-                    uploadModel.setPayment("Cash On Delivery");
+                    userUploadFoodModel.setPayment("Cash On Delivery");
                 }
             }
         });
@@ -276,16 +276,16 @@ public class UploadData extends AppCompatActivity {
     /*EditText init()*/
     private void initEditText(){
 
-        uploadModel.setFoodTitle(editTextTitle.getText().toString().trim());
+        userUploadFoodModel.setFoodTitle(editTextTitle.getText().toString().trim());
 
         Log.i("description of food", editTextDescription.getText().toString());
-        uploadModel.setFoodDescription(editTextDescription.getText().toString().trim());
+        userUploadFoodModel.setFoodDescription(editTextDescription.getText().toString().trim());
 
         Log.i("pickUpDetails of food", editTextPickUpDetails.getText().toString());
-        uploadModel.setFoodPickUpDetail(editTextPickUpDetails.getText().toString().trim());
+        userUploadFoodModel.setFoodPickUpDetail(editTextPickUpDetails.getText().toString().trim());
 
         Log.i("price of food", editTextPrice.getText().toString());
-        uploadModel.setFoodPrice(editTextPrice.getText().toString());
+        userUploadFoodModel.setFoodPrice(editTextPrice.getText().toString());
     }
 
     /*Spinner init()*/
@@ -309,7 +309,7 @@ public class UploadData extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                uploadModel.setFoodTypeCuisine(cuisineTypeSpinner.getSelectedItem().toString());
+                userUploadFoodModel.setFoodTypeCuisine(cuisineTypeSpinner.getSelectedItem().toString());
                 /*cuisine_type = cuisineTypeSpinner.getSelectedItem().toString();*/
             }
 
@@ -338,7 +338,7 @@ public class UploadData extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                uploadModel.setAvailabilityDays(listFoodSpinner.getSelectedItem().toString());
+                userUploadFoodModel.setAvailabilityDays(listFoodSpinner.getSelectedItem().toString());
                 /*days = listFoodSpinner.getSelectedItem().toString();*/
             }
 
@@ -374,11 +374,11 @@ public class UploadData extends AppCompatActivity {
                                 String url = String.valueOf(uri);
                                 Log.i("images Url", url);
                                 //sData.setUri(mArrayUri);
-                                //uploadModel.setmArrayUri(mArrayUri.get());
+                                //userUploadFoodModel.setmArrayUri(mArrayUri.get());
 
                                 HashMap<String,String> hashMap = new HashMap<>();
                                 hashMap.put("ImgLink",url);
-                                uploadModel.setHashMap(hashMap);
+                                userUploadFoodModel.setHashMap(hashMap);
                                 storeLink();
                             }
                         });
@@ -413,7 +413,7 @@ public class UploadData extends AppCompatActivity {
 
                             String url = String.valueOf(uri);
                             Log.i("image Url",url);
-                            uploadModel.setmImageUri(url);
+                            userUploadFoodModel.setmImageUri(url);
                             storeLink();
                         }
                     });
@@ -451,7 +451,7 @@ public class UploadData extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference("Seller").child("User");
 
         initEditText();
-        databaseReference.push().setValue(uploadModel);
+        databaseReference.push().setValue(userUploadFoodModel);
 
         progressDialog.dismiss();
         Toast.makeText(UploadData.this, "Uploaded", Toast.LENGTH_SHORT).show();

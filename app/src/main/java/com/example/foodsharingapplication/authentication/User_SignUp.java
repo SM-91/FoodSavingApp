@@ -129,11 +129,17 @@ public class User_SignUp extends AppCompatActivity {
 
 
         }
-        if (!TextUtils.isEmpty(txtUser_Email.getText().toString())) {
+        /*isEmailValid*/
+
+        /*if (!TextUtils.isEmpty(txtUser_Email.getText().toString())) {
             if (isEmailValid(txtUser_Email.getText().toString())) {
                 userData.setUserEmail(txtUser_Email.getText().toString().trim());
                 userEmail = txtUser_Email.getText().toString();
+<<<<<<< HEAD
                 /*firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
+=======
+                *//*firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
+>>>>>>> feature/Shayan
                 firebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -155,7 +161,7 @@ public class User_SignUp extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });*/
+                });*//*
             } else {
                 txtUser_Email.setError("Enter a valid email address");
                 txtUser_Email.requestFocus();
@@ -166,7 +172,7 @@ public class User_SignUp extends AppCompatActivity {
             txtUser_Email.setError("Email Can't be empty");
             txtUser_Email.requestFocus();
 
-        }
+        }*/
         if (!TextUtils.isEmpty(txtUser_Password.getText().toString())) {
             if (txtUser_Password.getText().toString().length() >= 6) {
 
@@ -212,12 +218,17 @@ public class User_SignUp extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
+                                //System.out.println("current user id in registerToFirebase "+currentUserid);
+                                //if (!currentUserid.isEmpty()) {
+                                //intent = new Intent(getContext(), HomeActivity.class);
                                 userData.setUserId(firebaseAuth.getCurrentUser().getUid());
                                 firebaseDatabaseRef.child(userData.getUserId()).setValue(userData)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
+
                                                     firebaseAuth.getCurrentUser().sendEmailVerification()
                                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
@@ -231,6 +242,8 @@ public class User_SignUp extends AppCompatActivity {
                                                                             firebaseAuth.signOut();
                                                                             startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
                                                                         }
+                                                                        toastMessage("Check your email for verification");
+                                                                        startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
                                                                     } else {
                                                                         toastMessage("Enter a valid email");
                                                                     }
@@ -239,6 +252,11 @@ public class User_SignUp extends AppCompatActivity {
                                                 }
                                             }
                                         });
+
+                            /*} else {
+                                //do on failure
+                                Toast.makeText(getContext(), "Some Thing went wrong with DB", Toast.LENGTH_SHORT).show();
+                            }*/
                             } else {
                                 //do on failure
                                 Toast.makeText(User_SignUp.this, "Email Already Exists123", Toast.LENGTH_SHORT).show();

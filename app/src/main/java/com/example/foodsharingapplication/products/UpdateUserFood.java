@@ -1,28 +1,20 @@
-package com.example.foodsharingapplication.products.ProductsFragment;
+package com.example.foodsharingapplication.products;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,57 +25,39 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
-import com.example.foodsharingapplication.HomeActivity;
-import com.example.foodsharingapplication.Maps.MapsActivity;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
-import com.example.foodsharingapplication.products.ViewPageAdapter;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.concurrent.Executor;
-
+import java.util.Locale;
 
 import me.abhinay.input.CurrencyEditText;
 
-import static android.app.Activity.RESULT_OK;
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class UploadDataFragment extends Fragment {
+public class UpdateUserFood extends AppCompatActivity {
 
     /*Model Class*/
     UserUploadFoodModel userUploadFoodModel;
-
 
     FirebaseAuth firebaseAuth;
 
@@ -109,65 +83,64 @@ public class UploadDataFragment extends Fragment {
 
     /*Spinner UI*/
     private SmartMaterialSpinner cuisineTypeSpinner, listFoodSpinner;
-    private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085);
 
     /*ViewPager*/
-    private ViewPager viewPager;
-    private ViewPageAdapter adapter = null;
+    ViewPager viewPager , updateViewPager;
+    ViewPageAdapter adapter = null;
+    ViewPageAdapter updateImagesAdapter = null;
 
     /*Other Variable Declaration*/
     private String cuisine_type, days, title, description, pickUpDetails, price;
-    private static final String TAG = UploadDataFragment.class.getSimpleName();
 
     /*ArrayList*/
     ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
     final ArrayList<String> arrayList = new ArrayList<>();
-    private Uri mImageUri;
-    private int uploadCount = 0;
-
-
-    private String[] cuisines = {"Asian" , "Italian", "French", "FastFood", "German", "Continental",
-    "South American", "Arabic", "African"};
-
-    ArrayAdapter<String> foodListingAdapter;
-    private HomeActivity home = new HomeActivity();
+    Uri mImageUri;
+    int uploadCount = 0;
 
     /*Other Static declarations*/
     private static final int MULTIPLE_IMAGE_REQUEST = 2;
     ProgressDialog progressDialog;
 
-    public UploadDataFragment() {
-        // Required empty public constructor
-    }
+    private String ad_id = " ";
+    private String user_id = " ";
+    private ArrayList<String> listImages = new ArrayList<>();
+
+    ArrayAdapter<String> cuisineAdapter;
+    private String[] cuisines = {"Asian" , "Italian", "French", "FastFood", "German", "Continental",
+            "South American", "Arabic", "African"};
+
+    ArrayAdapter<String> foodListingAdapter;
+    private String foodUploadDateAndTime;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_upload_data, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_update_user_food);
 
         /*Model Class*/
         userUploadFoodModel = new UserUploadFoodModel();
         firebaseAuth = FirebaseAuth.getInstance();
 
         /*Layouts*/
-        viewPagerLayout =  view.findViewById(R.id.test1);
-        imageViewLayout =  view.findViewById(R.id.imageViewLayout);
-        buttonLayout =  view.findViewById(R.id.layout_buttons);
+        viewPagerLayout =  findViewById(R.id.test1);
+        imageViewLayout =  findViewById(R.id.imageViewLayout);
+        buttonLayout =  findViewById(R.id.layout_buttons);
 
         /*ViewPager*/
-        viewPager = view.findViewById(R.id.flipperView);
-        adapter = new ViewPageAdapter(getContext(), mArrayUri);
+        viewPager = findViewById(R.id.flipperView);
+        adapter = new ViewPageAdapter(getApplicationContext(), mArrayUri);
         viewPager.setAdapter(adapter);
 
         /*ImageView*/
-        imageView = view.findViewById(R.id.mainImage);
+        imageView = findViewById(R.id.mainImage);
 
         /*EditTexts*/
-        editTextTitle =  view.findViewById(R.id.editTextTitle);
-        editTextDescription =  view.findViewById(R.id.editTextDescription);
-        editTextPickUpDetails = view.findViewById(R.id.editTextPickUpDetails);
-        editTextPrice =  view.findViewById(R.id.etPrice);
+        editTextTitle =  findViewById(R.id.editTextTitle);
+        editTextDescription =  findViewById(R.id.editTextDescription);
+        editTextPickUpDetails = findViewById(R.id.editTextPickUpDetails);
+        editTextPrice =  findViewById(R.id.etPrice);
         editTextPrice.setCurrency("€");
         editTextPrice.setDelimiter(false);
         editTextPrice.setSpacing(false);
@@ -177,29 +150,29 @@ public class UploadDataFragment extends Fragment {
 
 
         /*Buttons*/
-        btnChoose = view.findViewById(R.id.btnChoosePhoto);
-        btnSubmit = view.findViewById(R.id.submitData);
+        btnChoose = findViewById(R.id.btnChoosePhoto);
+        btnSubmit = findViewById(R.id.submitData);
 
         /*RadioGroups*/
         /*FoodType*/
-        foodTypeRadioGroup = view.findViewById(R.id.radioGroup);
-        cookedFoodRadioBtn =  view.findViewById(R.id.radioCookedFood);
-        rawFoodRadioBtn = view.findViewById(R.id.radioRawFood);
+        foodTypeRadioGroup = findViewById(R.id.radioGroup);
+        cookedFoodRadioBtn =  findViewById(R.id.radioCookedFood);
+        rawFoodRadioBtn = findViewById(R.id.radioRawFood);
         /*Payment*/
-        paymentGroup = view.findViewById(R.id.radioGroupPaymentMethods);
-        paypalOption = view.findViewById(R.id.paypal);
-        bankTransferOption = view.findViewById(R.id.bankTransfer);
-        cashOnDeliveryOption = view.findViewById(R.id.cashOnDelivery);
+        paymentGroup = findViewById(R.id.radioGroupPaymentMethods);
+        paypalOption = findViewById(R.id.paypal);
+        bankTransferOption = findViewById(R.id.bankTransfer);
+        cashOnDeliveryOption = findViewById(R.id.cashOnDelivery);
 
         /*Spinners*/
-        cuisineTypeSpinner = view.findViewById(R.id.cuisine_spinner);
-        ArrayAdapter<String> cuisineAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,
+        cuisineTypeSpinner = findViewById(R.id.cuisine_spinner);
+        cuisineAdapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,
                 cuisines);
         cuisineTypeSpinner.setAdapter(cuisineAdapter);
         cuisineTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String cuisineType =parent.getItemAtPosition(position).toString();
+                String cuisineType = parent.getItemAtPosition(position).toString();
                 userUploadFoodModel.setFoodTypeCuisine(cuisineType);
                 /*cuisine_type = cuisineTypeSpinner.getSelectedItem().toString();*/
             }
@@ -209,11 +182,14 @@ public class UploadDataFragment extends Fragment {
             }
         });
 
-        listFoodSpinner = view.findViewById(R.id.days_spinner);
+        listFoodSpinner = findViewById(R.id.days_spinner);
         initDaysSpinner();
 
         /*ProgressDialog*/
-        progressDialog = new ProgressDialog(getContext());
+        progressDialog = new ProgressDialog(getApplicationContext());
+
+        /*Getting Data For Update*/
+        getUpdateData();
 
         /*Listeners*/
         btnChoose.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +207,7 @@ public class UploadDataFragment extends Fragment {
                 } else if (mImageUri != null) {
                     uploadSingleImage();
                 } else {
-                    Toast.makeText(getContext().getApplicationContext(), "Please Select Image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext().getApplicationContext(), "Please Select Image", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -282,9 +258,96 @@ public class UploadDataFragment extends Fragment {
             }
         });
 
-        return view;
     }
 
+    private void getUpdateData(){
+
+        updateImagesAdapter = new ViewPageAdapter(getApplicationContext(), mArrayUri);
+        viewPager.getOffscreenPageLimit();
+
+
+        Bundle bundle = getIntent().getExtras();
+        ad_id = getIntent().getStringExtra("foodAdId");
+        String foodAvailability = getIntent().getStringExtra("foodAvailability");
+        String foodDescription = getIntent().getStringExtra("foodDescription");
+        String foodPickUpDetail = getIntent().getStringExtra("foodPickUpDetail");
+        String foodPrice = getIntent().getStringExtra("foodPrice");
+        String foodTitle = getIntent().getStringExtra("foodTitle");
+        String foodType = getIntent().getStringExtra("foodType");
+        String foodTypeCuisine = getIntent().getStringExtra("foodTypeCuisine");
+        foodUploadDateAndTime = getIntent().getStringExtra("foodUploadDateAndTime");
+        String foodPayment = getIntent().getStringExtra("foodPayment");
+        String foodSingleImage = getIntent().getStringExtra("foodSingleImage");
+        listImages = getIntent().getStringArrayListExtra("updateMultipleImagesList");
+        user_id = getIntent().getStringExtra("user_id");
+
+        if(bundle != null){
+
+            if(foodSingleImage != null){
+                imageView.setVisibility(View.VISIBLE);
+                Picasso.get().load(foodSingleImage)
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
+                userUploadFoodModel.setmImageUri(foodSingleImage);
+
+            } else {
+
+                viewPager.setVisibility(View.VISIBLE);
+                mArrayUri.clear();
+                try{
+                    for (int i = 0; i < listImages.size(); i++) {
+                        Uri tem_uri = Uri.parse(listImages.get(i));
+                        mArrayUri.add(tem_uri);
+                    }
+
+                    userUploadFoodModel.setmArrayString(listImages);
+                    viewPager.setAdapter(updateImagesAdapter);
+                    updateImagesAdapter.notifyDataSetChanged();
+
+                } catch (Exception e) {
+                    // This will catch any exception, because they are all descended from Exception
+                    System.out.println("Error " + e.getMessage());
+                    Toast.makeText(getApplicationContext(),"Error in multiple images" + e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            editTextTitle.setText(foodTitle);
+            editTextDescription.setText(foodDescription);
+            editTextPickUpDetails.setText(foodPickUpDetail);
+            editTextPrice.setText(foodPrice);
+
+
+            if(cookedFoodRadioBtn.isChecked()){
+                cookedFoodRadioBtn.setChecked(true);
+            } else {
+                rawFoodRadioBtn.setChecked(true);
+            }
+
+            if(paypalOption.isChecked()){
+                paypalOption.setChecked(true);
+                userUploadFoodModel.setPayment("Paypal");
+            } else if(bankTransferOption.isChecked()){
+                bankTransferOption.setChecked(true);
+                userUploadFoodModel.setPayment("Bank Transfer");
+            } else {
+                cashOnDeliveryOption.setChecked(true);
+                userUploadFoodModel.setPayment(" Cash On Delivery");
+            }
+
+            if(foodTypeCuisine != null){
+                int cuisinePositionInSpinner = cuisineAdapter.getPosition(foodTypeCuisine);
+                cuisineTypeSpinner.setSelection(cuisinePositionInSpinner);
+                userUploadFoodModel.setFoodTypeCuisine(foodTypeCuisine);
+            }
+
+            if(foodAvailability != null){
+                int foodLisitngPositionInSpinner = foodListingAdapter.getPosition(foodAvailability);
+                listFoodSpinner.setSelection(foodLisitngPositionInSpinner);
+                userUploadFoodModel.setAvailabilityDays(foodAvailability);
+            }
+        }
+    }
 
     /*Intent Function for Open Gallery*/
     private void selectImagesFromGallery() {
@@ -320,13 +383,12 @@ public class UploadDataFragment extends Fragment {
 
                 }
                 Log.i("listsize", String.valueOf(mArrayUri.size()));
+
                 imageView.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
-                imageViewLayout.setVisibility(View.GONE);
-                buttonLayout.setVisibility(View.GONE);
 
                 RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) viewPagerLayout.getLayoutParams();
-                lp.height = (int) convertDpToPixelInt(300, getContext()); //convert pixel to dp
+                lp.height = (int) convertDpToPixelInt(300, getApplicationContext()); //convert pixel to dp
                 viewPagerLayout.setLayoutParams(lp);
 
                 adapter.notifyDataSetChanged();
@@ -336,19 +398,17 @@ public class UploadDataFragment extends Fragment {
                 Bitmap new_bitmap = null;
                 try {
 
-                    new_bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), mImageUri);
+                    new_bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), mImageUri);
                     imageView.setImageBitmap(new_bitmap);
-                    imageViewLayout.setVisibility(View.GONE);
                     viewPager.setVisibility(View.GONE);
                     imageView.setVisibility(View.VISIBLE);
-                    buttonLayout.setVisibility(View.GONE);
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
                 RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
-                lp.height = (int) convertDpToPixelInt(300, getContext()); //convert pixel to dp
+                lp.height = (int) convertDpToPixelInt(300, getApplicationContext()); //convert pixel to dp
                 viewPagerLayout.setLayoutParams(lp);
 
                 String imagePath = data.getData().getPath();
@@ -357,27 +417,6 @@ public class UploadDataFragment extends Fragment {
         }
     }
 
-    /*Spinner init()*//*
-    private void initCuisineSpinner() {
-
-        Locale[] locale = Locale.getAvailableLocales();
-        ArrayList<String> countries = new ArrayList<String>();
-        String country;
-        for (Locale loc : locale) {
-            country = loc.getDisplayCountry();
-            if (country.length() > 0 && !countries.contains(country)) {
-                countries.add(country);
-            }
-        }
-        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
-
-        ArrayAdapter<String> countries_adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, countries);
-        cuisineTypeSpinner.setAdapter(countries_adapter);
-
-
-
-    }
-*/
     private void initDaysSpinner() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 1; i <= 31; i++) {
@@ -388,7 +427,7 @@ public class UploadDataFragment extends Fragment {
             }
         }
         listFoodSpinner.setItem(Collections.singletonList(days));
-        foodListingAdapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayList);
+        foodListingAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, arrayList);
         //arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         listFoodSpinner.setAdapter(foodListingAdapter);
 
@@ -407,7 +446,6 @@ public class UploadDataFragment extends Fragment {
         });
     }
 
-
     /*Upload Single Image*/
     private void uploadSingleImage() {
 
@@ -425,7 +463,7 @@ public class UploadDataFragment extends Fragment {
                         String url = String.valueOf(uri);
                         Log.i("image Url", url);
                         userUploadFoodModel.setmImageUri(url);
-                        uploadFood();
+                        updateFood();
                     }
                 });
             }
@@ -433,7 +471,7 @@ public class UploadDataFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(), "Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -445,9 +483,10 @@ public class UploadDataFragment extends Fragment {
         });
 
     }
+
     /*Getting File Extension for single Image Uri*/
     private String getFileExtension(Uri uri) {
-        ContentResolver cR = getContext().getContentResolver();
+        ContentResolver cR = getApplicationContext().getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
@@ -455,7 +494,7 @@ public class UploadDataFragment extends Fragment {
     /*Upload Multiple Image*/
     private void uploadMultipleImages() {
 
-        progressDialog = ProgressDialog.show(getContext(), "Posting Data",
+        progressDialog = ProgressDialog.show(UpdateUserFood.this, "Posting Data",
                 "Uploading..", true);
 
         StorageReference ImageFolder = FirebaseStorage.getInstance().getReference("SellerImageFolder").child("Images");
@@ -472,7 +511,7 @@ public class UploadDataFragment extends Fragment {
                     imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            final String url = String.valueOf(uri);
+                            String url = String.valueOf(uri);
                             Log.i("images Url", url);
                             //sData.setUri(mArrayUri);
                             //userUploadFoodModel.setmArrayUri(mArrayUri.get());
@@ -488,7 +527,7 @@ public class UploadDataFragment extends Fragment {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressDialog.dismiss();
-                    Toast.makeText(getContext(), "Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateUserFood.this, "Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -507,45 +546,33 @@ public class UploadDataFragment extends Fragment {
     private void uploadDataWithMultipleImages(){
         userUploadFoodModel.setmArrayString(arrayList);
         progressDialog.cancel();
-        uploadFood();
+        updateFood();
     }
 
     /*Sending Data to DB*/
-    private void uploadFood() {
-
-        String uploadDateTime = DateFormat.getDateTimeInstance()
-                .format(Calendar.getInstance().getTime());
-        userUploadFoodModel.setFoodUploadDateAndTime(uploadDateTime);
+    private void updateFood() {
 
         userUploadFoodModel.setFoodTitle(editTextTitle.getText().toString().trim());
         userUploadFoodModel.setFoodDescription(editTextDescription.getText().toString().trim());
         userUploadFoodModel.setFoodPickUpDetail(editTextPickUpDetails.getText().toString().trim());
         userUploadFoodModel.setFoodPrice(editTextPrice.getText().toString());
+        userUploadFoodModel.setFoodUploadDateAndTime(foodUploadDateAndTime);
+        userUploadFoodModel.setAdId(ad_id);
         userUploadFoodModel.setFoodPostedBy(currentUser);
 
-        userUploadFoodModel.setLatitude(home.curr.latitude);
-        userUploadFoodModel.setLongitude(home.curr.longitude);
+        DatabaseReference userFoodUpdateReference;
+        userFoodUpdateReference = FirebaseDatabase.getInstance().getReference("Food")
+                .child("FoodByUser").child(firebaseAuth.getUid());
+        userFoodUpdateReference.child(ad_id).setValue(userUploadFoodModel);
 
-
-        DatabaseReference userFoodPostingReference;
-        userFoodPostingReference = FirebaseDatabase.getInstance().getReference("Food")
-        .child("FoodByUser").child(firebaseAuth.getUid());
-
-        String pushKey = userFoodPostingReference.push().getKey();
-        userUploadFoodModel.setAdId(pushKey);
-        userFoodPostingReference.child(pushKey).setValue(userUploadFoodModel);
-
-        DatabaseReference allFoodPostingReference;
-        allFoodPostingReference = FirebaseDatabase.getInstance().getReference("Food")
+        DatabaseReference allFoodUpdateReference;
+        allFoodUpdateReference = FirebaseDatabase.getInstance().getReference("Food")
                 .child("FoodByAllUsers");
-        allFoodPostingReference.child(pushKey).setValue(userUploadFoodModel);
+        allFoodUpdateReference.child(ad_id).setValue(userUploadFoodModel);
 
-        Toast.makeText(getContext(), "Food Uploaded", Toast.LENGTH_SHORT).show();
+        Toast.makeText(UpdateUserFood.this, "Food Updated", Toast.LENGTH_SHORT).show();
+        finish();
 
     }
-
-
-
-
 
 }

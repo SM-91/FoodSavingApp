@@ -204,8 +204,11 @@
 
 
                 <LinearLayout
+                    android:id="@+id/btn_layout"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <Button
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -214,10 +217,12 @@
                         android:text="Buy"/>
 
                     <Button
+                        android:id="@+id/chat_button"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Chat" />
+
                 </LinearLayout>
 
 

@@ -1,5 +1,10 @@
 package com.example.foodsharingapplication.products;
 
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -21,7 +27,7 @@ import com.braintreepayments.api.exceptions.InvalidArgumentException;
 import com.braintreepayments.api.models.Authorization;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.extras.Products;
-import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.userOrdersAndUploadedAds.UserOrderAndUploads;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +45,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import com.example.foodsharingapplication.model.User;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PostDetailActivity extends AppCompatActivity {
@@ -60,20 +77,32 @@ public class PostDetailActivity extends AppCompatActivity {
     HashMap<String, String> hashImage;
     private BraintreeFragment mBraintreeFragment;
     private Authorization mAuthorization;
+    FirebaseAuth firebaseAuth;
+
+    User foodPostedBy;
+    String ad_id;
+    String user_id;
+
+    LinearLayout linearLayout;
+
+    Button chatBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
 
+        firebaseAuth = FirebaseAuth.getInstance();
        /* //Action Bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Post");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);*/
 
+
         //Flipper View
         pFlip = findViewById(R.id.viewFlipper);
+        linearLayout = findViewById(R.id.btn_layout);
 
 
         pTitle = findViewById(R.id.titlePost);
@@ -86,6 +115,7 @@ public class PostDetailActivity extends AppCompatActivity {
         pAvailable = findViewById(R.id.availability);
         pCuisineType = findViewById(R.id.cuisineTypePost);
         pPayment = findViewById(R.id.paymentPost);
+        chatBtn = findViewById(R.id.chat_button);
 
         //Shehzad Paypal button Casting start
         btnPayNow = (Button) findViewById(R.id.btnPay);
@@ -104,6 +134,24 @@ public class PostDetailActivity extends AppCompatActivity {
         payment = getIntent().getStringExtra("pay");
         imageString = getIntent().getStringArrayExtra("hashImage");
 
+        //Get Data from Card
+        ad_id = getIntent().getStringExtra("ad_id");
+        title = getIntent().getStringExtra("title");
+        String desc = getIntent().getStringExtra("description");
+        String image = getIntent().getStringExtra("image");
+       // String image2 = getIntent().getStringExtra("image2");
+        String price = getIntent().getStringExtra("price");
+        String time = getIntent().getStringExtra("time");
+        String type = getIntent().getStringExtra("type");
+        String availablity = getIntent().getStringExtra("availability");
+        String cuisineType = getIntent().getStringExtra("cuisineType");
+        String payment = getIntent().getStringExtra("pay");
+        foodPostedBy = getIntent().getParcelableExtra("foodPostedBy");
+
+        //getUser();
+
+        ArrayList<String> imageArray = getIntent().getStringArrayListExtra("imageArray");
+
 
         //Set Data in Views
         pTitle.setText(title);
@@ -118,6 +166,13 @@ public class PostDetailActivity extends AppCompatActivity {
 
         /*if (image == null) {
             for (int i = 0; i < imageString.length; i++) {
+=======
+
+
+        if(image==null) {
+
+            for (int i = 0; i < imageArray.size(); i++) {
+>>>>>>> feature/Shayan
 
                 ImageView imageV = new ImageView(this);
                 //imageV.setLayoutParams(new android.view.ViewGroup.LayoutParams(80,60));
@@ -183,7 +238,7 @@ public class PostDetailActivity extends AppCompatActivity {
                         //JSONObject jsonObject = new JSONObject(paymentDetails);
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                                 .getReference("Orders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Product");
-                        UploadModel uploadModel = new UploadModel();
+                        UserUploadFoodModel uploadModel = new UserUploadFoodModel();
                         uploadModel.setFoodTitle(title);
                         uploadModel.setFoodDescription(desc);
                         uploadModel.setFoodPrice(price);
@@ -217,6 +272,40 @@ public class PostDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Something went wrong WITH PAYPAL_REQ_CODE", Toast.LENGTH_SHORT).show();
 
         }
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent chat_intent = new Intent(PostDetailActivity.this, MessageActivity.class);
+                chat_intent.putExtra("ad_id", ad_id);
+                chat_intent.putExtra("foodTitle", title);
+                chat_intent.putExtra("foodPostedBy",foodPostedBy);
+                startActivity(chat_intent);
+            }
+        });
+
+        DatabaseReference getUserReference;
+        getUserReference = FirebaseDatabase.getInstance().getReference("Food")
+                .child("FoodByAllUsers").child(ad_id);
+        getUserReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                user_id = dataSnapshot.child("foodPostedBy").child("userId").getValue(String.class);
+                if (firebaseAuth.getUid().equals(user_id)) {
+                    linearLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    private void getUser(){
 
 
     }

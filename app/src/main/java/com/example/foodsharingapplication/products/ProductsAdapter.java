@@ -15,7 +15,8 @@ import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.extras.AllProducts;
 import com.example.foodsharingapplication.extras.Products;
 import com.example.foodsharingapplication.extras.productdetails;
-import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.userOrdersAndUploadedAds.UserOrderAndUploads;
 import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
@@ -24,10 +25,10 @@ import java.util.List;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder> {
     private Context mContext;
-    private List<UploadModel> productsList;
+    private List<UserUploadFoodModel> productsList;
 
     Intent intent ;
-    public ProductsAdapter(Context context, List<UploadModel> products) {
+    public ProductsAdapter(Context context, List<UserUploadFoodModel> products) {
 
         mContext = context;
         productsList = products;
@@ -43,7 +44,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
 
     @Override
     public void onBindViewHolder(@NonNull ProductsViewHolder holder, int position) {
-        UploadModel products = productsList.get(position);
+        UserUploadFoodModel products = productsList.get(position);
         intent = new Intent(mContext, UserOrderAndUploads.class);
         final String productTitle;
         final String productDesc;

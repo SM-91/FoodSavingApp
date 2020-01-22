@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.products.ProductsAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +35,7 @@ public class UserOrderAndUploads extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView tag1,tag2;
     private ProductsAdapter allProductsAdapter;
-    private List<UploadModel> productsList;
+    private List<UserUploadFoodModel> productsList;
     private RecyclerView.LayoutManager layoutManager;
     private DatabaseReference mDatabaseRef;
     private FirebaseUser mFirebaseCurrentUser;
@@ -80,7 +81,7 @@ public class UserOrderAndUploads extends AppCompatActivity {
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         for (DataSnapshot productsDataSnapshot : dataSnapshot.getChildren()) {
                                             Log.i("Current UID: ", productsDataSnapshot.toString());
-                                            UploadModel orders = productsDataSnapshot.getValue(UploadModel.class);
+                                            UserUploadFoodModel orders = productsDataSnapshot.getValue(UserUploadFoodModel.class);
                                             if (orders.getRating()==0){
                                                 Toast.makeText(UserOrderAndUploads.this,"please rate the cosine type",Toast.LENGTH_SHORT).show();
 

@@ -1,14 +1,18 @@
 package com.example.foodsharingapplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
 
-public class User {
+public class User implements Parcelable {
+
     private double Latitude;
     private double Longitude;
     private @ServerTimestamp Date timestamp;
-    private UploadModel uploadModel;
+    private UserUploadFoodModel uploadModel;
     private String userId;
     private String userName;
     private String userPhoneNumber;
@@ -24,6 +28,37 @@ public class User {
     private String userCountryDialCode;
     private Boolean userWithFb;
 
+    public User(){
+
+    }
+
+    protected User(Parcel in) {
+        userId = in.readString();
+        userName = in.readString();
+        userEmail = in.readString();
+        userPhoneNumber = in.readString();
+        userProfilePicName = in.readString();
+        userProfilePicUrl = in.readString();
+        sex = in.readString();
+        userDateOfBirth = in.readString();
+        userCountry = in.readString();
+        userCountryCurrency = in.readString();
+        userCountryISO = in.readString();
+        userCountryDialCode = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
     public String getUserId() {
         return userId;
     }
@@ -32,11 +67,11 @@ public class User {
         this.userId = userId;
     }
 
-    public UploadModel getUploadModel() {
+    public UserUploadFoodModel getUploadModel() {
         return uploadModel;
     }
 
-    public void setUploadModel(UploadModel uploadModel) {
+    public void setUploadModel(UserUploadFoodModel uploadModel) {
         this.uploadModel = uploadModel;
     }
 
@@ -112,9 +147,6 @@ public class User {
         this.userDateOfBirth = userDateOfBirth;
     }
 
-    public User(){
-
-    }
     public String getSex() {
         return sex;
     }
@@ -177,5 +209,27 @@ public class User {
     public void setUserPassword(String userPassword) {
 
         this.userPassword = userPassword;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(userId);
+        dest.writeString(userName);
+        dest.writeString(userEmail);
+        dest.writeString(userPhoneNumber);
+        dest.writeString(userProfilePicName);
+        dest.writeString(userProfilePicUrl);
+        dest.writeString(sex);
+        dest.writeString(userDateOfBirth);
+        dest.writeString(userCountry);
+        dest.writeString(userCountryCurrency);
+        dest.writeString(userCountryISO);
+        dest.writeString(userCountryDialCode);
     }
 }
