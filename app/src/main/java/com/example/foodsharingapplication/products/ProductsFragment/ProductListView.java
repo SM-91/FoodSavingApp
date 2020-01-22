@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodsharingapplication.R;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
+import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.products.PostDetailActivity;
@@ -167,9 +169,11 @@ public class ProductListView extends Fragment {
         // ///////////Query to get Data from Firebase and Populate HomePage///////////
 
         Query query = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers");
+
         FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder> firebaseRecyclerAdapter;
         FirebaseRecyclerOptions<UserUploadFoodModel> options =
                 new FirebaseRecyclerOptions.Builder<UserUploadFoodModel>().setQuery(query, UserUploadFoodModel.class).build();
+
 
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserUploadFoodModel, ViewHolder>(options) {
 
@@ -219,11 +223,13 @@ public class ProductListView extends Fragment {
                         intent.putExtra("foodPostedBy",foodPostedBy);
 
                         // Image Setting
-                        //intent.putExtra("image2", myImage2);
+                        //intent.putExtra("image2", hashImage);
                         if (myImage != null) {
                             intent.putExtra("image", myImage);
-                        } else if (hashImage != null) {
-                            intent.getStringArrayExtra("hashImage");
+                        }
+
+                        else if (hashImage != null) {
+                            intent.putExtra("hashImage",hashImage);
                         }
 
                         startActivity(intent);

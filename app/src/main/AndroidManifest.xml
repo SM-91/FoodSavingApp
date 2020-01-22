@@ -3,6 +3,7 @@
     package="com.example.foodsharingapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.hardware.camera" />
@@ -14,6 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".userOrdersAndUploadedAds.UserOrderAndUploads"></activity>
+
         <activity android:name=".products.MessageListActivity" />
         <activity android:name=".products.MessageActivity" />
         <activity android:name=".products.UpdateUserFood" />
@@ -44,6 +47,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--Brain tree Browser switch activity-->
+        <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.example.foodsharingapplication.braintree" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -63,7 +76,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -72,7 +84,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_api_key" />
+            android:value="AIzaSyBnRBQrPHLWAxGe6lvb67YLF1ZMthd1bWc" />
         <meta-data
             android:name="AIzaSyCJiTIWJuH2_y_BhwPp3Kcx0GWu-BRaPzI"
             android:value="@string/google_api_key" />

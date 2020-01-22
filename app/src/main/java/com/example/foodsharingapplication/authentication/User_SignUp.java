@@ -135,7 +135,11 @@ public class User_SignUp extends AppCompatActivity {
             if (isEmailValid(txtUser_Email.getText().toString())) {
                 userData.setUserEmail(txtUser_Email.getText().toString().trim());
                 userEmail = txtUser_Email.getText().toString();
+<<<<<<< HEAD
+                /*firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
+=======
                 *//*firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
+>>>>>>> feature/Shayan
                 firebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -214,6 +218,7 @@ public class User_SignUp extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
                                 //System.out.println("current user id in registerToFirebase "+currentUserid);
                                 //if (!currentUserid.isEmpty()) {
                                 //intent = new Intent(getContext(), HomeActivity.class);
@@ -229,6 +234,14 @@ public class User_SignUp extends AppCompatActivity {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     if (task.isSuccessful()) {
+                                                                        if (firebaseAuth.getCurrentUser().isEmailVerified()){
+                                                                            startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
+                                                                        }
+                                                                        else {
+                                                                            toastMessage("Chuttiyapa is here!");
+                                                                            firebaseAuth.signOut();
+                                                                            startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
+                                                                        }
                                                                         toastMessage("Check your email for verification");
                                                                         startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
                                                                     } else {
@@ -239,6 +252,7 @@ public class User_SignUp extends AppCompatActivity {
                                                 }
                                             }
                                         });
+
                             /*} else {
                                 //do on failure
                                 Toast.makeText(getContext(), "Some Thing went wrong with DB", Toast.LENGTH_SHORT).show();

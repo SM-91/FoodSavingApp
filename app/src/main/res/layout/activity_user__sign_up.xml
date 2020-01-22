@@ -36,49 +36,71 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp">
-
-        <EditText
-            android:id="@+id/firstName_SignUp"
-            android:hint="First Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:inputType="text"
-            android:textColorHighlight="#A2A19F"
-            android:textColorHint="#A2A19F"
-            android:textSize="12sp"
-            android:textColor="#A2A19F" />
-
-
-        <EditText
-            android:id="@+id/lastName_SignUp"
-            android:layout_below="@+id/firstName_SignUp"
-            android:hint="Last Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:inputType="text"
-            android:textColorHighlight="#A2A19F"
-            android:textColorHint="#A2A19F"
-            android:textSize="12sp"
-            android:textColor="#A2A19F" />
-
-        <EditText
-            android:id="@+id/enterEmail_SignUp"
-            android:hint="Email"
-            android:layout_below="@+id/lastName_SignUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:inputType="text"
-            android:textColorHighlight="#A2A19F"
-            android:textColorHint="#A2A19F"
-            android:textSize="12sp"
-            android:textColor="#A2A19F" />
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/enterEmail_SignUp"
+            android:id="@+id/inputfirstName">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/firstName_SignUp"
+                android:hint="First Name"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColorHighlight="#A2A19F"
+                android:textColorHint="#A2A19F"
+                android:textSize="12sp"
+                android:textColor="#A2A19F"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputfirstName"
+            android:id="@+id/inputlastName">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lastName_SignUp"
+                android:hint="Last Name"
+                android:inputType="text"
+                android:layout_below="@+id/enterEmail_SignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColorHighlight="#A2A19F"
+                android:textColorHint="#A2A19F"
+                android:textSize="12sp"
+                android:textColor="#A2A19F"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputlastName"
+            android:id="@+id/inputEmail">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/enterEmail_SignUp"
+                android:hint="Email"
+                android:inputType="text"
+                android:layout_below="@+id/enterEmail_SignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColorHighlight="#A2A19F"
+                android:textColorHint="#A2A19F"
+                android:textSize="12sp"
+                android:textColor="#A2A19F"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hellow"
+                android:textSize="10dp"
+                android:textColor="@color/bt_error_red"
+                android:id="@+id/emailVarificationError"
+                android:visibility="gone"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputEmail"
             android:id="@+id/inputPassword"
             app:errorEnabled="true"
             app:passwordToggleEnabled="true">
@@ -95,19 +117,6 @@
                 android:textColorHint="#A2A19F"
                 android:textSize="12sp"
                 android:textColor="#A2A19F"/>
-            <!--<EditText
-                android:id="@+id/enterPassword_SignUp"
-                android:hint="Password"
-                android:ems="10"
-                android:inputType="textPassword"
-                android:layout_below="@+id/enterEmail_SignUp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColorHighlight="#A2A19F"
-                android:textColorHint="#A2A19F"
-                android:textSize="12sp"
-                android:textColor="#A2A19F" />-->
         </com.google.android.material.textfield.TextInputLayout>
         <EditText
             android:id="@+id/confirmPassword_SignUp"
@@ -166,7 +175,8 @@
             android:layout_centerHorizontal="true"
             android:textColor="#A2A19F"
             android:textSize="15sp"
-            android:background="@drawable/small_button" />
+            android:background="@drawable/small_button"
+            android:clickable="true"/>
 
     </RelativeLayout>
     <TextView

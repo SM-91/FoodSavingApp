@@ -8,14 +8,20 @@ import java.util.HashMap;
 
 public class UserUploadFoodModel {
 
+    //public static final String PAYPAL_CLIENT_ID="AVULyNmcckcTupOFuhbixw6Y9-eLfvfFeIWWA-oWTDoDLmYBywtiJTJLsfEcfhklndSEfIVgMv0DXASr";
+    public static final String PAYPAL_CLIENT_ID="Aft7p51eX-yqZs35DdKeo7zTAHzREns2FbsNtXP9vFSqHRAl0Liyi6lf1IO85DE8hMvWRnHbF1Ri9MsE";
     private String adId;
     private String foodTitle,foodDescription,foodPickUpDetail,foodPrice;
     private String foodType;
     private String foodTypeCuisine;
     private String Payment;
     private String AvailabilityDays;
+    private String paymentDetails;
+    private float rating;
     private User foodPostedBy;
     private String foodUploadDateAndTime;
+    private double latitude;
+    private double longitude;
 
     User user = new User();
 
@@ -44,8 +50,24 @@ public class UserUploadFoodModel {
         this.user = user;
     }
 
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
     public ArrayList<String> getmArrayString() {
         return mArrayString;
+    }
+
+    public String getPaymentDetails() {
+        return paymentDetails;
+    }
+
+    public void setPaymentDetails(String paymentDetails) {
+        this.paymentDetails = paymentDetails;
     }
 
     public void setmArrayString(ArrayList<String> mArrayString) {
@@ -174,5 +196,21 @@ public class UserUploadFoodModel {
 
     public void setFoodUploadDateAndTime(String foodUploadDateAndTime) {
         this.foodUploadDateAndTime = foodUploadDateAndTime;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }
