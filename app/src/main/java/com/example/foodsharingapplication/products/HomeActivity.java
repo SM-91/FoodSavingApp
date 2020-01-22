@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //    LinearLayout slider_linear_layout;
 //    FirebaseDatabase myFirebaseDatabase;
 //    DatabaseReference myRef;
-//    UploadModel uploadModel
+//    UserUploadFoodModel userUploadFoodModel
 
     BottomNavigationView nav_bar;
     FirebaseAuth firebaseAuth;

@@ -85,7 +85,7 @@ public class Authentication_Firebase {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
         userData = user;
-        try {
+     /*   try {
             firebaseAuth.createUserWithEmailAndPassword(user.getUserEmail(), Password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -107,10 +107,6 @@ public class Authentication_Firebase {
                                                 }
                                             }
                                         });
-                            /*} else {
-                                //do on failure
-                                Toast.makeText(getContext(), "Some Thing went wrong with DB", Toast.LENGTH_SHORT).show();
-                            }*/
                             } else {
                                 //do on failure
                                 Toast.makeText(getContext(), "Email Already Exists", Toast.LENGTH_SHORT).show();
@@ -119,7 +115,7 @@ public class Authentication_Firebase {
                     });
         } catch (NullPointerException e) {
             Toast.makeText(context, "Email already exists!", Toast.LENGTH_SHORT).show();
-        }
+        }*/
         System.out.println("Register status in registerToFirebase " + notifyRegistration);
         return notifyRegistration;
 

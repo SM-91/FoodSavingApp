@@ -2,7 +2,6 @@ package com.example.foodsharingapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,11 +17,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.foodsharingapplication.Maps.MapsActivity;
 import com.example.foodsharingapplication.authentication.AuthemnticationFragments.ProfileHomeFragment;
 import com.example.foodsharingapplication.authentication.Authentication_Firebase;
-import com.example.foodsharingapplication.authentication.SignIn;
 import com.example.foodsharingapplication.model.User;
+import com.example.foodsharingapplication.products.MessageListActivity;
 import com.example.foodsharingapplication.products.ProductsFragment.ProductGridView;
 import com.example.foodsharingapplication.products.ProductsFragment.ProductListView;
 import com.example.foodsharingapplication.products.ProductsFragment.UploadDataFragment;
+import com.example.foodsharingapplication.products.UserOrderedFood;
+import com.example.foodsharingapplication.products.UserUploadedFood;
 import com.example.foodsharingapplication.userOrdersAndUploadedAds.UserOrderAndUploads;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -32,7 +33,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -87,18 +87,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         /*Log.i("auth.getUserName: ", firebaseAuth.getCurrentUser().getDisplayName());
         Log.i("auth.getUserEmail: ", firebaseAuth.getCurrentUser().getEmail());*/
         //firebaseAuth.getCurrentUser().getPhotoUrl();
-        if (firebaseAuth.getCurrentUser()!=null){
-            txtHeaderEmail.setText(firebaseAuth.getCurrentUser().getEmail().toString());
+        if (firebaseAuth.getCurrentUser() != null) {
+            txtHeaderEmail.setText(firebaseAuth.getCurrentUser().getEmail());
+            txtHeaderName.setText(firebaseAuth.getCurrentUser().getDisplayName());
             firebaseDatabaseRef.child(firebaseAuth.getCurrentUser().getUid())
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             userData = dataSnapshot.getValue(User.class);
-                            if (!userData.getUserEmail().isEmpty()){
+                            if (!userData.getUserEmail().equals(null)) {
                                 txtHeaderEmail.setText(userData.getUserEmail());
                             }
 
-                            if (!userData.getUserName().isEmpty()){
+                            if (!userData.getUserName().equals(null)) {
                                 txtHeaderName.setText(userData.getUserName());
                             }
                             //String profilePicUrl = userData.getUserProfilePicUrl();
@@ -127,6 +128,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         //.setCustomAnimations(R.anim.slide_in,R.anim.slide_out)
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in, R.anim.slide_out).replace(R.id.fragment_container, new ProductGridView()).commit();
                         return true;
+
+                    case R.id.list:
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in, R.anim.slide_out).replace(R.id.fragment_container, new ProductListView()).commit();
+                        return true;
+
                     case R.id.add:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in, R.anim.slide_out).replace(R.id.fragment_container, new UploadDataFragment()).commit();
                         return true;
@@ -200,13 +206,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 //startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
                 break;
 
+            case R.id.myOrders:
+                startActivity(new Intent(HomeActivity.this, UserOrderedFood.class));
+
+                break;
+
+            case R.id.myAds:
+                Intent intent = new Intent(HomeActivity.this, UserUploadedFood.class);
+                startActivity(intent);
+                //getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in, R.anim.slide_out).replace(R.id.fragment_container, new ProfileHomeFragment()).commit();
+                //nav_bar.setVisibility(View.GONE);
+                //startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                break;
+
+            case R.id.messages:
+                Intent viewMessage = new Intent(HomeActivity.this, MessageListActivity.class);
+                startActivity(viewMessage);
+                //nav_bar.setVisibility(View.GONE);
+                //startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                break;
+
+
             case R.id.signOut:
                 firebaseAuth.signOut();
                 startActivity(new Intent(HomeActivity.this, HomeDefinition.class));
-
-                break;
-            case R.id.myOrders:
-                startActivity(new Intent(HomeActivity.this, UserOrderAndUploads.class));
 
                 break;
             /*case R.id.updateProfile:

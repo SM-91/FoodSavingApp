@@ -1,24 +1,18 @@
-package com.example.foodsharingapplication.userOrdersAndUploadedAds;
+package com.example.foodsharingapplication.products;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodsharingapplication.Adapters.UserUploadedFoodAdapter;
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
-import com.example.foodsharingapplication.products.PostDetailActivity;
-import com.example.foodsharingapplication.products.ProductsAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,56 +24,45 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserOrderAndUploads extends AppCompatActivity implements View.OnClickListener {
+public class UserOrderedFood extends AppCompatActivity implements UserUploadedFoodAdapter.ItemClickListener {
+
+
     private RecyclerView recyclerView;
-    private TextView tag1, tag2;
-    private ProductsAdapter allProductsAdapter;
+    private UserUploadedFoodAdapter userUploadedFoodAdapter;
     private List<UserUploadFoodModel> orderList;
-    private RecyclerView.LayoutManager layoutManager;
     private DatabaseReference mDatabaseRef;
     private FirebaseUser mFirebaseCurrentUser;
-    private RatingBar ratingBar;
-    private String userId, productTitle, productPrice, ad_id;
-    private float barRating;
+    private String ad_id;
     private UserUploadFoodModel orders;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_slider);
-        recyclerView = findViewById(R.id.slider_recycler_view);
-        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        tag1 = findViewById(R.id.tag1);
-        tag2 = findViewById(R.id.tag2);
-        recyclerView.setHasFixedSize(true);
-        //txtAddProduct=(Button) findViewById(R.id.txtAddProduct);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
+        setContentView(R.layout.activity_user_uploaded_food);
+        recyclerView = findViewById(R.id.userAdsRecyclerView);
         ad_id = getIntent().getStringExtra("ad_id");
-        //Changing Tags according to own requirement start
-        tag1.setText("My Orders");
-        tag2.setText("My Ads");
-
-        //Changing Tags according to own requirement end
 
         orderList = new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        userUploadedFoodAdapter = new UserUploadedFoodAdapter(UserOrderedFood.this, orderList);
+        userUploadedFoodAdapter.setClickListener(this);
+
         mFirebaseCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase.getInstance()
                 .getReference("Orders").child(mFirebaseCurrentUser.getUid()).child("Product")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                       for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                           orders = ds.getValue(UserUploadFoodModel.class);
+                            orders = ds.getValue(UserUploadFoodModel.class);
 
-                           Log.i("current Order: ", ds.getKey());
-                           orderList.add(orders);
-                           allProductsAdapter = new ProductsAdapter(UserOrderAndUploads.this, orderList);
-                           recyclerView.setAdapter(allProductsAdapter);
-                       }
+                            orderList.add(orders);
+                            Log.i("current Order: ",userUploadedFoodAdapter.toString());
+                            recyclerView.setAdapter(userUploadedFoodAdapter);
+                        }
                     }
 
                     @Override
@@ -92,10 +75,23 @@ public class UserOrderAndUploads extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onClick(View v) {
-        UserUploadFoodModel clickedUserFoodModel = (UserUploadFoodModel) v.getTag();
-        Intent intent = new Intent(this, PostDetailActivity.class);
-        intent.putExtra("orders", clickedUserFoodModel);
+    public void onItemClick(View view, int position) {
+        /*UserUploadFoodModel clickedUserFoodModel = (UserUploadFoodModel) view.getTag();
+        Intent intent1 = new Intent(this, PostDetailActivity.class);
+        intent1.putExtra("orders", clickedUserFoodModel);
+        startActivity(intent1);*/
+
+
+        Intent intent = new Intent(UserOrderedFood.this, UserOrderedFoodDetails.class);
+        orders = userUploadedFoodAdapter.getItem(position);
+        intent.putExtra("FoodAdID", orders.getAdId());
+        intent.putExtra("FoodTitle", orders.getFoodTitle());
+        intent.putExtra("FoodType", orders.getFoodType());
+        intent.putExtra("FoodCuisineType", orders.getFoodTypeCuisine());
+        intent.putExtra("FoodDescription", orders.getFoodDescription());
+        intent.putExtra("FoodPrice", orders.getFoodPrice());
+        intent.putExtra("FoodSingleImage", orders.getmImageUri());
+        intent.putExtra("FoodMultipleImages", orders.getmArrayString());
         startActivity(intent);
     }
 

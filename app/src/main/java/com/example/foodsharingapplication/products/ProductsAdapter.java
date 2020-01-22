@@ -15,7 +15,8 @@ import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.extras.AllProducts;
 import com.example.foodsharingapplication.extras.Products;
 import com.example.foodsharingapplication.extras.productdetails;
-import com.example.foodsharingapplication.model.UploadModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.userOrdersAndUploadedAds.UserOrderAndUploads;
 import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
@@ -24,10 +25,11 @@ import java.util.List;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder> {
     private Context mContext;
-    private List<UploadModel> productsList;
+    private List<UserUploadFoodModel> productsList;
+    private View.OnClickListener listener;
 
     Intent intent ;
-    public ProductsAdapter(Context context, List<UploadModel> products) {
+    public ProductsAdapter(Context context, List<UserUploadFoodModel> products) {
 
         mContext = context;
         productsList = products;
@@ -43,7 +45,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
 
     @Override
     public void onBindViewHolder(@NonNull ProductsViewHolder holder, int position) {
-        UploadModel products = productsList.get(position);
+        UserUploadFoodModel products = productsList.get(position);
         intent = new Intent(mContext, UserOrderAndUploads.class);
         final String productTitle;
         final String productDesc;
@@ -64,7 +66,10 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
             holder.productPrice.setText(String.valueOf(productPrice));
             intent.putExtra("pPrice", productPrice);
 
-        if (holder.productName != null) {
+        holder.itemView.setTag(products);
+        holder.itemView.setOnClickListener(listener);
+
+        /*if (holder.productName != null) {
             holder.productName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,9 +78,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
                     v.getContext().startActivity(intent);
                 }
             });
-        }
+        }*/
 
     }
+
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
+
 
     @Override
     public int getItemCount() {

@@ -15,14 +15,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".userOrdersAndUploadedAds.UserOrderAndUploads"></activity>
+        <activity android:name=".products.UserOrderedFood"/>
+        <activity android:name=".products.MessageListActivity" />
+        <activity android:name=".products.MessageActivity" />
+        <activity android:name=".products.UpdateUserFood" />
+        <activity android:name=".products.UserOrderedFoodDetails" />
+        <activity android:name=".products.UserUploadedFoodDetails" />
+        <activity android:name=".products.UserUploadedFood" />
         <activity android:name=".authentication.AuthemnticationFragments.ProfileActivity" />
         <activity android:name=".authentication.User_SignUp" />
         <activity android:name=".extras.productdetails" />
         <activity android:name=".extras.showproducts" />
         <activity android:name=".extras.uploadproduct" />
         <activity android:name=".userProfile.UserProfile" />
-        <activity android:name=".authentication.forgetPassword" /> <!-- <activity android:name=".authentication.FinalSignUp" /> -->
+        <activity android:name=".authentication.forgetPassword" />
         <activity android:name=".products.PostDetailActivity" />
         <activity android:name=".Maps.MapsActivity" />
         <activity android:name=".Dashboard" />
@@ -52,16 +58,6 @@
             </intent-filter>
         </activity>
 
-
-
-        <!--
-<activity
-            android:name=".extras.Register"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        -->
-        <!-- <activity android:name=".MainLogin" /> -->
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -83,9 +79,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_key" />
