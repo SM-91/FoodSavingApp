@@ -11,10 +11,21 @@ import java.util.HashMap;
 public class UserUploadFoodModel implements Parcelable {
 
     //public static final String PAYPAL_CLIENT_ID="AVULyNmcckcTupOFuhbixw6Y9-eLfvfFeIWWA-oWTDoDLmYBywtiJTJLsfEcfhklndSEfIVgMv0DXASr";
-    public static final String PAYPAL_CLIENT_ID="Aft7p51eX-yqZs35DdKeo7zTAHzREns2FbsNtXP9vFSqHRAl0Liyi6lf1IO85DE8hMvWRnHbF1Ri9MsE";
+    public static final String PAYPAL_CLIENT_ID = "Aft7p51eX-yqZs35DdKeo7zTAHzREns2FbsNtXP9vFSqHRAl0Liyi6lf1IO85DE8hMvWRnHbF1Ri9MsE";
+    public static final Creator<UserUploadFoodModel> CREATOR = new Creator<UserUploadFoodModel>() {
+        @Override
+        public UserUploadFoodModel createFromParcel(Parcel in) {
+            return new UserUploadFoodModel(in);
+        }
 
+        @Override
+        public UserUploadFoodModel[] newArray(int size) {
+            return new UserUploadFoodModel[size];
+        }
+    };
+    User user = new User();
     private String adId;
-    private String foodTitle,foodDescription,foodPickUpDetail,foodPrice;
+    private String foodTitle, foodDescription, foodPickUpDetail, foodPrice;
     private String foodType;
     private String foodTypeCuisine;
     private String Payment;
@@ -23,17 +34,13 @@ public class UserUploadFoodModel implements Parcelable {
     private float rating;
     private User foodPostedBy;
     private String foodUploadDateAndTime;
-
-    User user = new User();
-
-    private HashMap<String,String> hashMap;
-
+    private double latitude, longitude;
+    private HashMap<String, String> hashMap;
     private ArrayList<String> mArrayString;
     private ArrayList<Uri> mArrayUri;
     private String mImageUri;
 
-
-    public UserUploadFoodModel(){
+    public UserUploadFoodModel() {
 
     }
 
@@ -50,20 +57,6 @@ public class UserUploadFoodModel implements Parcelable {
         AvailabilityDays = parcel.readString();
     }
 
-    public static final Creator<UserUploadFoodModel> CREATOR = new Creator<UserUploadFoodModel>() {
-        @Override
-        public UserUploadFoodModel createFromParcel(Parcel in) {
-            return new UserUploadFoodModel(in);
-        }
-
-        @Override
-        public UserUploadFoodModel[] newArray(int size) {
-            return new UserUploadFoodModel[size];
-        }
-    };
-
-
-
     public float getRating() {
         return rating;
     }
@@ -76,16 +69,16 @@ public class UserUploadFoodModel implements Parcelable {
         return mArrayString;
     }
 
+    public void setmArrayString(ArrayList<String> mArrayString) {
+        this.mArrayString = mArrayString;
+    }
+
     public String getPaymentDetails() {
         return paymentDetails;
     }
 
     public void setPaymentDetails(String paymentDetails) {
         this.paymentDetails = paymentDetails;
-    }
-
-    public void setmArrayString(ArrayList<String> mArrayString) {
-        this.mArrayString = mArrayString;
     }
 
     public String getAdId() {
@@ -101,9 +94,9 @@ public class UserUploadFoodModel implements Parcelable {
     }
 
     public void setFoodTitle(String foodTitle) {
-        if(foodTitle.trim().equals("")){
+        if (foodTitle.trim().equals("")) {
             this.foodTitle = "No title";
-        }else {
+        } else {
             this.foodTitle = foodTitle;
         }
     }
@@ -168,7 +161,7 @@ public class UserUploadFoodModel implements Parcelable {
         return mArrayUri;
     }
 
-    public void setmArrayUri(ArrayList<Uri>  mArrayUri) {
+    public void setmArrayUri(ArrayList<Uri> mArrayUri) {
         this.mArrayUri = mArrayUri;
     }
 
@@ -212,6 +205,22 @@ public class UserUploadFoodModel implements Parcelable {
         this.foodUploadDateAndTime = foodUploadDateAndTime;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -228,5 +237,7 @@ public class UserUploadFoodModel implements Parcelable {
         dest.writeString(foodTypeCuisine);
         dest.writeString(Payment);
         dest.writeString(AvailabilityDays);
+
     }
+
 }

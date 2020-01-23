@@ -6,7 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:background="#fff"
-    tools:context=".authentication.User_SignUp">
+    tools:context=".authentication.User_SignUp"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
 
     <ImageView
@@ -140,20 +142,18 @@
             android:layout_below="@id/confirmPassword_SignUp"
             android:layout_marginTop="10dp"
             android:padding="5dp">
-            <ImageView
-                android:id="@+id/profileImgView_SignUp"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentLeft="true"
-                android:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnChoose_SignUp"
                 android:layout_width="60dp"
                 android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
                 android:background="@drawable/ic_camera_alt_black_24dp" />
+            <ImageView
+                android:id="@+id/profileImgView_SignUp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnUpload_SignUp"

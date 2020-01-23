@@ -18,6 +18,8 @@ import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.products.PostDetailActivity;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.products.ProductsAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +37,7 @@ public class UserOrderAndUploads extends AppCompatActivity implements View.OnCli
     private TextView tag1, tag2;
     private ProductsAdapter allProductsAdapter;
     private List<UserUploadFoodModel> orderList;
+    private List<UserUploadFoodModel> productsList;
     private RecyclerView.LayoutManager layoutManager;
     private DatabaseReference mDatabaseRef;
     private FirebaseUser mFirebaseCurrentUser;
@@ -80,6 +83,50 @@ public class UserOrderAndUploads extends AppCompatActivity implements View.OnCli
                            allProductsAdapter = new ProductsAdapter(UserOrderAndUploads.this, orderList);
                            recyclerView.setAdapter(allProductsAdapter);
                        }
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                            if (mFirebaseCurrentUser.getUid().equals(ds.getKey())) {
+
+                                Log.i("current Order: ", mFirebaseCurrentUser.getUid());
+                                mDatabaseRef = FirebaseDatabase.getInstance()
+                                        .getReference("Orders").child(mFirebaseCurrentUser.getUid());
+                                mDatabaseRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot productsDataSnapshot : dataSnapshot.getChildren()) {
+                                            Log.i("Current UID: ", productsDataSnapshot.toString());
+                                            UserUploadFoodModel orders = productsDataSnapshot.getValue(UserUploadFoodModel.class);
+                                            if (orders.getRating()==0){
+                                                Toast.makeText(UserOrderAndUploads.this,"please rate the cosine type",Toast.LENGTH_SHORT).show();
+
+                                                //send a code to user on payment completion in PostDetailsActivity
+                                                //if seller has also inserted this code into app by asking from buyer then
+                                                //show rating bar as ratingbar.setvisibility(visible)
+                                                ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                                                    @Override
+                                                    public void onRatingChanged(RatingBar ratingBar1, float rating, boolean fromUser) {
+                                                        Toast.makeText(UserOrderAndUploads.this,""+rating,Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                                //saveRating();
+                                            }
+                                            productsList.add(orders);
+                                            allProductsAdapter = new ProductsAdapter(UserOrderAndUploads.this, productsList);
+                                            recyclerView.setAdapter(allProductsAdapter);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        Toast.makeText(UserOrderAndUploads.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+                            } else {
+                                Toast.makeText(UserOrderAndUploads.this, "please order first", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
 
                     @Override

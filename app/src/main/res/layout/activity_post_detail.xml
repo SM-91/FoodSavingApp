@@ -20,20 +20,11 @@
 
         <ViewFlipper
             android:id="@+id/viewFlipper"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:background="@color/colorImageViewBackground"
             android:layout_height="300dp">
 
-            <ImageView
-                android:id="@+id/imagePost"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/loading"/>
-            <ImageView
-                android:id="@+id/imagePost2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/loading"/>
+
         </ViewFlipper>
 
 

@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".products.UserOrderedFood"/>
+        <activity android:name=".userOrdersAndUploadedAds.UserOrderAndUploads"></activity>
         <activity android:name=".products.MessageListActivity" />
         <activity android:name=".products.MessageActivity" />
         <activity android:name=".products.UpdateUserFood" />
@@ -81,7 +82,7 @@
             android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_api_key" />
+            android:value="AIzaSyBnRBQrPHLWAxGe6lvb67YLF1ZMthd1bWc" />
         <meta-data
             android:name="AIzaSyCJiTIWJuH2_y_BhwPp3Kcx0GWu-BRaPzI"
             android:value="@string/google_api_key" />
