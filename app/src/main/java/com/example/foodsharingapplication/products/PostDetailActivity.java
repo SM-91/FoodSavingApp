@@ -139,7 +139,7 @@ public class PostDetailActivity extends AppCompatActivity {
         title = getIntent().getStringExtra("title");
         String desc = getIntent().getStringExtra("description");
         String image = getIntent().getStringExtra("image");
-       // String image2 = getIntent().getStringExtra("image2");
+        // String image2 = getIntent().getStringExtra("image2");
         String price = getIntent().getStringExtra("price");
         String time = getIntent().getStringExtra("time");
         String type = getIntent().getStringExtra("type");
@@ -162,7 +162,7 @@ public class PostDetailActivity extends AppCompatActivity {
         pAvailable.setText(availablity);
         pCuisineType.setText(cuisineType);
         pPayment.setText(payment);
-       // Log.i("imagesString[]: ", imageString.length);
+        // Log.i("imagesString[]: ", imageString.length);
 
         /*if (image == null) {
             for (int i = 0; i < imageString.length; i++) {
@@ -186,8 +186,8 @@ public class PostDetailActivity extends AppCompatActivity {
             Picasso.get().load(image).into(pImage);
         }*/
         // Picasso.get().load(image2).into(pImage2);
-        Intent intentPaypal=new Intent(PostDetailActivity.this, PayPalService.class);
-        intentPaypal.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,payPalConfiguration);
+        Intent intentPaypal = new Intent(PostDetailActivity.this, PayPalService.class);
+        intentPaypal.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, payPalConfiguration);
         startService(intentPaypal);
 
         /*Animation out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
@@ -195,7 +195,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
 
         pFlip.setAutoStart(true);
-       // pFlip.setInAnimation(in);
+        // pFlip.setInAnimation(in);
         //pFlip.setOutAnimation(out);
         pFlip.setFlipInterval(3000);
         //Shehzad Paypal Acting functionality called on click start
@@ -206,6 +206,36 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         });
         //Shehzad Paypal Acting functionality called on click end
+
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent chat_intent = new Intent(PostDetailActivity.this, MessageActivity.class);
+                chat_intent.putExtra("ad_id", ad_id);
+                chat_intent.putExtra("foodTitle", title);
+                chat_intent.putExtra("foodPostedBy", foodPostedBy);
+                startActivity(chat_intent);
+            }
+        });
+
+        DatabaseReference getUserReference;
+        getUserReference = FirebaseDatabase.getInstance().getReference("Food")
+                .child("FoodByAllUsers").child(ad_id);
+        getUserReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                user_id = dataSnapshot.child("foodPostedBy").child("userId").getValue(String.class);
+                if (firebaseAuth.getUid().equals(user_id)) {
+                    linearLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -273,42 +303,9 @@ public class PostDetailActivity extends AppCompatActivity {
 
         }
 
-        chatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent chat_intent = new Intent(PostDetailActivity.this, MessageActivity.class);
-                chat_intent.putExtra("ad_id", ad_id);
-                chat_intent.putExtra("foodTitle", title);
-                chat_intent.putExtra("foodPostedBy",foodPostedBy);
-                startActivity(chat_intent);
-            }
-        });
-
-        DatabaseReference getUserReference;
-        getUserReference = FirebaseDatabase.getInstance().getReference("Food")
-                .child("FoodByAllUsers").child(ad_id);
-        getUserReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                user_id = dataSnapshot.child("foodPostedBy").child("userId").getValue(String.class);
-                if (firebaseAuth.getUid().equals(user_id)) {
-                    linearLayout.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
     }
 
-    private void getUser(){
 
-
-    }
 
    /* @Override
     public void onActivityResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

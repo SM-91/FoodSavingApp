@@ -1,4 +1,4 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,14 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.extras.AllProducts;
-import com.example.foodsharingapplication.extras.Products;
-import com.example.foodsharingapplication.extras.productdetails;
-import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.userOrdersAndUploadedAds.UserOrderAndUploads;
-import com.google.firebase.firestore.auth.User;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

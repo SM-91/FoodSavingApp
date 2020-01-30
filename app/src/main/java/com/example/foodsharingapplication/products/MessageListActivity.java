@@ -42,9 +42,6 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_message_list);
 
         myId = FirebaseAuth.getInstance().getUid();
-
-
-
         rvMessageList = findViewById(R.id.rvMessageList);
         rvMessageList.setLayoutManager(new LinearLayoutManager(this));
 

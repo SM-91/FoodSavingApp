@@ -2,7 +2,6 @@ package com.example.foodsharingapplication.userOrdersAndUploadedAds;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,10 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
-import com.example.foodsharingapplication.model.UserUploadFoodModel;
-import com.example.foodsharingapplication.products.ProductsAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.foodsharingapplication.Adapters.ProductsAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,8 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.view.View.VISIBLE;
 
 public class UserOrderAndUploads extends AppCompatActivity {
     private RecyclerView recyclerView;

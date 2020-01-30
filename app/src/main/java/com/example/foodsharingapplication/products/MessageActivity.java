@@ -113,13 +113,6 @@ public class MessageActivity extends AppCompatActivity {
         chatModel.setReciever(receiver);
         chatModel.setFoodName(food_name);
 
-    /*    HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("foodAdId", ad_id);
-        hashMap.put("foodName", food_name);
-        hashMap.put("sender", this.sender);
-        hashMap.put("reciever", this.receiver);
-        hashMap.put("message", message);*/
-
         DatabaseReference sendMessageReference = FirebaseDatabase.getInstance().getReference("Messages");
         sendMessageReference.child(ad_id).push().setValue(chatModel);
     }

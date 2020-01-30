@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in, R.anim.slide_out).replace(R.id.fragment_container, new ProductListView()).commit();
         getLocationPermission();
         getDeviceLocation();
+
         userData = new User();
         authentication_firebase = new Authentication_Firebase(getApplicationContext());
 
@@ -297,10 +298,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             mLastKnownLocation = task.getResult();
                             curr=new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
                             Log.e(TAG,"current1"+curr);
-
-
-
-
 
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
