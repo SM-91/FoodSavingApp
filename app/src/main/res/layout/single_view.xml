@@ -67,7 +67,8 @@
                             android:scaleType="centerCrop"
                             card_view:srcCompat="@drawable/ic_favorite_border_black_24dp"
                             tools:visibility="visible"
-                            android:clickable="true"/>
+                            android:clickable="true"
+                            tools:ignore="VectorDrawableCompat" />
                     </LinearLayout>
 
                     <LinearLayout

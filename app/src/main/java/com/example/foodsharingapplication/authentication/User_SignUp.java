@@ -62,6 +62,7 @@ public class User_SignUp extends AppCompatActivity {
     private String firbaseEmail;
     private ArrayList<String> arrayListEmail;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +103,7 @@ public class User_SignUp extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(User_SignUp.this, SignIn.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -114,6 +116,12 @@ public class User_SignUp extends AppCompatActivity {
     }
 
     private void RegisterUser() {
+        /*if (!uploadImage().isEmpty()){
+            userData.setUserProfilePicUrl(uploadImage());
+        }
+        else {
+            toastMessage("Error in uploading picture ");
+        }*/
 
         if (TextUtils.isEmpty(txtUser_FirstName.getText().toString())) {
 
@@ -128,9 +136,7 @@ public class User_SignUp extends AppCompatActivity {
         } else {
             userFullName = txtUser_FirstName.getText().toString() + " " + txtUser_LastName.getText().toString();
             userData.setUserName(userFullName);
-            //intent.putExtra("name", fName.getText().toString() + lName.getText().toString());
         }
-        /*isEmailValid*/
 
         if (!TextUtils.isEmpty(txtUser_Email.getText().toString())) {
             if (isEmailValid(txtUser_Email.getText().toString())) {
@@ -153,9 +159,6 @@ public class User_SignUp extends AppCompatActivity {
                 if (!TextUtils.isEmpty(txtUser_ConfirmPassword.getText().toString())) {
 
                     if (txtUser_Password.getText().toString().equals(txtUser_ConfirmPassword.getText().toString())) {
-
-                        //intent.putExtra("uPassword", pass.getText().toString().trim());
-                        //userData.setUserPassword(txtUser_Password.getText().toString().trim());
                         userPassword = txtUser_Password.getText().toString().trim();
 
                     } else {
@@ -196,7 +199,6 @@ public class User_SignUp extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     userData.setUserId(firebaseAuth.getCurrentUser().getUid());
                                     if (!userData.getUserName().isEmpty()) {
-
                                         firebaseDatabaseRef.child(userData.getUserId()).setValue(userData)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
@@ -209,20 +211,20 @@ public class User_SignUp extends AppCompatActivity {
                                                                             if (task.isSuccessful()) {
                                                                                 if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                                                                                     startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
-                                                                                    uploadImage();
+                                                                                    finish();
                                                                                 } else {
-                                                                                    toastMessage("Chuttiyapa is here!");
                                                                                     firebaseAuth.signOut();
                                                                                     startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
+                                                                                    finish();
                                                                                 }
                                                                                 toastMessage("Check your email for verification");
                                                                                 startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
+                                                                                finish();
                                                                             } else {
                                                                                 toastMessage("Enter a valid email");
                                                                             }
                                                                         }
                                                                     });
-
                                                         }
                                                     }
                                                 });
@@ -242,14 +244,12 @@ public class User_SignUp extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Email or Password can't be empty", Toast.LENGTH_SHORT).show();
             }
+            if (!userData.getUserProfilePicUrl().isEmpty()){
+
+            }
         } catch (NullPointerException e) {
             Toast.makeText(User_SignUp.this, "Email already exists!", Toast.LENGTH_SHORT).show();
         }
-        /*if (authentication_firebase.registerToFirebase(userData, userPassword)) {
-            startActivity(new Intent(User_SignUp.this, HomeActivity.class));
-        } else {
-            toastMessage("Profile cannot be created check your email");
-        }*/
 
     }
 
@@ -271,6 +271,7 @@ public class User_SignUp extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     filePath = data.getData();
                     Picasso.get().load(filePath).centerCrop().resize(90, 90).into(logoImg_SignUp);
+                    uploadImage();
                     btnUser_UploadImage.setVisibility(View.GONE);
                 }
                 break;
@@ -278,6 +279,7 @@ public class User_SignUp extends AppCompatActivity {
                 if (resultCode == RESULT_OK && data.getData() != null) {
                     filePath = data.getData();
                     Picasso.get().load(filePath).centerCrop().resize(90, 90).into(logoImg_SignUp);
+                    uploadImage();
                     btnUser_UploadImage.setVisibility(View.VISIBLE);
                     btnUser_ChooseImage.setVisibility(View.GONE);
                 }
@@ -293,6 +295,7 @@ public class User_SignUp extends AppCompatActivity {
     }
 
     private void uploadImage() {
+        toastMessage("file Path " + filePath.toString());
         if (filePath != null) {
             final StorageReference ref = firebaseStorageReference.child(System.currentTimeMillis()
                     + "." + getFileExtension(filePath));
@@ -316,14 +319,20 @@ public class User_SignUp extends AppCompatActivity {
                             downloadUriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    imageUrl = uri.toString();
-                                    Log.e("download url : ", imageUrl);
-                                    userData.setUserProfilePicUrl(imageUrl);
+                                    if (!uri.toString().isEmpty()) {
+                                        imageUrl = uri.toString();
+                                        Log.i("download url1 : ", imageUrl);
+                                        userData.setUserProfilePicUrl(imageUrl);
+                                        //return imageUrl;
+                                    } else {
+                                        toastMessage("Profile picture not uploaded");
+                                    }
                                 }
                             });
                             //imageUrl = Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl().toString();
                             //userData.setUserProfilePicName(name+"_"+email);
-                            //userData.setUserProfilePicUrl(imageUrl);
+                           /* Log.i("download url2 : ", imageUrl);
+                            userData.setUserProfilePicUrl(imageUrl);*/
 
                         }
                     })
@@ -345,6 +354,7 @@ public class User_SignUp extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private boolean isEmailValid(String email) {

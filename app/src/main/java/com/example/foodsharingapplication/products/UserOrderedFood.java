@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodsharingapplication.Adapters.UserUploadedFoodAdapter;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
+import com.example.foodsharingapplication.products.ProductsFragment.ProductGridView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,12 +35,14 @@ public class UserOrderedFood extends AppCompatActivity implements UserUploadedFo
     private FirebaseUser mFirebaseCurrentUser;
     private String ad_id;
     private UserUploadFoodModel orders;
+    private static UserOrderedFood userOrderedFood;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_uploaded_food);
+        userOrderedFood = this;
         recyclerView = findViewById(R.id.userAdsRecyclerView);
         ad_id = getIntent().getStringExtra("ad_id");
 
@@ -70,8 +73,15 @@ public class UserOrderedFood extends AppCompatActivity implements UserUploadedFo
 
                     }
                 });
+    }
 
-
+    public static UserOrderedFood getInstance(){
+        return userOrderedFood;
+    }
+    public void showSearch(UserUploadFoodModel searchResult){
+        orderList.add(searchResult);
+        Log.i("current Order: ",userUploadedFoodAdapter.toString());
+        recyclerView.setAdapter(userUploadedFoodAdapter);
     }
 
     @Override

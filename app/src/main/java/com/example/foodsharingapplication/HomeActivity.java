@@ -26,6 +26,7 @@ import com.example.foodsharingapplication.Maps.MapsActivity;
 import com.example.foodsharingapplication.authentication.AuthemnticationFragments.ProfileHomeFragment;
 import com.example.foodsharingapplication.authentication.Authentication_Firebase;
 import com.example.foodsharingapplication.model.User;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.products.MessageListActivity;
 import com.example.foodsharingapplication.products.ProductsFragment.ProductGridView;
 import com.example.foodsharingapplication.products.ProductsFragment.ProductListView;
@@ -40,8 +41,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -107,9 +112,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //firebaseAuth.getCurrentUser().getPhotoUrl();
         try {
             if (firebaseAuth.getCurrentUser() != null) {
-                txtHeaderEmail.setText(firebaseAuth.getCurrentUser().getEmail());
-                txtHeaderName.setText(firebaseAuth.getCurrentUser().getDisplayName());
-               /* firebaseDatabaseRef.child(firebaseAuth.getCurrentUser().getUid())
+                firebaseDatabaseRef.child(firebaseAuth.getCurrentUser().getUid())
                         .addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -121,10 +124,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                 if (!userData.getUserName().isEmpty()) {
                                     txtHeaderName.setText(userData.getUserName());
                                 }
-                                //String profilePicUrl = userData.getUserProfilePicUrl();
-                           *//* Log.i("auth.getUserName: ", userData.getUserName());
-                            Log.i("auth.getUserEmail: ", firebaseAuth.getCurrentUser().getEmail());*//*
-                                //Picasso.get().load(profilePicUrl).centerCrop().fit().into(headerUserProfilePic);
+                                if (!userData.getUserProfilePicUrl().isEmpty()) {
+                                    Picasso.get().load(userData.getUserProfilePicUrl()).centerCrop().fit().into(headerUserProfilePic);
+                                }
 
                             }
 
@@ -132,7 +134,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
-                        });*/
+                        });
 //            firebaseDatabaseRef.child(firebaseAuth.getCurrentUser().getUid())
 //                    .addValueEventListener(new ValueEventListener() {
 //                        @Override
@@ -217,14 +219,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                String s1 = newText.substring(0, 1).toUpperCase();
-                String nameCapitalized = s1 + newText.substring(1);
-                ProductGridView.getInstance().firebaseSearch(nameCapitalized);
+                String srchTxt = newText.substring(0, 1).toUpperCase();
+                final String querytext = srchTxt + newText.substring(1);
+                ProductGridView.getInstance().firebaseSearch(querytext);
+                firebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()){
+                            UserUploadFoodModel userUploadFoodModel= ds.getValue(UserUploadFoodModel.class);
+                            if (querytext.equals(userUploadFoodModel.getFoodTitle())){
+                                //ProductGridView.getInstance().firebaseSearch(querytext);
+                                UserOrderedFood.getInstance().showSearch(userUploadFoodModel);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 return true;
             }
+
             @Override
             public boolean onQueryTextSubmit(String query) {
-               /* String s1 = query.substring(0, 1).toUpperCase();
+                /*String s1 = query.substring(0, 1).toUpperCase();
                 String nameCapitalized = s1 + query.substring(1);
                 ProductGridView.getInstance().firebaseSearch(nameCapitalized);*/
 

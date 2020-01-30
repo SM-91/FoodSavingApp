@@ -150,6 +150,7 @@ public class User implements Parcelable {
     }
 
     public void setUserProfilePicUrl(String userProfilePicUrl) {
+        System.out.println("user profile pic    "+userProfilePicUrl);
         this.userProfilePicUrl = userProfilePicUrl;
     }
 

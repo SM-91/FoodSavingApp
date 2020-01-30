@@ -120,7 +120,28 @@
                 android:textSize="12sp"
                 android:textColor="#A2A19F"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <EditText
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputPassword"
+            android:id="@+id/inputconfirmPassword_SignUp"
+            app:errorEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPassword_SignUp"
+                android:hint="Confirm Password"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:layout_below="@+id/inputPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColorHighlight="#A2A19F"
+                android:textColorHint="#A2A19F"
+                android:textSize="12sp"
+                android:textColor="#A2A19F"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <!--<EditText
             android:id="@+id/confirmPassword_SignUp"
             android:hint="Confirm Password"
             android:inputType="textPassword"
@@ -132,14 +153,14 @@
             android:textColorHighlight="#A2A19F"
             android:textColorHint="#A2A19F"
             android:textSize="12sp"
-            android:textColor="#A2A19F" />
+            android:textColor="#A2A19F" />-->
 
 
         <RelativeLayout
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/uploadProfilePic"
-            android:layout_below="@id/confirmPassword_SignUp"
+            android:layout_below="@id/inputconfirmPassword_SignUp"
             android:layout_marginTop="10dp"
             android:padding="5dp">
 
