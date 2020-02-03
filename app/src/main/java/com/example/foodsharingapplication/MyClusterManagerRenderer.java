@@ -49,10 +49,13 @@ public class MyClusterManagerRenderer extends DefaultClusterRenderer<ClusterMark
      */
     @Override
     protected void onBeforeClusterItemRendered(ClusterMarker item, MarkerOptions markerOptions) {
-        Picasso.get().load(item.getIconPicture()).into(imageView);
-
+        if(item.getIconPicture()!=null) {
+            Picasso.get().load(item.getIconPicture()).into(imageView);
+        }else{
+            Picasso.get().load(item.getmArrayString()).into(imageView);
+        }
         Bitmap icon = iconGenerator.makeIcon();
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(item.getSnippet()).snippet(item.getSnippet());
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(item.getSnippet());
 
     }
 
