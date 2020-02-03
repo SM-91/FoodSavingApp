@@ -1,4 +1,4 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication.extras;
 
 
 import androidx.annotation.NonNull;
@@ -29,10 +29,12 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
+import com.example.foodsharingapplication.Adapters.ViewPageAdapter;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -63,6 +65,8 @@ public class UploadData extends AppCompatActivity {
 
     /*Buttons*/
     private Button chooseImage, btnChoose, btnSubmit;
+    private SwitchMaterial freeSwitchBtn;
+
 
     /*Image View*/
     ImageView imageView,imgView, mainImageView;
@@ -106,6 +110,8 @@ public class UploadData extends AppCompatActivity {
         viewPagerLayout = (RelativeLayout)findViewById(R.id.test1);
         imageViewLayout = (LinearLayout) findViewById(R.id.imageViewLayout);
         buttonLayout = (LinearLayout) findViewById(R.id.layout_buttons);
+
+        freeSwitchBtn = findViewById(R.id.freeBtn);
 
         /*ViewPager*/
         viewPager = findViewById(R.id.flipperView);
@@ -378,7 +384,7 @@ public class UploadData extends AppCompatActivity {
 
                                 HashMap<String,String> hashMap = new HashMap<>();
                                 hashMap.put("ImgLink",url);
-                                userUploadFoodModel.setHashMap(hashMap);
+                                //userUploadFoodModel.setHashMap(hashMap);
                                 storeLink();
                             }
                         });

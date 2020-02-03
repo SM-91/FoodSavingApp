@@ -2,17 +2,21 @@ package com.example.foodsharingapplication.model;
 
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserUploadFoodModel {
+public class UserUploadFoodModel implements Parcelable {
 
     //public static final String PAYPAL_CLIENT_ID="AVULyNmcckcTupOFuhbixw6Y9-eLfvfFeIWWA-oWTDoDLmYBywtiJTJLsfEcfhklndSEfIVgMv0DXASr";
     public static final String PAYPAL_CLIENT_ID="Aft7p51eX-yqZs35DdKeo7zTAHzREns2FbsNtXP9vFSqHRAl0Liyi6lf1IO85DE8hMvWRnHbF1Ri9MsE";
     private String adId;
     private String foodTitle,foodDescription,foodPickUpDetail,foodPrice;
+    User user = new User();
     private String foodType;
+    private String free;
     private String foodTypeCuisine;
     private String Payment;
     private String AvailabilityDays;
@@ -23,31 +27,38 @@ public class UserUploadFoodModel {
     private double latitude;
     private double longitude;
 
-    User user = new User();
-
-    private HashMap<String,String> hashMap;
-
     private ArrayList<String> mArrayString;
     private ArrayList<Uri> mArrayUri;
     private String mImageUri;
 
+    public static final Creator<UserUploadFoodModel> CREATOR = new Creator<UserUploadFoodModel>() {
+        @Override
+        public UserUploadFoodModel createFromParcel(Parcel in) {
+            return new UserUploadFoodModel(in);
+        }
 
-    public UserUploadFoodModel(){
+        @Override
+        public UserUploadFoodModel[] newArray(int size) {
+            return new UserUploadFoodModel[size];
+        }
+    };
+
+    public UserUploadFoodModel() {
 
     }
 
-    public UserUploadFoodModel(String foodTitle, String foodDescription, String foodPickUpDetail, String foodPrice, String foodType, String foodTypeCuisine, String payment, String availabilityDays, User user) {
+    public UserUploadFoodModel(Parcel parcel) {
 
-        this.foodTitle = foodTitle;
-        this.foodDescription = foodDescription;
-        this.foodPickUpDetail = foodPickUpDetail;
-        this.foodPrice = foodPrice;
-        this.foodType = foodType;
-        this.foodTypeCuisine = foodTypeCuisine;
-        Payment = payment;
-        AvailabilityDays = availabilityDays;
-
-        this.user = user;
+        adId = parcel.readString();
+        foodTitle = parcel.readString();
+        foodDescription = parcel.readString();
+        foodPickUpDetail = parcel.readString();
+        foodPrice = parcel.readString();
+        foodType = parcel.readString();
+        foodTypeCuisine = parcel.readString();
+        Payment = parcel.readString();
+        free = parcel.readString();
+        AvailabilityDays = parcel.readString();
     }
 
     public float getRating() {
@@ -62,16 +73,16 @@ public class UserUploadFoodModel {
         return mArrayString;
     }
 
+    public void setmArrayString(ArrayList<String> mArrayString) {
+        this.mArrayString = mArrayString;
+    }
+
     public String getPaymentDetails() {
         return paymentDetails;
     }
 
     public void setPaymentDetails(String paymentDetails) {
         this.paymentDetails = paymentDetails;
-    }
-
-    public void setmArrayString(ArrayList<String> mArrayString) {
-        this.mArrayString = mArrayString;
     }
 
     public String getAdId() {
@@ -87,9 +98,9 @@ public class UserUploadFoodModel {
     }
 
     public void setFoodTitle(String foodTitle) {
-        if(foodTitle.trim().equals("")){
+        if (foodTitle.trim().equals("")) {
             this.foodTitle = "No title";
-        }else {
+        } else {
             this.foodTitle = foodTitle;
         }
     }
@@ -154,7 +165,7 @@ public class UserUploadFoodModel {
         return mArrayUri;
     }
 
-    public void setmArrayUri(ArrayList<Uri>  mArrayUri) {
+    public void setmArrayUri(ArrayList<Uri> mArrayUri) {
         this.mArrayUri = mArrayUri;
     }
 
@@ -166,13 +177,6 @@ public class UserUploadFoodModel {
         this.mImageUri = mImageUri;
     }
 
-    public HashMap<String, String> getHashMap() {
-        return hashMap;
-    }
-
-    public void setHashMap(HashMap<String, String> hashMap) {
-        this.hashMap = hashMap;
-    }
 
     public User getUser() {
         return user;
@@ -212,5 +216,33 @@ public class UserUploadFoodModel {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getFree() {
+        return free;
+    }
+
+    public void setFree(String free) {
+        this.free = free;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(foodTitle);
+        dest.writeString(foodDescription);
+        dest.writeString(foodPickUpDetail);
+        dest.writeString(foodPrice);
+        dest.writeString(foodType);
+        dest.writeString(foodTypeCuisine);
+        dest.writeString(Payment);
+        dest.writeString(free);
+        dest.writeString(AvailabilityDays);
+
     }
 }

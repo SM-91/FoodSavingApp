@@ -1,4 +1,4 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +11,10 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.example.foodsharingapplication.Adapters.MessageViewAdapter;
-import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.ChatModel;
+import com.example.foodsharingapplication.model.CustomModel;
 import com.example.foodsharingapplication.model.User;
+import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +33,7 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
 
     private Map<String, Boolean> otherUserMap = new HashMap<>();
     List<User> userList = new ArrayList<>();
-
+    private ArrayList<CustomModel> customModelArrayList = new ArrayList<>();
 
     private String myId;
     private String ad_id = " ";
@@ -55,7 +56,7 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
                     String conversationId = snapshot.getKey();
                     if (!TextUtils.isEmpty(conversationId)) {
                         ad_id = conversationId;
-                        getUser();
+                        getProduct();
                     }
                 }
             }
@@ -66,11 +67,28 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+    }
 
+    private void getProduct() {
+        DatabaseReference productReference = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers").child(ad_id);
+        productReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserUploadFoodModel productModel = dataSnapshot.getValue(UserUploadFoodModel.class);
+                if (productModel != null) {
+                    getUser(productModel);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
-    private void getUser(){
+    private void getUser(final UserUploadFoodModel productModel){
         DatabaseReference allChatReference = FirebaseDatabase.getInstance().getReference("Messages").child(ad_id);
 
         //Show Progress Dialog
@@ -92,6 +110,12 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
                         if(!otherUserMap.containsKey(otherUser.getUserId())) {
                             otherUserMap.put(otherUser.getUserId(), true);
                             userList.add(otherUser);
+
+                            CustomModel requestAdapterModel = new CustomModel();
+                            requestAdapterModel.setUser(otherUser);
+                            requestAdapterModel.setChatModel(chatModel);
+                            requestAdapterModel.setUserUploadFoodModel(productModel);
+                            customModelArrayList.add(requestAdapterModel);
                         }
                     }
                 }
@@ -106,7 +130,7 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
 
     }
     private void setRVAdapter() {
-        MessageViewAdapter messageViewAdapter = new MessageViewAdapter(this, userList);
+        MessageViewAdapter messageViewAdapter = new MessageViewAdapter(this, customModelArrayList);
         messageViewAdapter.setOnClickListener(this);
         rvMessageList.setAdapter(messageViewAdapter);
         //userAdapter.notifyDataSetChanged();
@@ -115,11 +139,11 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
 
-        User clickedUserModel = (User) v.getTag();
+        //User clickedUserModel = (User) v.getTag();
+        CustomModel clickedCustomModel = (CustomModel) v.getTag();
         Intent messageIntent = new Intent(MessageListActivity.this, MessageActivity.class);
-        messageIntent.putExtra("foodPostedBy", clickedUserModel);
+        messageIntent.putExtra("foodPostedBy", clickedCustomModel.getUser());
         messageIntent.putExtra("ad_id", ad_id);
         startActivity(messageIntent);
-
     }
 }

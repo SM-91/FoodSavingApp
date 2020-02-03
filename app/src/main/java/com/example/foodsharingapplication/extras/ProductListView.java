@@ -1,4 +1,4 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication.extras;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +16,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodsharingapplication.PostDetailActivity;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
+import com.example.foodsharingapplication.Fragments.ViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,7 +30,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ProductListView extends AppCompatActivity {
 
@@ -158,7 +159,7 @@ public class ProductListView extends AppCompatActivity {
 
                         Intent intent = new Intent(view.getContext(), PostDetailActivity.class);
 
-                        intent.putExtra("ad_id",ad_id);
+                        intent.putExtra("ad_id", ad_id);
                         intent.putExtra("title", myTitle);
                         intent.putExtra("description", myDesc);
                         intent.putExtra("price", myPrice);
@@ -167,7 +168,7 @@ public class ProductListView extends AppCompatActivity {
                         intent.putExtra("cuisineType", myCuisineType);
                         intent.putExtra("pay", pay);
                         intent.putExtra("availability", available);
-                        intent.putExtra("foodPostedBy",foodPostedBy);
+                        intent.putExtra("foodPostedBy", foodPostedBy);
                         // Image Setting
                         intent.putExtra("imageArray", imageArray);
 
@@ -234,7 +235,7 @@ public class ProductListView extends AppCompatActivity {
 
                         Intent intent = new Intent(view.getContext(), PostDetailActivity.class);
 
-                        intent.putExtra("ad_id",ad_id);
+                        intent.putExtra("ad_id", ad_id);
                         intent.putExtra("title", myTitle);
                         intent.putExtra("description", myDesc);
                         intent.putExtra("price", myPrice);
@@ -243,7 +244,7 @@ public class ProductListView extends AppCompatActivity {
                         intent.putExtra("cuisineType", myCuisineType);
                         intent.putExtra("pay", pay);
                         intent.putExtra("availability", available);
-                        intent.putExtra("foodPostedBy",foodPostedBy);
+                        intent.putExtra("foodPostedBy", foodPostedBy);
 
                         // Image Setting
                         intent.putExtra("imageArray", imageArray);

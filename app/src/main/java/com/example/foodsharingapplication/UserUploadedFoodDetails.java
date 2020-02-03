@@ -1,4 +1,4 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,9 +15,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foodsharingapplication.R;
+import com.example.foodsharingapplication.Adapters.ViewPageAdapter;
 import com.example.foodsharingapplication.model.User;
-import com.example.foodsharingapplication.model.UserUploadFoodModel;
+import com.example.foodsharingapplication.extras.UploadData;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +36,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class UserUploadedFoodDetails extends AppCompatActivity {
+
 
     FirebaseAuth firebaseAuth;
 
@@ -70,15 +76,13 @@ public class UserUploadedFoodDetails extends AppCompatActivity {
         uploadData = new UploadData();
         //updateProductFragment = new UpdateProductFragment();
 
-        text_food_title = findViewById(R.id.textview_ad_name);
-        text_food_desc = findViewById(R.id.textview_ad_desc);
-        text_food_availablity = findViewById(R.id.textview_ad_availability);
-        text_food_price = findViewById(R.id.textview_ad_estimated);
-        text_food_type = findViewById(R.id.textview_ad_type);
-        text_food_cuisine_type = findViewById(R.id.textview_ad_cuisine);
-        text_food_pickUpDetails = findViewById(R.id.textview_ad_food_pickup_detail);
-        myRelativeLayout = findViewById(R.id.myAdsLayout);
-
+        text_food_title = findViewById(R.id.titlePost);
+        text_food_desc = findViewById(R.id.descPost);
+        text_food_availablity = findViewById(R.id.availability);
+        text_food_price = findViewById(R.id.pricePost);
+        text_food_type = findViewById(R.id.typePost);
+        text_food_cuisine_type = findViewById(R.id.cuisineTypePost);
+        text_food_pickUpDetails = findViewById(R.id.timePost);
 
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDel = findViewById(R.id.btnDelete);
@@ -105,6 +109,7 @@ public class UserUploadedFoodDetails extends AppCompatActivity {
         String FoodPostedBy = getIntent().getStringExtra("FoodPostedBy");
         String FoodSingleImage = getIntent().getStringExtra("FoodSingleImage");
         multipleImagesList = getIntent().getStringArrayListExtra("FoodMultipleImages");
+
 
         if (bundle != null) {
             if (FoodSingleImage != null) {
@@ -151,42 +156,42 @@ public class UserUploadedFoodDetails extends AppCompatActivity {
                         String foodType = dataSnapshot.child("foodType").getValue(String.class);
                         String foodTypeCuisine = dataSnapshot.child("foodTypeCuisine").getValue(String.class);
                         String foodUploadDateAndTime = dataSnapshot.child("foodType").getValue(String.class);
-                        String foodPayment = dataSnapshot.child("foodPayment").getValue(String.class);
+                        String foodPayment = dataSnapshot.child("payment").getValue(String.class);
                         String foodSingleImage = dataSnapshot.child("mImageUri").getValue(String.class);
 
                         ArrayList<String> updateMultipleImagesList = new ArrayList<>();
                         try {
-                            if(dataSnapshot.child("mArrayString").getValue(String.class) != null){
+                            if (dataSnapshot.child("mArrayString").getValue(String.class) != null) {
 
-                                for(DataSnapshot snapshot : dataSnapshot.child("mArrayString").getChildren()){
+                                for (DataSnapshot snapshot : dataSnapshot.child("mArrayString").getChildren()) {
                                     updateMultipleImagesList.add(snapshot.child("mArrayString").getValue(String.class));
                                 }
                             }
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
-                        if(foodPostedBy != null){
-                            for(DataSnapshot postedBySnapshot : dataSnapshot.child("foodPostedBy").getChildren()){
+                        if (foodPostedBy != null) {
+                            for (DataSnapshot postedBySnapshot : dataSnapshot.child("foodPostedBy").getChildren()) {
                                 user_id = postedBySnapshot.child("userId").getValue(String.class);
                             }
                         }
 
                         Intent intent = new Intent(UserUploadedFoodDetails.this, UpdateUserFood.class);
                         intent.putExtra("foodAdId", foodAdId);
-                        intent.putExtra("foodAvailability",foodAvailability);
-                        intent.putExtra("foodDescription",foodDescription);
-                        intent.putExtra("foodPickUpDetail",foodPickUpDetail);
-                        intent.putExtra("foodPrice",foodPrice);
-                        intent.putExtra("foodTitle",foodTitle);
-                        intent.putExtra("foodType",foodType);
-                        intent.putExtra("foodTypeCuisine",foodTypeCuisine);
-                        intent.putExtra("foodUploadDateAndTime",foodUploadDateAndTime);
-                        intent.putExtra("foodPayment",foodPayment);
-                        intent.putExtra("foodPostedBy",foodPostedBy);
-                        intent.putExtra("foodSingleImage",foodSingleImage);
-                        intent.putExtra("updateMultipleImagesList",updateMultipleImagesList);
-                        intent.putExtra("user_id",user_id);
+                        intent.putExtra("foodAvailability", foodAvailability);
+                        intent.putExtra("foodDescription", foodDescription);
+                        intent.putExtra("foodPickUpDetail", foodPickUpDetail);
+                        intent.putExtra("foodPrice", foodPrice);
+                        intent.putExtra("foodTitle", foodTitle);
+                        intent.putExtra("foodType", foodType);
+                        intent.putExtra("foodTypeCuisine", foodTypeCuisine);
+                        intent.putExtra("foodUploadDateAndTime", foodUploadDateAndTime);
+                        intent.putExtra("foodPayment", foodPayment);
+                        intent.putExtra("foodPostedBy", foodPostedBy);
+                        intent.putExtra("foodSingleImage", foodSingleImage);
+                        intent.putExtra("updateMultipleImagesList", updateMultipleImagesList);
+                        intent.putExtra("user_id", user_id);
                         startActivity(intent);
 
                     }
@@ -219,6 +224,5 @@ public class UserUploadedFoodDetails extends AppCompatActivity {
             }
         });
     }
-
 
 }

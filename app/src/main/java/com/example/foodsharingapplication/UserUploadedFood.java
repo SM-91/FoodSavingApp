@@ -1,4 +1,4 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.foodsharingapplication.Adapters.UserUploadedFoodAdapter;
-import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
-import com.example.foodsharingapplication.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -88,6 +87,7 @@ public class UserUploadedFood extends AppCompatActivity implements UserUploadedF
         String FoodPayment = userUploadFoodModel.getPayment();
         String FoodSingleImage = userUploadFoodModel.getmImageUri();
         ArrayList<String> FoodMultipleImages = userUploadFoodModel.getmArrayString();
+
 
         intent.putExtra("myCurrentDateTime", myCurrentDateTime);
         intent.putExtra("FoodAdID", FoodAdID);

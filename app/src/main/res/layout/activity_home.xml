@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".products.ProductListView">
+    tools:context=".extras.ProductListView">
 
    <!-- <EditText
         android:layout_width="match_parent"
@@ -21,11 +21,43 @@
             android:background="@drawable/ic_action_search"/>
 
     </EditText>-->
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/textview_search_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="Search"
+            android:textColor="#fff"
+            android:textSize="18sp">
+
+        </TextView>
+
+        <SearchView
+            android:id="@+id/search_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:queryHint="Search by Name">
+
+        </SearchView>
+
+    </LinearLayout>
 
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_recycler_view"
+        android:layout_below="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"

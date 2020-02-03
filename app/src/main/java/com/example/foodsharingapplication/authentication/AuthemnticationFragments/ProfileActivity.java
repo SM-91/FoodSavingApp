@@ -35,7 +35,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         userName= (TextView) findViewById(R.id.showUserName);
         userEmail= (TextView) findViewById(R.id.showUserEmail);
-        userPassword= (TextView) findViewById(R.id.showUserPassword);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -64,8 +63,8 @@ public class ProfileActivity extends AppCompatActivity {
                     Log.i(" getUserProfilePicUrl ", userData.getUserProfilePicUrl());
                     userName.setText(userData.getUserName().toString());
                 }
-               userName.setText(userData.getUserName());
-               userEmail.setText(userData.getUserEmail());
+                userName.setText(userData.getUserName());
+                userEmail.setText(userData.getUserEmail());
 
             }
 

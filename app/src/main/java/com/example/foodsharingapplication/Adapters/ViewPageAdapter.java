@@ -1,4 +1,4 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication.Adapters;
 
 
 import android.content.Context;
@@ -55,6 +55,11 @@ public class ViewPageAdapter extends PagerAdapter {
         container.addView(imageView);
 
         return imageView;
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication.Fragments;
 
 import android.content.Context;
 import android.view.View;

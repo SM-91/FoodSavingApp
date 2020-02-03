@@ -1,6 +1,5 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication.extras;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -12,17 +11,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.foodsharingapplication.Dashboard;
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.Settings;
-import com.example.foodsharingapplication.authentication.ShowData;
-import com.example.foodsharingapplication.authentication.SignIn;
-import com.example.foodsharingapplication.products.ProductsFragment.ProductGridView;
-import com.example.foodsharingapplication.products.ProductsFragment.ProductListView;
+import com.example.foodsharingapplication.Fragments.ProductGridView;
+import com.example.foodsharingapplication.Fragments.ProductListView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 

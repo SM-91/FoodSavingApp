@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodsharingapplication.HomeActivity;
 import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.squareup.picasso.Picasso;
@@ -76,6 +77,7 @@ public class UserUploadedFoodAdapter extends RecyclerView.Adapter<UserUploadedFo
     public int getItemCount() {
         return userUploadFoodModelList.size();
     }
+
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

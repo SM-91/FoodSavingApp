@@ -1,4 +1,4 @@
-package com.example.foodsharingapplication.products;
+package com.example.foodsharingapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.foodsharingapplication.Adapters.MessageAdapter;
-import com.example.foodsharingapplication.R;
 import com.example.foodsharingapplication.model.ChatModel;
 import com.example.foodsharingapplication.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
@@ -49,14 +47,19 @@ public class MessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        if (getIntent().getExtras() != null) {
+       /* if (getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
             ad_id = bundle.getString("ad_id");
             food_name = bundle.getString("foodTitle");
             receiver = bundle.getParcelable("foodPostedBy");
-        }
+        }*/
+
+        ad_id = getIntent().getStringExtra("ad_id");
+        food_name = getIntent().getStringExtra("product_name");
+        receiver = getIntent().getParcelableExtra("foodPostedBy");
 
         firebaseAuth = FirebaseAuth.getInstance();
+
 
         send_btn = findViewById(R.id.btn_send);
         input_message = findViewById(R.id.text_send);
@@ -88,8 +91,10 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-
-                    if (user.getUserId().equals(firebaseAuth.getUid())) {
+                    String user_id = user.getUserId();
+                    String name = user.getUserName();
+                    Log.i("username",name);
+                    if (firebaseAuth.getUid().equals(user_id)) {
                         sender = user;
                         readMessage();
                     }
@@ -118,7 +123,7 @@ public class MessageActivity extends AppCompatActivity {
     }
 
 
-    private void readMessage(){
+    private void readMessage() {
 
         DatabaseReference readMessageReference;
         readMessageReference = FirebaseDatabase.getInstance().getReference("Messages").child(ad_id);
@@ -134,7 +139,6 @@ public class MessageActivity extends AppCompatActivity {
                                 || (receiver.getUserId().equals(chatModel.getReciever().getUserId()) && sender.getUserId().equals(chatModel.getSender().getUserId()))) {
                             chatModels.add(chatModel);
                         }
-
 
                         if (messageAdapter == null) {
                             messageAdapter = new MessageAdapter(MessageActivity.this, chatModels);

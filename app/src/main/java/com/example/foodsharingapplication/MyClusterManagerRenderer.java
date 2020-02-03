@@ -14,10 +14,10 @@ import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
+import com.squareup.picasso.Picasso;
 
 
-public class MyClusterManagerRenderer extends DefaultClusterRenderer<ClusterMarker>
-{
+public class MyClusterManagerRenderer extends DefaultClusterRenderer<ClusterMarker> {
 
     private final IconGenerator iconGenerator;
     private final ImageView imageView;
@@ -43,15 +43,17 @@ public class MyClusterManagerRenderer extends DefaultClusterRenderer<ClusterMark
 
     /**
      * Rendering of the individual ClusterItems
+     *
      * @param item
      * @param markerOptions
      */
     @Override
     protected void onBeforeClusterItemRendered(ClusterMarker item, MarkerOptions markerOptions) {
+        Picasso.get().load(item.getIconPicture()).into(imageView);
 
-        imageView.setImageResource(item.getIconPicture());
         Bitmap icon = iconGenerator.makeIcon();
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(item.getTitle());
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(item.getSnippet()).snippet(item.getSnippet());
+
     }
 
 
@@ -62,6 +64,7 @@ public class MyClusterManagerRenderer extends DefaultClusterRenderer<ClusterMark
 
     /**
      * Update the GPS coordinate of a ClusterItem
+     *
      * @param clusterMarker
      */
     public void setUpdateMarker(ClusterMarker clusterMarker) {
@@ -71,20 +74,3 @@ public class MyClusterManagerRenderer extends DefaultClusterRenderer<ClusterMark
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

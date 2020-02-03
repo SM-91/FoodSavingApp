@@ -9,8 +9,6 @@ import java.util.Date;
 
 public class User implements Parcelable {
 
-    private double Latitude;
-    private double Longitude;
     private @ServerTimestamp Date timestamp;
     private UserUploadFoodModel uploadModel;
     private String userId;
@@ -77,22 +75,6 @@ public class User implements Parcelable {
 
     public String getUserCountryCurrency() {
         return userCountryCurrency;
-    }
-
-    public double getLatitude() {
-        return Latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        Latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return Longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        Longitude = longitude;
     }
 
     public Date getTimestamp() {
@@ -168,6 +150,7 @@ public class User implements Parcelable {
     }
 
     public void setUserProfilePicUrl(String userProfilePicUrl) {
+        System.out.println("user profile pic    "+userProfilePicUrl);
         this.userProfilePicUrl = userProfilePicUrl;
     }
 

@@ -9,29 +9,59 @@
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/smsp_transparent_color">
 
+        <ImageView
+            android:id="@+id/ad_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_profile" />
 
-        <TextView
+        <RelativeLayout
+            android:id="@+id/inside1"
             android:padding="5dp"
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="username"
-            android:textSize="18sp"/>
+            android:layout_toRightOf="@+id/ad_image">
 
-        <TextView
-            android:padding="5dp"
-            android:id="@+id/product_title"
-            android:layout_below="@id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Food Title"
-            android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="User Name"
+                android:layout_marginStart="10dp"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/product_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/username"
+                android:layout_marginStart="10dp"
+                android:padding="5dp"
+                android:text="Product Name"
+                android:textColor="#000"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/isAccepted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/product_title"
+                android:layout_marginStart="10dp"
+                android:padding="5dp"
+                android:text="Request Status"
+                android:visibility="gone"
+                android:textColor="#000"
+                android:textSize="18sp"/>
+
+        </RelativeLayout>
+
+
     </RelativeLayout>
-
-
 
 </androidx.cardview.widget.CardView>

@@ -28,11 +28,5 @@
         app:showAsAction="always"
         />
 
-    <item
-        android:id="@+id/profile_edit"
-        android:title="Edit Profile"
-        android:icon="@drawable/ic_account_circle_black_24dp"
-        app:showAsAction="always" />
-
 
 </menu>

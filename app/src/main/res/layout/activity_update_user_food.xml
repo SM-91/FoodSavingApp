@@ -67,177 +67,233 @@
 
         </RelativeLayout>
 
-
         <!--Form Layout-->
         <RelativeLayout
             android:id="@+id/formLayout"
-            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/imageChangeBtnLayout">
+            android:layout_below="@id/imageChangeBtnLayout"
+            android:padding="5dp">
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textViewTitle"
-                android:text="Food title:"
-                android:textSize="15sp"
-                android:textColor="#000000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <EditText
-                android:id="@+id/editTextTitle"
-                android:layout_below="@+id/textViewTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:hint="e.g Title of your food"/>
+                android:layout_height="wrap_content">
 
-            <TextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Food Title"
+                    android:inputType="text"
+                    android:textColor="#A2A19F"
+                    android:textColorHighlight="#A2A19F"
+                    android:textColorHint="#A2A19F"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textViewDescription"
-                android:layout_below="@+id/editTextTitle"
-                android:text="Food description:"
-                android:textSize="15sp"
-                android:textColor="#000000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <EditText
-                android:id="@+id/editTextDescription"
-                android:layout_below="@+id/textViewDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:hint="e.g Quality, quantity, other information"/>
+                android:layout_below="@+id/textViewTitle">
 
-            <TextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Food Description"
+                    android:inputType="text"
+                    android:textColor="#A2A19F"
+                    android:textColorHighlight="#A2A19F"
+                    android:textColorHint="#A2A19F"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textViewPickUpDetails"
-                android:layout_below="@+id/editTextDescription"
-                android:text="Pick up details:"
-                android:textSize="15sp"
-                android:textColor="#000000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <EditText
-                android:id="@+id/editTextPickUpDetails"
-                android:layout_below="@+id/textViewPickUpDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:hint="e.g Today from 16:00 - 18:00 Hours, other information"/>
+                android:layout_below="@+id/textViewDescription"
+                android:textColor="#000000"
+                android:textSize="15sp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPickUpDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Food PickUp Details"
+                    android:inputType="text"
+                    android:textColor="#A2A19F"
+                    android:textColorHighlight="#A2A19F"
+                    android:textColorHint="#A2A19F"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <LinearLayout
                 android:id="@+id/radioLayout"
-                android:layout_below="@+id/editTextPickUpDetails"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@+id/textViewPickUpDetails"
                 android:orientation="vertical">
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textViewFoodType"
-                    android:text="Choose food type:"
-                    android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_below="@+id/textViewFoodType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RadioButton android:id="@+id/radioCookedFood"
-                        android:textColor="#000000"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Cooked Food" />
-                    <RadioButton
-                        android:id="@+id/radioRawFood"
-                        android:textColor="#000000"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Raw Food" />
+                    android:layout_below="@+id/textViewDescription"
+                    android:padding="5dp"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    app:placeholderText="Food Type">
 
-                </RadioGroup>
+                    <RadioGroup
+                        android:id="@+id/radioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewFoodType"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioCookedFood"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cooked Food"
+                            android:textColor="#000000" />
+
+                        <RadioButton
+                            android:id="@+id/radioRawFood"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Raw Food"
+                            android:textColor="#000000" />
+                    </RadioGroup>
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/spinnerCusinetype"
-                android:layout_below="@+id/radioLayout"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/radioLayout"
+                android:orientation="vertical">
 
-                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-                    android:id="@+id/cuisine_spinner"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:smsp_searchHeaderBackgroundColor="@color/colorPrimary"
-                    app:smsp_searchHeaderText="Select Cuisine Type"
-                    app:smsp_hint="select cuisine type"
-                    app:smsp_hintSize="15sp"
-                    app:smsp_hintColor="#000000"
-                    app:smsp_itemSize="15sp"
-                    app:smsp_floatingLabelText="Select Cuisine Type"
-                    app:smsp_floatingLabelSize="15sp"
-                    app:smsp_floatingLabelColor="#000000"
-                    app:smsp_arrowColor="@color/colorPrimary"
-                    app:smsp_underlineColor="@color/colorPrimary"
-                    app:smsp_itemListHintBackgroundColor="@color/colorPrimary"
-                    app:smsp_errorText="Please choose your cuisine type"
-                    app:smsp_isSearchable="true" />
+                    android:padding="5dp">
+
+                    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                        android:id="@+id/cuisine_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:smsp_arrowColor="@color/colorPrimary"
+                        app:smsp_floatingLabelColor="#000000"
+                        app:smsp_floatingLabelSize="15sp"
+                        app:smsp_hint="select cuisine type"
+                        app:smsp_errorText="Please select the cuisine type"
+                        app:smsp_hintColor="#000000"
+                        app:smsp_hintSize="15sp"
+                        app:smsp_isSearchable="true"
+                        app:smsp_itemListHintBackgroundColor="@color/colorPrimary"
+                        app:smsp_itemSize="15sp"
+                        app:smsp_searchHeaderBackgroundColor="@color/colorPrimary"
+                        app:smsp_searchHeaderText="Select Cuisine Type"
+                        app:smsp_underlineColor="@color/colorPrimary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--  <TextView
+                      android:id="@+id/selectCuisineType"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:textSize="15sp"
+                      android:textColor="#000000"
+                      android:text="Select cuisine type"/>-->
 
             </LinearLayout>
 
-
-
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/productValidity"
-                android:layout_below="@id/spinnerCusinetype"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinnerCusinetype"
+                android:orientation="vertical">
 
-                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-                    android:id="@+id/days_spinner"
+                <!-- <ImageView
+                     android:id="@+id/listIcon"
+                     android:background="@mipmap/baseline_av_timer_black_36dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+                 <TextView
+                     android:id="@+id/captionForListing"
+                     android:layout_toRightOf="@+id/listIcon"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textSize="15sp"
+                     android:textColor="#000000"
+                     android:text="List food for how many days"/>-->
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:smsp_arrowColor="@color/colorPrimary"
-                    app:smsp_errorText="Please select the days to list your food"
-                    app:smsp_floatingLabelColor="#000000"
-                    app:smsp_floatingLabelSize="15sp"
-                    app:smsp_floatingLabelText="Select days to list your food"
-                    app:smsp_hint="Select days to list your food"
-                    app:smsp_hintColor="#000000"
-                    app:smsp_hintSize="15sp"
-                    app:smsp_itemListHintBackgroundColor="@color/colorPrimary"
-                    app:smsp_itemSize="15sp"
-                    app:smsp_underlineColor="@color/colorPrimary" />
+                    android:padding="5dp">
 
-            </RelativeLayout>
+                    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                        android:id="@+id/days_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:smsp_arrowColor="@color/colorPrimary"
+                        app:smsp_floatingLabelColor="#000000"
+                        app:smsp_floatingLabelSize="15sp"
+                        app:smsp_floatingLabelText="Select the availablity of your food"
+                        app:smsp_errorText="Please select the number of days for food availability"
+                        app:smsp_hint="select food availability"
+                        app:smsp_hintColor="#000000"
+                        app:smsp_hintSize="15sp"
+                        app:smsp_isSearchable="true"
+                        app:smsp_itemListHintBackgroundColor="@color/colorPrimary"
+                        app:smsp_itemSize="15sp"
+                        app:smsp_searchHeaderBackgroundColor="@color/colorPrimary"
+                        app:smsp_searchHeaderText="Select food availability"
+                        app:smsp_underlineColor="@color/colorPrimary" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/layoutPaymentMethods"
-                android:layout_below="@+id/productValidity"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_below="@+id/productValidity">
 
                 <TextView
                     android:id="@+id/payment"
-                    android:text="Payment Section"
-                    android:textSize="15sp"
-                    android:textColor="#000000"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Payment Section"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/freeBtnUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:padding="5dp"
+                    android:switchMinWidth="56dp"
+                    android:text="Free:"
+                    android:textOff="OFF"
+                    android:textOn="ON" />
 
                 <LinearLayout
                     android:id="@+id/radioPaymentLayout"
-                    android:layout_below="@+id/payment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_below="@+id/payment"
                     android:orientation="vertical">
 
                     <me.abhinay.input.CurrencyEditText
@@ -250,36 +306,40 @@
 
                     <TextView
                         android:id="@+id/paymentOptions"
-                        android:text="Please select your desired option"
-                        android:textSize="15sp"
-                        android:textColor="#000000"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Please select your desired option"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
 
                     <RadioGroup
                         android:id="@+id/radioGroupPaymentMethods"
-                        android:layout_below="@+id/paymentOptions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/paymentOptions"
                         android:orientation="vertical">
 
-                        <RadioButton android:id="@+id/paypal"
-                            android:textColor="#000000"
+                        <RadioButton
+                            android:id="@+id/paypal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Paypal" />
+                            android:text="Paypal"
+                            android:textColor="#000000" />
 
-                        <RadioButton android:id="@+id/bankTransfer"
-                            android:textColor="#000000"
+                        <RadioButton
+                            android:id="@+id/bankTransfer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bank transfer" />
+                            android:text="Bank transfer"
+                            android:textColor="#000000" />
 
-                        <RadioButton android:id="@+id/cashOnDelivery"
-                            android:textColor="#000000"
+                        <RadioButton
+                            android:id="@+id/cashOnDelivery"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cash on delivery" />
+                            android:text="Cash on delivery"
+                            android:textColor="#000000" />
                     </RadioGroup>
 
                 </LinearLayout>
