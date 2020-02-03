@@ -124,7 +124,8 @@ public class User_SignUp extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        startActivity(new Intent(getApplicationContext(),SignIn.class));
+                        firebaseAuth.signOut();
+                        startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
                         //finish();
                     }
                 });
@@ -232,9 +233,9 @@ public class User_SignUp extends AppCompatActivity {
                                                                                     startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
                                                                                     //finish();
                                                                                 } else {
-                                                                                    firebaseAuth.signOut();
-                                                                                    startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
                                                                                     checkEmailDialogue();
+
+                                                                                    //checkEmailDialogue();
                                                                                     //finish();
                                                                                 }
                                                                                 toastMessage("Check your email for verification");

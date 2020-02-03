@@ -157,7 +157,7 @@ public class UpdateProfile extends Fragment implements DialogeConfirmCredentials
 
     private void uploadData() {
         databaseReference.setValue(userData);
-        startActivity(new Intent(getContext(), Profile.class));
+        toastMessage("Image Updated");
     }
 
     //Image Choose and Upload Related Start
