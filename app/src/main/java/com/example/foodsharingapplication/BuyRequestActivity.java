@@ -96,4 +96,3 @@ public class BuyRequestActivity extends AppCompatActivity implements View.OnClic
     }
 }
 
-// changes

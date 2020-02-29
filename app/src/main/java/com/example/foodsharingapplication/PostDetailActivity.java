@@ -160,7 +160,6 @@ public class PostDetailActivity extends AppCompatActivity implements OnMapReadyC
             btnPayNow.setVisibility(View.GONE);
         }
 
-
         if (imageUri != null) {
             ImageView imageV = new ImageView(PostDetailActivity.this);
             Picasso.get().load(imageUri).fit().into(imageV);
