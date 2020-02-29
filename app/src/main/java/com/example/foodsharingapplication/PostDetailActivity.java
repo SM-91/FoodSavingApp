@@ -156,6 +156,10 @@ public class PostDetailActivity extends AppCompatActivity implements OnMapReadyC
         pCuisineType.setText(cuisineType);
         pPayment.setText(payment);
 
+        if(payment.equals("Free")){
+            btnPayNow.setVisibility(View.GONE);
+        }
+
 
         if (imageUri != null) {
             ImageView imageV = new ImageView(PostDetailActivity.this);
