@@ -38,7 +38,8 @@ public class BuyRequestActivity extends AppCompatActivity implements View.OnClic
     private String ad_id = " ";
     private String name;
     private boolean accepted;
-    User sender,reciever;
+    User sender, reciever;
+    private ArrayList<BidModel> requestsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,75 +56,16 @@ public class BuyRequestActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //otherUserMap.clear();
+                requestsList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String productId = snapshot.getKey();
-                    if (!TextUtils.isEmpty(productId)) {
-                        ad_id = productId;
-                        getProduct();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void getProduct() {
-        DatabaseReference productReference = FirebaseDatabase.getInstance().getReference("Food").child("FoodByAllUsers")
-                .child(ad_id);
-        productReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserUploadFoodModel productModel = dataSnapshot.getValue(UserUploadFoodModel.class);
-                if(productModel != null) {
-                    getUser(productModel);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void getUser(final UserUploadFoodModel productModel) {
-        DatabaseReference allRequestsReference = FirebaseDatabase.getInstance().getReference("Requests").child(ad_id);
-        //Show Progress Dialog
-        allRequestsReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //otherUserList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    BidModel bidModel = snapshot.getValue(BidModel.class);
-                    User otherUser = null;
-
-                    sender = bidModel.getSender();
-                    reciever = bidModel.getReciever();
-                    accepted = bidModel.isAccepted();
-                    name = bidModel.getName();
-                    requestId = bidModel.getRequestId();
-
-                    if (myId.equals(bidModel.getReciever().getUserId())) {
-                        otherUser = bidModel.getSender();
-                    }
-
-                    if (otherUser != null) {
-                        if (!otherUserMap.containsKey(otherUser.getUserId())) {
-                            otherUserMap.put(otherUser.getUserId(), true);
-                            otherUserList.add(otherUser);
-
-                            CustomModel customModel = new CustomModel();
-                            customModel.setUser(otherUser);
-                            customModel.setBidModel(bidModel);
-                            customModel.setUserUploadFoodModel(productModel);
-                            customModelArrayList.add(customModel);
+                    for (DataSnapshot requestSnapshot : snapshot.getChildren()) {
+                        BidModel requestModel = requestSnapshot.getValue(BidModel.class);
+                        if (requestModel != null && myId.equals(requestModel.getReciever().getUserId())) {
+                            requestsList.add(requestModel);
                         }
                     }
                 }
+
                 setRVAdapter();
             }
 
@@ -135,28 +77,23 @@ public class BuyRequestActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setRVAdapter() {
-        CustomModelAdapter customModelAdapter = new CustomModelAdapter(customModelArrayList);
+        CustomModelAdapter customModelAdapter = new CustomModelAdapter(requestsList);
         customModelAdapter.setOnClickListener(this);
         rvRequestList.setAdapter(customModelAdapter);
-        customModelAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View v) {
+        BidModel bidRequest = (BidModel) v.getTag();
+        if(bidRequest != null) {
+            bidRequest.setAccepted(true);
 
-        DatabaseReference setAcceptedReference;
-        setAcceptedReference = FirebaseDatabase.getInstance().getReference("Requests")
-                .child(ad_id);
+            DatabaseReference updateRequestReference = FirebaseDatabase.getInstance().getReference("Requests").child(bidRequest.getAdId()).child(bidRequest.getRequestId());
+            updateRequestReference.setValue(bidRequest);
 
-        BidModel bidModel = new BidModel();
-        bidModel.setAdId(ad_id);
-        bidModel.setAccepted(true);
-        bidModel.setSender(sender);
-        bidModel.setReciever(reciever);
-        bidModel.setName(name);
-        bidModel.setRequestId(requestId);
-        setAcceptedReference.child(requestId).setValue(bidModel);
-
-        Toast.makeText(this,"Bid Accepted",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Bid Accepted", Toast.LENGTH_LONG).show();
+        }
     }
 }
+
+// changes

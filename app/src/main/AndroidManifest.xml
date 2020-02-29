@@ -28,9 +28,8 @@
         <activity android:name=".UserUploadedFood" />
         <activity android:name=".authentication.AuthemnticationFragments.ProfileActivity" />
         <activity android:name=".authentication.User_SignUp" />
-        <activity android:name=".extras.productdetails" />
-        <activity android:name=".extras.showproducts" />
-        <activity android:name=".extras.uploadproduct" />
+
+        <activity android:name=".extra.UploadData" />
         <activity android:name=".userProfile.UserProfile" />
         <activity android:name=".authentication.forgetPassword" />
         <activity android:name=".PostDetailActivity" />

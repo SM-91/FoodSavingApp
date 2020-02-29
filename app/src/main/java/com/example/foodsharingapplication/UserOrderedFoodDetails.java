@@ -123,9 +123,9 @@ public class UserOrderedFoodDetails extends AppCompatActivity {
             }
             text_food_title.setText(FoodTitle);
             text_food_desc.setText(FoodDescription);
-            text_food_price.setText("Food Price: " + FoodPrice);
+            text_food_price.setText(FoodPrice);
             text_food_type.setText(FoodType);
-            text_food_cuisine_type.setText("Cuisine Type :" + FoodCuisineType);
+            text_food_cuisine_type.setText(FoodCuisineType);
         }
 
         btnDel.setOnClickListener(new View.OnClickListener() {

@@ -47,11 +47,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import me.abhinay.input.CurrencyEditText;
+
+//Todo: Images issue (single and multiple) firebase exception!!!!!!!!
 
 public class UpdateUserFood extends AppCompatActivity {
 
@@ -63,7 +66,7 @@ public class UpdateUserFood extends AppCompatActivity {
     private User currentUser = null;
 
     /*Layouts*/
-    private LinearLayout imageViewLayout, buttonLayout,paymentRadioLayout;
+    private LinearLayout imageViewLayout, buttonLayout, paymentRadioLayout;
     RelativeLayout viewPagerLayout;
 
     /*Buttons*/
@@ -85,7 +88,7 @@ public class UpdateUserFood extends AppCompatActivity {
     private SmartMaterialSpinner cuisineTypeSpinner, listFoodSpinner;
 
     /*ViewPager*/
-    ViewPager viewPager , updateViewPager;
+    ViewPager viewPager, updateViewPager;
     ViewPageAdapter adapter = null;
     ViewPageAdapter updateImagesAdapter = null;
 
@@ -104,10 +107,11 @@ public class UpdateUserFood extends AppCompatActivity {
 
     private String ad_id = " ";
     private String user_id = " ";
+    private boolean changesInImage = false;
     private ArrayList<String> listImages = new ArrayList<>();
 
     ArrayAdapter<String> cuisineAdapter;
-    private String[] cuisines = {"Asian" , "Italian", "French", "FastFood", "German", "Continental",
+    private String[] cuisines = {"Asian", "Italian", "French", "FastFood", "German", "Continental",
             "South American", "Arabic", "African"};
 
     ArrayAdapter<String> foodListingAdapter;
@@ -124,9 +128,9 @@ public class UpdateUserFood extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         /*Layouts*/
-        viewPagerLayout =  findViewById(R.id.test1);
-        imageViewLayout =  findViewById(R.id.imageViewLayout);
-        buttonLayout =  findViewById(R.id.layout_buttons);
+        viewPagerLayout = findViewById(R.id.test1);
+        imageViewLayout = findViewById(R.id.imageViewLayout);
+        buttonLayout = findViewById(R.id.layout_buttons);
         paymentRadioLayout = findViewById(R.id.radioPaymentLayout);
 
         /*ViewPager*/
@@ -138,10 +142,10 @@ public class UpdateUserFood extends AppCompatActivity {
         imageView = findViewById(R.id.mainImage);
 
         /*EditTexts*/
-        editTextTitle =  findViewById(R.id.editTextTitle);
-        editTextDescription =  findViewById(R.id.editTextDescription);
+        editTextTitle = findViewById(R.id.editTextTitle);
+        editTextDescription = findViewById(R.id.editTextDescription);
         editTextPickUpDetails = findViewById(R.id.editTextPickUpDetails);
-        editTextPrice =  findViewById(R.id.etPrice);
+        editTextPrice = findViewById(R.id.etPrice);
         editTextPrice.setCurrency("€");
         editTextPrice.setDelimiter(false);
         editTextPrice.setSpacing(false);
@@ -157,7 +161,7 @@ public class UpdateUserFood extends AppCompatActivity {
         /*RadioGroups*/
         /*FoodType*/
         foodTypeRadioGroup = findViewById(R.id.radioGroup);
-        cookedFoodRadioBtn =  findViewById(R.id.radioCookedFood);
+        cookedFoodRadioBtn = findViewById(R.id.radioCookedFood);
         rawFoodRadioBtn = findViewById(R.id.radioRawFood);
         /*Payment*/
         paymentGroup = findViewById(R.id.radioGroupPaymentMethods);
@@ -167,7 +171,7 @@ public class UpdateUserFood extends AppCompatActivity {
 
         /*Spinners*/
         cuisineTypeSpinner = findViewById(R.id.cuisine_spinner);
-        cuisineAdapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,
+        cuisineAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,
                 cuisines);
         cuisineTypeSpinner.setAdapter(cuisineAdapter);
         cuisineTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -177,6 +181,7 @@ public class UpdateUserFood extends AppCompatActivity {
                 userUploadFoodModel.setFoodTypeCuisine(cuisineType);
                 /*cuisine_type = cuisineTypeSpinner.getSelectedItem().toString();*/
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -203,12 +208,17 @@ public class UpdateUserFood extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mArrayUri.isEmpty()) {
-                    uploadMultipleImages();
-                } else if (mImageUri != null) {
-                    uploadSingleImage();
+                if(!changesInImage) {
+                    //no changes in images
+                    updateFood();
                 } else {
-                    Toast.makeText(getApplicationContext().getApplicationContext(), "Please Select Image", Toast.LENGTH_SHORT).show();
+                    if (!mArrayUri.isEmpty()) {
+                        uploadMultipleImages();
+                    } else if (mImageUri != null) {
+                        uploadSingleImage();
+                    } else {
+                        Toast.makeText(getApplicationContext().getApplicationContext(), "Please Select Image", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -243,10 +253,10 @@ public class UpdateUserFood extends AppCompatActivity {
         freeSwitchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(freeSwitchBtn.isChecked()){
+                if (freeSwitchBtn.isChecked()) {
                     userUploadFoodModel.setPayment("Free");
                     paymentRadioLayout.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     paymentRadioLayout.setVisibility(View.VISIBLE);
                 }
             }
@@ -266,6 +276,7 @@ public class UpdateUserFood extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -274,13 +285,8 @@ public class UpdateUserFood extends AppCompatActivity {
 
     }
 
-    private void getUpdateData(){
+    private void getUpdateData() {
 
-        updateImagesAdapter = new ViewPageAdapter(getApplicationContext(), mArrayUri);
-        viewPager.getOffscreenPageLimit();
-
-
-        Bundle bundle = getIntent().getExtras();
         ad_id = getIntent().getStringExtra("foodAdId");
         String foodAvailability = getIntent().getStringExtra("foodAvailability");
         String foodDescription = getIntent().getStringExtra("foodDescription");
@@ -295,35 +301,38 @@ public class UpdateUserFood extends AppCompatActivity {
         listImages = getIntent().getStringArrayListExtra("updateMultipleImagesList");
         user_id = getIntent().getStringExtra("user_id");
 
-        if(bundle != null){
+        if (foodSingleImage != null) {
+            viewPager.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
+            Picasso.get().load(foodSingleImage)
+                    .fit()
+                    .centerCrop()
+                    .into(imageView);
+            userUploadFoodModel.setmImageUri(foodSingleImage);
+        } else {
 
-            if(foodSingleImage != null){
-                imageView.setVisibility(View.VISIBLE);
-                Picasso.get().load(foodSingleImage)
-                        .fit()
-                        .centerCrop()
-                        .into(imageView);
-                userUploadFoodModel.setmImageUri(foodSingleImage);
-
-            } else {
-
-                viewPager.setVisibility(View.VISIBLE);
-                mArrayUri.clear();
-                try{
-                    for (int i = 0; i < listImages.size(); i++) {
-                        Uri tem_uri = Uri.parse(listImages.get(i));
-                        mArrayUri.add(tem_uri);
-                    }
-
-                    userUploadFoodModel.setmArrayString(listImages);
-                    viewPager.setAdapter(updateImagesAdapter);
-                    updateImagesAdapter.notifyDataSetChanged();
-
-                } catch (Exception e) {
-                    // This will catch any exception, because they are all descended from Exception
-                    System.out.println("Error " + e.getMessage());
-                    Toast.makeText(getApplicationContext(),"Error in multiple images" + e.getMessage(),Toast.LENGTH_SHORT).show();
+            imageView.setVisibility(View.GONE);
+            viewPager.setVisibility(View.VISIBLE);
+            mArrayUri.clear();
+            try {
+                for (int i = 0; i < listImages.size(); i++) {
+                    Uri tem_uri = Uri.parse(listImages.get(i));
+                    mArrayUri.add(tem_uri);
                 }
+
+                userUploadFoodModel.setmArrayString(listImages);
+                /*if(updateImagesAdapter == null) {
+                    updateImagesAdapter = new ViewPageAdapter(this, mArrayUri);
+                } else {
+                    updateImagesAdapter.notifyDataSetChanged();
+                }*/
+
+                updateImagesAdapter = new ViewPageAdapter(this, listImages.toArray(new String[0]));
+                viewPager.setAdapter(updateImagesAdapter);
+            } catch (Exception e) {
+                // This will catch any exception, because they are all descended from Exception
+                System.out.println("Error " + e.getMessage());
+                Toast.makeText(getApplicationContext(), "Error in multiple images" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             editTextTitle.setText(foodTitle);
@@ -332,21 +341,21 @@ public class UpdateUserFood extends AppCompatActivity {
             editTextPrice.setText(foodPrice);
 
 
-            if(cookedFoodRadioBtn.isChecked()){
+            if (cookedFoodRadioBtn.isChecked()) {
                 cookedFoodRadioBtn.setChecked(true);
             } else {
                 rawFoodRadioBtn.setChecked(true);
             }
 
-            if(foodPayment.equals("Free")){
+            if (foodPayment.equals("Free")) {
                 userUploadFoodModel.setPayment("Free");
                 paymentRadioLayout.setVisibility(View.GONE);
             }
 
-            if(paypalOption.isChecked()){
+            if (paypalOption.isChecked()) {
                 paypalOption.setChecked(true);
                 userUploadFoodModel.setPayment("Paypal");
-            } else if(bankTransferOption.isChecked()){
+            } else if (bankTransferOption.isChecked()) {
                 bankTransferOption.setChecked(true);
                 userUploadFoodModel.setPayment("Bank Transfer");
             } else {
@@ -354,13 +363,13 @@ public class UpdateUserFood extends AppCompatActivity {
                 userUploadFoodModel.setPayment(" Cash On Delivery");
             }
 
-            if(foodTypeCuisine != null){
+            if (foodTypeCuisine != null) {
                 int cuisinePositionInSpinner = cuisineAdapter.getPosition(foodTypeCuisine);
                 cuisineTypeSpinner.setSelection(cuisinePositionInSpinner);
                 userUploadFoodModel.setFoodTypeCuisine(foodTypeCuisine);
             }
 
-            if(foodAvailability != null){
+            if (foodAvailability != null) {
                 int foodLisitngPositionInSpinner = foodListingAdapter.getPosition(foodAvailability);
                 listFoodSpinner.setSelection(foodLisitngPositionInSpinner);
                 userUploadFoodModel.setAvailabilityDays(foodAvailability);
@@ -389,7 +398,7 @@ public class UpdateUserFood extends AppCompatActivity {
 
         if (requestCode == MULTIPLE_IMAGE_REQUEST && resultCode == RESULT_OK) {
             if (data.getClipData() != null) {
-                mArrayUri.clear();
+              //  mArrayUri.clear();
                 imageView.setImageBitmap(null);
                 int count = data.getClipData().getItemCount();
                 Log.i("count", String.valueOf(count));
@@ -402,6 +411,7 @@ public class UpdateUserFood extends AppCompatActivity {
 
                 }
                 Log.i("listsize", String.valueOf(mArrayUri.size()));
+                changesInImage = true;
 
                 imageView.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
@@ -425,6 +435,7 @@ public class UpdateUserFood extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                changesInImage = true;
 
                 RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
                 lp.height = (int) convertDpToPixelInt(300, getApplicationContext()); //convert pixel to dp
@@ -467,12 +478,12 @@ public class UpdateUserFood extends AppCompatActivity {
 
     /*Upload Single Image*/
     private void uploadSingleImage() {
-
+        Uri singleImageUri = Uri.fromFile(new File(mImageUri.toString()));
         StorageReference ImageFolder = FirebaseStorage.getInstance().getReference("SellerImageFolder").child("Images");
 
-        final StorageReference singleImageName = ImageFolder.child(System.currentTimeMillis() + "." + getFileExtension(mImageUri));
+        final StorageReference singleImageName = ImageFolder.child(System.currentTimeMillis() + "." + getFileExtension(singleImageUri));
 
-        singleImageName.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        singleImageName.putFile(singleImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 singleImageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -516,15 +527,17 @@ public class UpdateUserFood extends AppCompatActivity {
         progressDialog = ProgressDialog.show(UpdateUserFood.this, "Posting Data",
                 "Uploading..", true);
 
-        StorageReference ImageFolder = FirebaseStorage.getInstance().getReference("SellerImageFolder").child("Images");
+        StorageReference ImageFolder = FirebaseStorage.getInstance().getReference();
 
         arrayList.clear();
         for (uploadCount = 0; uploadCount < mArrayUri.size(); uploadCount++) {
             final Uri individualImage = mArrayUri.get(uploadCount);
             Log.i("Individual Image Uri:", String.valueOf(individualImage));
-            final StorageReference imageName = ImageFolder.child("Image" + individualImage.getLastPathSegment());
 
-            imageName.putFile(individualImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            Uri multipleImageUri = Uri.fromFile(new File(individualImage.toString()));
+            final StorageReference imageName = ImageFolder.child("SellerImageFolder").child("Images");
+
+            imageName.putFile(multipleImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -532,8 +545,6 @@ public class UpdateUserFood extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             String url = String.valueOf(uri);
                             Log.i("images Url", url);
-                            //sData.setUri(mArrayUri);
-                            //userUploadFoodModel.setmArrayUri(mArrayUri.get());
                             arrayList.add(url);
 
                             if (arrayList.size() == mArrayUri.size()) {
@@ -562,7 +573,7 @@ public class UpdateUserFood extends AppCompatActivity {
 
     }
 
-    private void uploadDataWithMultipleImages(){
+    private void uploadDataWithMultipleImages() {
         userUploadFoodModel.setmArrayString(arrayList);
         progressDialog.cancel();
         updateFood();

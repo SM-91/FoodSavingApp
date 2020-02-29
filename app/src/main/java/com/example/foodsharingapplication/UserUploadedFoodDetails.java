@@ -7,7 +7,6 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,11 +17,6 @@ import android.widget.Toast;
 import com.example.foodsharingapplication.Adapters.ViewPageAdapter;
 import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.extras.UploadData;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -129,11 +123,11 @@ public class UserUploadedFoodDetails extends AppCompatActivity {
             }
             text_food_title.setText(FoodTitle);
             text_food_desc.setText(FoodDescription);
-            text_food_availablity.setText("Available For: " + FoodAvailability);
-            text_food_price.setText("Food Price: " + FoodPrice);
+            text_food_availablity.setText(FoodAvailability);
+            text_food_price.setText(FoodPrice);
             text_food_type.setText(FoodType);
-            text_food_pickUpDetails.setText("Pick Up Details :" + FoodPickUpDetail);
-            text_food_cuisine_type.setText("Cuisine Type :" + FoodCuisineType);
+            text_food_pickUpDetails.setText(FoodPickUpDetail);
+            text_food_cuisine_type.setText(FoodCuisineType);
         }
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -161,11 +155,8 @@ public class UserUploadedFoodDetails extends AppCompatActivity {
 
                         ArrayList<String> updateMultipleImagesList = new ArrayList<>();
                         try {
-                            if (dataSnapshot.child("mArrayString").getValue(String.class) != null) {
-
-                                for (DataSnapshot snapshot : dataSnapshot.child("mArrayString").getChildren()) {
-                                    updateMultipleImagesList.add(snapshot.child("mArrayString").getValue(String.class));
-                                }
+                            for(DataSnapshot snapshot:dataSnapshot.child("mArrayString").getChildren()) {
+                                updateMultipleImagesList.add(snapshot.getValue(String.class));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -210,17 +201,14 @@ public class UserUploadedFoodDetails extends AppCompatActivity {
                 DatabaseReference userFoodDelReference;
                 userFoodDelReference = FirebaseDatabase.getInstance().getReference("Food")
                         .child("FoodByUser").child(firebaseAuth.getUid());
-                userFoodDelReference.child(FoodAdID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        DatabaseReference allFoodsDelReference;
-                        allFoodsDelReference = FirebaseDatabase.getInstance().getReference("Food")
-                                .child("FoodByAllUsers");
-                        allFoodsDelReference.child(FoodAdID).removeValue();
-                        Toast.makeText(getApplicationContext(), "Product Deleted", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                });
+                userFoodDelReference.child(FoodAdID).removeValue();
+
+                DatabaseReference allFoodsDelReference;
+                allFoodsDelReference = FirebaseDatabase.getInstance().getReference("Food")
+                        .child("FoodByAllUsers");
+                allFoodsDelReference.child(FoodAdID).removeValue();
+                Toast.makeText(getApplicationContext(), "Product Deleted", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

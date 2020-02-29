@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodsharingapplication.R;
+import com.example.foodsharingapplication.model.BidModel;
 import com.example.foodsharingapplication.model.CustomModel;
 import com.squareup.picasso.Picasso;
 
@@ -18,10 +19,10 @@ import java.util.ArrayList;
 
 public class CustomModelAdapter extends RecyclerView.Adapter<CustomModelAdapter.ViewHolder> {
 
-    private ArrayList<CustomModel> customModels;
+    private ArrayList<BidModel> customModels;
     private View.OnClickListener listener;
 
-    public CustomModelAdapter( ArrayList<CustomModel> customModels) {
+    public CustomModelAdapter(ArrayList<BidModel> customModels) {
         this.customModels = customModels;
     }
 
@@ -32,15 +33,14 @@ public class CustomModelAdapter extends RecyclerView.Adapter<CustomModelAdapter.
         return new ViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CustomModelAdapter.ViewHolder holder, int position) {
-        CustomModel customModel = customModels.get(holder.getAdapterPosition());
+        BidModel customModel = customModels.get(holder.getAdapterPosition());
 
-        holder.username.setText("Sender Name :" + " " + customModel.getUser().getUserName());
-        holder.productName.setText("Product Name :" + " " + customModel.getUserUploadFoodModel().getFoodTitle());
+        holder.username.setText("Sender Name :" + " " + customModel.getSender().getUserName());
+        holder.productName.setText("Product Name :" + " " + customModel.getName());
 
-        if(customModel.getBidModel().isAccepted() == true){
+        if (customModel.isAccepted()) {
             holder.isAccepted.setText("Request Status :" + " " + "Bid Accepted");
             holder.isAccepted.setVisibility(View.VISIBLE);
         } else {
@@ -48,7 +48,8 @@ public class CustomModelAdapter extends RecyclerView.Adapter<CustomModelAdapter.
             holder.isAccepted.setVisibility(View.VISIBLE);
         }
 
-        Picasso.get().load(customModel.getUser().getUserProfilePicUrl()).fit().centerCrop().into(holder.imageView);
+        if (customModel.getSender().getUserProfilePicUrl() != null)
+            Picasso.get().load(customModel.getSender().getUserProfilePicUrl()).fit().centerCrop().into(holder.imageView);
         holder.itemView.setTag(customModel);
         holder.itemView.setOnClickListener(listener);
     }

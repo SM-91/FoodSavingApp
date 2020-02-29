@@ -28,22 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-           <!-- <LinearLayout
-                android:id="@+id/imageViewLayout"
-                android:orientation="vertical"
-                android:visibility="visible"
-
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center_horizontal"
-                    />
-
-            </LinearLayout>-->
 
         </RelativeLayout>
 
@@ -206,13 +190,6 @@
                         app:smsp_underlineColor="@color/colorPrimary" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!--  <TextView
-                      android:id="@+id/selectCuisineType"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:textSize="15sp"
-                      android:textColor="#000000"
-                      android:text="Select cuisine type"/>-->
 
             </LinearLayout>
 
@@ -222,20 +199,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/spinnerCusinetype"
                 android:orientation="vertical">
-
-                <!-- <ImageView
-                     android:id="@+id/listIcon"
-                     android:background="@mipmap/baseline_av_timer_black_36dp"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"/>
-                 <TextView
-                     android:id="@+id/captionForListing"
-                     android:layout_toRightOf="@+id/listIcon"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:textSize="15sp"
-                     android:textColor="#000000"
-                     android:text="List food for how many days"/>-->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -249,7 +212,6 @@
                         app:smsp_arrowColor="@color/colorPrimary"
                         app:smsp_floatingLabelColor="#000000"
                         app:smsp_floatingLabelSize="15sp"
-                        app:smsp_floatingLabelText="Select the availablity of your food"
                         app:smsp_errorText="Please select the number of days for food availability"
                         app:smsp_hint="select food availability"
                         app:smsp_hintColor="#000000"

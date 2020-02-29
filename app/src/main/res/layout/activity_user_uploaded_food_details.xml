@@ -74,12 +74,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
-                        android:layout_marginRight="15dp"
                         android:layout_weight="1"
-                        android:gravity="right|top"
                         android:text="Price"
                         android:textColor="@color/priceColor"
-                        android:textSize="20dp" />
+                        android:textSize="25dp" />
 
                 </LinearLayout>
 
@@ -96,10 +94,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="9dp"
+                    android:layout_marginTop="10dp"
                     android:text="Description"
                     android:textColor="@color/colorAdText"
                     android:textSize="17dp"
-                    android:textStyle="italic" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,7 +134,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="9dp"
-                        android:text="Pick up Time"
                         android:textColor="@color/colorAdText"
                         android:textSize="20dp" />
                 </LinearLayout>
@@ -165,7 +163,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="9dp"
-                        android:text="Food Type"
                         android:textColor="@color/colorAdText"
                         android:textSize="20dp" />
                 </LinearLayout>
@@ -195,7 +192,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="9dp"
-                        android:text="Availability"
                         android:textColor="@color/colorAdText"
                         android:textSize="20dp" />
 
@@ -227,7 +223,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="9dp"
-                        android:text="Cuisine Type"
                         android:textColor="@color/colorAdText"
                         android:textSize="20dp" />
                 </LinearLayout>
@@ -258,7 +253,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="9dp"
-                        android:text="Payment Method"
                         android:textColor="@color/colorAdText"
                         android:textSize="20dp" />
 
@@ -274,6 +268,8 @@
                     android:id="@+id/btn_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="85dp"
                     android:visibility="visible">
 
                     <Button

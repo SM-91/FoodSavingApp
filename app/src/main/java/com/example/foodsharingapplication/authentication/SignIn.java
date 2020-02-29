@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,19 +18,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodsharingapplication.HomeActivity;
-import com.example.foodsharingapplication.HomeDefinition;
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.extras.ShowData_Fragment;
 import com.example.foodsharingapplication.model.User;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -61,7 +55,7 @@ public class SignIn extends AppCompatActivity {
     ProgressDialog progress;
     private String loginEmail;
     private String loginPassword;
-    private ShowData_Fragment showData_fragment;
+    //private ShowData_Fragment showData_fragment;
     private FragmentManager fragManger;
     private FragmentTransaction fragTrans;
     private String fbName;

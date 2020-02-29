@@ -18,15 +18,25 @@ public class ViewPageAdapter extends PagerAdapter {
 
     private Context context;
     private ArrayList<Uri> imageUrls;
+    private String[] images;
+
+    private boolean isUri = true;
 
     public ViewPageAdapter(Context context, ArrayList<Uri> imageUrls) {
         this.context = context;
         this.imageUrls = imageUrls;
     }
 
+    public ViewPageAdapter(Context context, String[] images) {
+        this.context = context;
+        this.images = images;
+
+        this.isUri = false;
+    }
+
     @Override
     public int getCount() {
-        return imageUrls.size();
+        return !isUri? images.length:imageUrls.size();
     }
 
     @Override
@@ -37,13 +47,23 @@ public class ViewPageAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        Uri uri = imageUrls.get(position);
+       // Uri uri = imageUrls.get(position);
         ImageView imageView = new ImageView(context);
-        Picasso.get()
-                .load(uri)
-                .fit()
-                .centerCrop()
-                .into(imageView);
+
+        if(isUri) {
+            Picasso.get()
+                    .load(imageUrls.get(position))
+                    .fit()
+                    .centerCrop()
+                    .into(imageView);
+        } else {
+            Picasso.get()
+                    .load(images[position])
+                    .fit()
+                    .centerCrop()
+                    .into(imageView);
+        }
+
 
 //        try {
 //            Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);

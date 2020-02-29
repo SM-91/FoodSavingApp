@@ -12,11 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodsharingapplication.R;
-
-import com.example.foodsharingapplication.extras.AllProducts;
-import com.example.foodsharingapplication.extras.Products;
-import com.example.foodsharingapplication.extras.productdetails;
-import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
 import com.example.foodsharingapplication.userOrdersAndUploadedAds.UserOrderAndUploads;
 

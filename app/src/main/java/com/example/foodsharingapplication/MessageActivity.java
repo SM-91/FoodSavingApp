@@ -55,7 +55,7 @@ public class MessageActivity extends AppCompatActivity {
         }*/
 
         ad_id = getIntent().getStringExtra("ad_id");
-        food_name = getIntent().getStringExtra("product_name");
+        food_name = getIntent().getStringExtra("foodTitle");
         receiver = getIntent().getParcelableExtra("foodPostedBy");
 
         firebaseAuth = FirebaseAuth.getInstance();

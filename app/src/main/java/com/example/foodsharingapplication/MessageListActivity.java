@@ -37,6 +37,8 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
 
     private String myId;
     private String ad_id = " ";
+    private String foodName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +55,16 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //otherUserMap.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String conversationId = snapshot.getKey();
-                    if (!TextUtils.isEmpty(conversationId)) {
-                        ad_id = conversationId;
-                        getProduct();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        ChatModel chatModel = ds.getValue(ChatModel.class);
+                        //String conversationId = snapshot.getKey();
+                        if (myId.equals(chatModel.getReciever().getUserId())) {
+                            ad_id = chatModel.getConversationID();
+                            getProduct();
+                        }
                     }
                 }
+
             }
 
             @Override
@@ -76,6 +82,8 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserUploadFoodModel productModel = dataSnapshot.getValue(UserUploadFoodModel.class);
                 if (productModel != null) {
+
+                    foodName = productModel.getFoodTitle();
                     getUser(productModel);
                 }
             }
@@ -88,7 +96,7 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-    private void getUser(final UserUploadFoodModel productModel){
+    private void getUser(final UserUploadFoodModel productModel) {
         DatabaseReference allChatReference = FirebaseDatabase.getInstance().getReference("Messages").child(ad_id);
 
         //Show Progress Dialog
@@ -107,7 +115,7 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
                     }
 
                     if (otherUser != null) {
-                        if(!otherUserMap.containsKey(otherUser.getUserId())) {
+                        if (!otherUserMap.containsKey(otherUser.getUserId())) {
                             otherUserMap.put(otherUser.getUserId(), true);
                             userList.add(otherUser);
 
@@ -129,6 +137,7 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
         });
 
     }
+
     private void setRVAdapter() {
         MessageViewAdapter messageViewAdapter = new MessageViewAdapter(this, customModelArrayList);
         messageViewAdapter.setOnClickListener(this);
@@ -141,8 +150,10 @@ public class MessageListActivity extends AppCompatActivity implements View.OnCli
 
         //User clickedUserModel = (User) v.getTag();
         CustomModel clickedCustomModel = (CustomModel) v.getTag();
+
         Intent messageIntent = new Intent(MessageListActivity.this, MessageActivity.class);
         messageIntent.putExtra("foodPostedBy", clickedCustomModel.getUser());
+        messageIntent.putExtra("foodTitle", foodName);
         messageIntent.putExtra("ad_id", ad_id);
         startActivity(messageIntent);
     }

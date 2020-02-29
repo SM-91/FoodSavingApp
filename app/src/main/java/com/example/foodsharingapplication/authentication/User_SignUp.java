@@ -210,7 +210,7 @@ public class User_SignUp extends AppCompatActivity {
 
         }
         try {
-            if (!txtUser_Email.getText().toString().isEmpty() && !txtUser_Password.getText().toString().isEmpty()) {
+            if (!userEmail.isEmpty() && !userPassword.isEmpty() && !userFullName.isEmpty()) {
                 firebaseAuth.createUserWithEmailAndPassword(txtUser_Email.getText().toString(), txtUser_Password.getText().toString().trim())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -233,8 +233,8 @@ public class User_SignUp extends AppCompatActivity {
                                                                                     startActivity(new Intent(User_SignUp.this, HomeDefinition.class));
                                                                                     //finish();
                                                                                 } else {
-                                                                                    checkEmailDialogue();
-
+                                                                                    //checkEmailDialogue();
+                                                                                    toastMessage("Email not verified");
                                                                                     //checkEmailDialogue();
                                                                                     //finish();
                                                                                 }

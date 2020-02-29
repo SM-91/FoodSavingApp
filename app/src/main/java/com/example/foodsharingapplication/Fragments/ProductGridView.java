@@ -2,7 +2,6 @@ package com.example.foodsharingapplication.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,15 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodsharingapplication.Adapters.NearestAdapter;
 import com.example.foodsharingapplication.Adapters.UserUploadedFoodAdapter;
+import com.example.foodsharingapplication.PostDetailActivity;
 import com.example.foodsharingapplication.R;
-import com.example.foodsharingapplication.extras.AllProducts;
 import com.example.foodsharingapplication.model.User;
 import com.example.foodsharingapplication.model.UserUploadFoodModel;
-import com.example.foodsharingapplication.PostDetailActivity;
-import com.example.foodsharingapplication.Fragments.ViewHolder;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.firebase.ui.database.ObservableSnapshotArray;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,8 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.foodsharingapplication.HomeActivity.curr;
 
 /**
  * A simple {@link Fragment} subclass.
